@@ -45,3 +45,4 @@ public class User {
     @JoinColumn(name = "shipping_address")
     private Address shippingAddress;
 }
+
