@@ -18,15 +18,20 @@ const SearchBar = ({ items, onSearch }) => {
 
   return (
     <form>
-      <label htmlFor="searchTerm" >Search:</label>
+      <label htmlFor="searchTerm" style={{ paddingRight: "8px" }}>
+        Search:
+      </label>
       <input
         type="text"
         id="searchTerm"
         value={searchTerm}
         onChange={handleSearchTermChange}
+        style={{ padding: "8px" }}
       />
-      <label htmlFor="sortBy">Sort by:</label>
-      <select id="sortBy" value={sortBy} onChange={handleSortByChange}>
+      <label htmlFor="sortBy" style={{ paddingLeft: "8px", paddingRight: "8px" }}>
+        Sort by:
+      </label>
+      <select id="sortBy" value={sortBy} onChange={handleSortByChange} style={{ padding: "8px" }}>
         <option value="none">None</option>
         <option value="price">Price (Low to High)</option>
         <option value="price-reverse">Price (High to Low)</option>

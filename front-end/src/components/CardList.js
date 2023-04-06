@@ -26,10 +26,11 @@ export default function CardList() {
         break;
     }
 
-    return sortedCards.filter(
-      (card) =>
-        card.inStock || !hideOutOfStock // Show out of stock items if hideOutOfStock is false
-      ).filter((card) =>
+    return sortedCards
+      .filter(
+        (card) => card.inStock || !hideOutOfStock // Show out of stock items if hideOutOfStock is false
+      )
+      .filter((card) =>
         `${card.name} ${card.price} ${card.brand}`
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
@@ -48,24 +49,35 @@ export default function CardList() {
 
   const renderCards = () => {
     return filteredCards.map((card) => (
-      <Card key={card.name} {...card} style={{ display: "inline-block" }}/>
+      <Card key={card.name} {...card} style={{ display: "inline-block" }} />
     ));
   };
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <SearchBar items={cards} onSearch={handleSearch} />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={hideOutOfStock}
-              onChange={(e) => setHideOutOfStock(e.target.checked)}
-            />
-          }
-          label="Hide out of stock"
-        />
+      <div style={{ textAlign: "center", padding: "16px" }}>
+        <div
+          style={{
+            display: "inline-flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "8px",
+          }}
+        >
+          <SearchBar items={cards} onSearch={handleSearch} />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={hideOutOfStock}
+                onChange={(e) => setHideOutOfStock(e.target.checked)}
+              />
+            }
+            label="Hide out of stock"
+            style={{ marginLeft: "auto" }}
+          />
+        </div>
       </div>
+
       <div
         style={{
           display: "grid",
