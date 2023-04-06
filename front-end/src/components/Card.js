@@ -6,10 +6,10 @@ export default function Card(props) {
     <div>
       <h2>{name}</h2>
       <p>${price.toFixed(2)}</p>
+      <p>{brand}</p>
       <p style={{ color: inStock ? "green" : "red", fontWeight: "bold" }}>
         {inStock ? "In Stock" : "Out of Stock"}
       </p>
-      <p>{brand}</p>
       <img
         src={image}
         alt={name}
