@@ -1,30 +1,80 @@
-import React from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Card from "./Card";
+import SearchBar from "./SearchBar";
+import { FormControlLabel, Checkbox } from "@mui/material";
+import cards from "../assetts/CardsData";
 
 export default function CardList() {
-  const cards = [
-    {
-      name: "Solemn Judgment - Maze of Memories (MAZE)",
-      image: require("./images/card1.jpg"),
-      price: 2.24,
-    },
-    {
-      name: "Nibiru, the Primal Being - 2022 Tin of the Pharaoh's Gods (MP22)",
-      image: require("./images/card2.jpg"),
-      price: 4.01,
-    },
-    {
-      name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
-      image: require("./images/card3.jpg"),
-      price: 0.40,
-    },
-  ];
+  const [hideOutOfStock, setHideOutOfStock] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("none");
+
+  const filteredCards = useMemo(() => {
+    let sortedCards = [...cards];
+
+    switch (sortBy) {
+      case "price":
+        sortedCards.sort((a, b) => a.price - b.price);
+        break;
+      case "price-reverse":
+        sortedCards.sort((a, b) => b.price - a.price);
+        break;
+      case "availability":
+        sortedCards.sort((a, b) => b.inStock - a.inStock);
+        break;
+      default:
+        break;
+    }
+
+    return sortedCards.filter(
+      (card) =>
+        card.inStock || !hideOutOfStock // Show out of stock items if hideOutOfStock is false
+      ).filter((card) =>
+        `${card.name} ${card.price} ${card.brand}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      );
+  }, [sortBy, hideOutOfStock, searchTerm]);
+
+  useEffect(() => {
+    setSearchTerm("");
+    setSortBy("none");
+  }, [hideOutOfStock]);
+
+  const handleSearch = (searchTerm, sortBy) => {
+    setSearchTerm(searchTerm);
+    setSortBy(sortBy);
+  };
+
+  const renderCards = () => {
+    return filteredCards.map((card) => (
+      <Card key={card.name} {...card} style={{ display: "inline-block" }}/>
+    ));
+  };
 
   return (
-    <div style={{ display: "flex", width: "400px", height: "400px"}}>
-      {cards.map((card) => (
-        <Card key={card.name} {...card} style={{ display: "inline-block" }} />
-      ))}
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <SearchBar items={cards} onSearch={handleSearch} />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={hideOutOfStock}
+              onChange={(e) => setHideOutOfStock(e.target.checked)}
+            />
+          }
+          label="Hide out of stock"
+        />
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "20px",
+        }}
+      >
+        {renderCards()}
+      </div>
     </div>
   );
 }
