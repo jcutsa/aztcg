@@ -3,6 +3,7 @@ import Card from "./Card";
 import SearchBar from "./SearchBar";
 import { FormControlLabel, Checkbox } from "@mui/material";
 import cards from "../assetts/CardsData";
+import { Stack } from "@mui/system";
 
 export default function CardList() {
   const [hideOutOfStock, setHideOutOfStock] = useState(false);
@@ -78,15 +79,7 @@ export default function CardList() {
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "20px",
-        }}
-      >
-        {renderCards()}
-      </div>
+      <Stack direction={"row"} flex="wrap" justifyContent={"space-evenly"}>{renderCards()}</Stack>
     </div>
   );
 }

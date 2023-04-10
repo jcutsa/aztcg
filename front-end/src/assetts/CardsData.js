@@ -5,6 +5,7 @@ const cards = [
       image: require("./images/card1.jpg"),
       price: 2.24,
       inStock: true,
+      id: "1"
     },
     {
       name: "Nibiru, the Primal Being - 2022 Tin of the Pharaoh's Gods (MP22)",
@@ -12,13 +13,15 @@ const cards = [
       image: require("./images/card2.jpg"),
       price: 4.01,
       inStock: false,
+      id: "2"
     },
     {
       name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
-      brand: "Yu-Gi-Oh!",
+      brand: "Magic",
       image: require("./images/card3.jpg"),
       price: 0.4,
       inStock: true,
+      id: "3"
     },
   ];
   
