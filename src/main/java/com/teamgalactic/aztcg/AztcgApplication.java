@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan({"com.teamgalactic.aztcg.controller", "com.teamgalactic.aztcg.service"})
-@EntityScan("com.teamgalactic.entity")
-@EnableJpaRepositories("com.teamgalactic.repository")
+@EntityScan("com.teamgalactic.aztcg.entity")
+@EnableJpaRepositories("com.teamgalactic.aztcg.repository")
 public class AztcgApplication {
 
 	public static void main(String[] args) {
