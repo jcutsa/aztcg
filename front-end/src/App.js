@@ -7,6 +7,7 @@ import Cards from "./pages/Cards";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import ShoppingCart from "./pages/ShoppingCart";
+import SingleCard from "./pages/SingleCard";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/cards" element={<Cards />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/shopping-cart" element={<ShoppingCart />} />
+          <Route path="/card/:cardId" element={<SingleCard />} />
         </Routes>
       </div>
     </BrowserRouter>
