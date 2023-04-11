@@ -9,11 +9,11 @@ export default function myCard(props) {
   const [elevation, setElevation] = useState(3);
 
   function raiseElevation() {
-    setElevation(15);
+    setElevation(20);
   }
 
   function lowerElevation() {
-    setElevation(3);
+    setElevation(5);
   }
 
   const handleButtonClick = () => {

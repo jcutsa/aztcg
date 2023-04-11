@@ -26,10 +26,10 @@ const theme = createTheme({
 
 export default function Navbar() {
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 1 }}>
       <ThemeProvider theme={theme}>
-        <AppBar position="static">
-          <Toolbar>
+        <AppBar position="static" sx={{ height: 80 }}>
+          <Toolbar sx={{ marginTop: 1 }}>
             <IconButton
               size="large"
               edge="start"
@@ -66,7 +66,7 @@ export default function Navbar() {
               <SearchComponent />
             </Typography>
 
-            <Button color="inherit">Login</Button>
+            <Link style={linkStyle} to="/sign-in" color="inherit">Sign In</Link>
           </Toolbar>
         </AppBar>
       </ThemeProvider>

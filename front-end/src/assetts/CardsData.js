@@ -15,14 +15,22 @@ const cards = [
       inStock: false,
       id: "2"
     },
+    // {
+    //   name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
+    //   brand: "Yu-Gi-Oh!"",
+    //   image: require("./images/card3.jpg"),
+    //   price: 0.4,
+    //   inStock: true,
+    //   id: "3"
+    // },
     {
-      name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
+      name: "Swamp (269) - Full Art - Phyrexia: All Will Be One (ONE)",
       brand: "Magic",
-      image: require("./images/card3.jpg"),
-      price: 0.4,
+      image: require("./images/card4.jpg"),
+      price: 0.91,
       inStock: true,
-      id: "3"
-    },
+      id: "4"
+    }
   ];
   
   export default cards;

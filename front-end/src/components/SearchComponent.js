@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import DropdownMenu from "./DropdownMenu";
 import cards from "../assetts/CardsData";
 import { Autocomplete, TextField } from "@mui/material";
@@ -12,9 +9,8 @@ import { Autocomplete, TextField } from "@mui/material";
 const options = ["All", "Yu-Gi-Oh!", "Magic"];
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  display: "flex",
+  display: "inline-flex",
   alignItems: "center",
-  width: 400,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.grey[100],
   "&:hover": {
