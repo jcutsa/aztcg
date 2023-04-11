@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 
-export default function PaymentForm() {
+export default function PaymentForm({ value, onChange }) {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -14,9 +14,11 @@ export default function PaymentForm() {
                     <TextField
                         required
                         id="cardName"
+                        name="cardName"
                         label="Name on card"
+                        value={value.cardName}
+                        onChange={onChange}
                         fullWidth
-                        autoComplete="cc-name"
                         variant="standard"
                     />
                 </Grid>
@@ -24,9 +26,11 @@ export default function PaymentForm() {
                     <TextField
                         required
                         id="cardNumber"
+                        name="cardNumber"
                         label="Card number"
+                        value={value.cardNumber}
+                        onChange={onChange}
                         fullWidth
-                        autoComplete="cc-number"
                         variant="standard"
                     />
                 </Grid>
@@ -34,9 +38,11 @@ export default function PaymentForm() {
                     <TextField
                         required
                         id="expDate"
+                        name="expiration"
                         label="Expiry date"
+                        value={value.expiration}
+                        onChange={onChange}
                         fullWidth
-                        autoComplete="cc-exp"
                         variant="standard"
                     />
                 </Grid>
@@ -44,10 +50,12 @@ export default function PaymentForm() {
                     <TextField
                         required
                         id="cvv"
+                        name="cvv"
                         label="CVV"
+                        value={value.cvv}
+                        onChange={onChange}
                         helperText="Last three digits on signature strip"
                         fullWidth
-                        autoComplete="cc-csc"
                         variant="standard"
                     />
                 </Grid>
