@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import ShoppingCart from "./pages/ShoppingCart";
 import SingleCard from "./pages/SingleCard";
+import Checkout from "./pages/Checkout";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/shopping-cart" element={<ShoppingCart />} />
           <Route path="/card/:cardId" element={<SingleCard />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
     </BrowserRouter>

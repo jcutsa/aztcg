@@ -9,9 +9,9 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AddressForm from "components/AddressForm";
-import PaymentForm from "components/PaymentForm";
-import Review from "components/Review";
+import AddressForm from "../components/AddressForm";
+import PaymentForm from "../components/PaymentForm";
+import Review from "../components/Review";
 
 import { useState } from "react";
 
@@ -65,10 +65,13 @@ export default function Checkout() {
                 return (
                     <AddressForm value={orderDetails} onChange={handleChange} />
                 );
+
             case 1:
-                return <PaymentForm />;
+                return (
+                    <PaymentForm value={orderDetails} onChange={handleChange} />
+                );
             case 2:
-                return <Review />;
+                return <Review value={orderDetails} />;
             default:
                 throw new Error("Unknown step");
         }

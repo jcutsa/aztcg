@@ -5,9 +5,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
 
 // Can probably hardcode the tax value in here
 // Add discount code entry text box
+// Does the API call to verify the discount code live here or in Checkout?
 
 const products = [
     {
@@ -44,15 +46,24 @@ const subtotal = Number(
 const tax = Number((subtotal * 0.0825).toFixed(2));
 const totalPrice = (subtotal + tax).toFixed(2);
 
-const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
-const payments = [
-    { name: "Card type", detail: "Visa" },
-    { name: "Card holder", detail: "Mr John Smith" },
-    { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-    { name: "Expiry date", detail: "04/2024" },
-];
+export default function Review({ value }) {
+    let addresses = Object.entries(value)
+        .slice(2, 8)
+        .map((entry) => entry[1]);
+    addresses = addresses.filter(function (e) {
+        return e;
+    });
 
-export default function Review() {
+    // Going to need to add some form of validation for the card number and expiration date
+    let hiddenCardNumber = "xxxx-xxxx-xxxx-".concat(
+        value.cardNumber.substring(value.cardNumber.length - 4)
+    );
+    const payments = [
+        { name: "Card holder", detail: value.cardName },
+        { name: "Card number", detail: hiddenCardNumber },
+        { name: "Expiry date", detail: value.expiration },
+    ];
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -70,7 +81,18 @@ export default function Review() {
                         </Typography>
                     </ListItem>
                 ))}
-                <Divider />
+                <Divider sx={{ my: 1 }} />
+
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="Discount Code" />
+                    <TextField
+                        sx={{ width: 100 }}
+                        id="discount"
+                        name="discount"
+                        variant="outlined"
+                        size="small"
+                    />
+                </ListItem>
 
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Subtotal" />
@@ -82,7 +104,7 @@ export default function Review() {
                     <Typography variant="body2">${tax}</Typography>
                 </ListItem>
 
-                <Divider />
+                <Divider sx={{ my: 1 }} />
 
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
@@ -96,7 +118,9 @@ export default function Review() {
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                         Shipping
                     </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
+                    <Typography gutterBottom>
+                        {value.firstName} {value.lastName}
+                    </Typography>
                     <Typography gutterBottom>{addresses.join(", ")}</Typography>
                 </Grid>
                 <Grid item container direction="column" xs={12} sm={6}>
