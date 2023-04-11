@@ -11,6 +11,7 @@ import SingleCard from "./pages/SingleCard";
 import Checkout from "./pages/Checkout";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword.js";
+import AdminLogin from "./pages/AdminLogin.js";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/sign-in" element={<SignIn/>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/admin-login" element={<AdminLogin />} />
         </Routes>
       </div>
     </BrowserRouter>
