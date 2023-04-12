@@ -5,6 +5,7 @@ const cards = [
       image: require("./images/card1.jpg"),
       price: 2.24,
       inStock: true,
+      quantity: 10,
       id: "1"
     },
     {
@@ -13,6 +14,7 @@ const cards = [
       image: require("./images/card2.jpg"),
       price: 4.01,
       inStock: false,
+      quantity: 0,
       id: "2"
     },
     // {
@@ -29,6 +31,7 @@ const cards = [
       image: require("./images/card4.jpg"),
       price: 0.91,
       inStock: true,
+      quantity: 5,
       id: "4"
     }
   ];

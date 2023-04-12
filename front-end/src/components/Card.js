@@ -46,21 +46,6 @@ export default function myCard(props) {
           <p style={{ color: inStock ? "green" : "red", fontWeight: "bold" }}>
             {inStock ? "In Stock" : "Out of Stock"}
           </p>
-
-          <div>
-            <button
-              style={{
-                backgroundColor: inStock ? "green" : "gray",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-                cursor: inStock ? "pointer" : "default",
-              }}
-              disabled={!inStock}
-            >
-              {inStock ? "Add to Cart" : "Out of Stock"}
-            </button>
-          </div>
         </Stack>
       </Stack>
     </Card>
