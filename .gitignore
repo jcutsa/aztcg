@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/front-end/node_modules
+front-end/node_modules/
 src/main/resources/application.properties
 
 ### STS ###
