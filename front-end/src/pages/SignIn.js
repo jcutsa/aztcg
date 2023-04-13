@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import SignUp from "./SignUp";
 
 const theme = createTheme();
 
@@ -82,7 +83,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to="/sign-up" variant="body2">
+                <Link component={RouterLink} to="/sign-up" element = {<SignUp/>} variant="body2">
                   Don't have an account? Sign Up
                 </Link>
               </Grid>
