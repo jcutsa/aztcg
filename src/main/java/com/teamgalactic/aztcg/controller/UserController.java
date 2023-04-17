@@ -1,25 +1,27 @@
 package com.teamgalactic.aztcg.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.teamgalactic.aztcg.entity.User;
+import com.teamgalactic.aztcg.request.CreateUserRequest;
+import com.teamgalactic.aztcg.request.UpdateUserRequest;
 import com.teamgalactic.aztcg.response.UserResponse;
 import com.teamgalactic.aztcg.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/user/")
@@ -28,10 +30,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private ClientRegistration registration;
+    //private ClientRegistration registration;
 
-    public UserController(ClientRegistrationRepository registrations) {
-        this.registration = registrations.findByRegistrationId("auth0");
+    public UserController(/*ClientRegistrationRepository registrations*/) {
+        //this.registration = registrations.findByRegistrationId("auth0");
     }
 
     @GetMapping("{id}")
@@ -40,14 +42,50 @@ public class UserController {
         UserResponse response = null;
 
         User user = userService.getUser(id);
+       
 
         if (user == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        
+        response = new UserResponse(user);
 
         return response;
     }
+    
+	@PostMapping("create")
+	public UserResponse createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+		
+		User user = userService.createUser(createUserRequest);
+		return new UserResponse(user);
+	}
+	
+	@GetMapping("getAll")
+	public List<UserResponse> getAllUsers() {
+	
+		List<User> userList = userService.getAllUsers();
+		List<UserResponse> userResponseList = new ArrayList<UserResponse>();
 
-    @PostMapping("/api/logout")
+		for (User user : userList) {
+			userResponseList.add(new UserResponse(user));
+		}
+		
+		return userResponseList;
+	}
+	
+	@PutMapping("update")
+	public UserResponse updateUser(@Valid @RequestBody UpdateUserRequest updateUserRequest) {
+		User user = userService.updateUser(updateUserRequest);
+		
+		return new UserResponse(user);
+	}
+	
+	
+	@DeleteMapping("delete/{id}")
+	public String deleteUser(@PathVariable long id) {
+		return userService.deleteUser(id);
+	}
+
+    /*@PostMapping("logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         // send logout URL to client so they can initiate logout
         StringBuilder logoutUrl = new StringBuilder();
@@ -59,7 +97,7 @@ public class UserController {
         logoutDetails.put("logoutUrl", logoutUrl.toString());
         request.getSession(false).invalidate();
         return ResponseEntity.ok().body(logoutDetails);
-    }
+    }*/
 }
 
 

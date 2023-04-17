@@ -1,25 +1,30 @@
 package com.teamgalactic.aztcg.entity;
 
+import com.teamgalactic.aztcg.request.CreateUserRequest;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name="user")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_id")
+	@Column(name="id")
 	private Long id;
 	
 	@Column(name="username")
@@ -37,12 +42,22 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
-    @ManyToOne
-    @JoinColumn(name = "billing_address")
-    private Address billingAddress;
+	//When deleting a user, the address will be automatically deleted
+	@OneToOne(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Address shippingAddress;
+
+	@Transient
+	private String fullName;
+	
+	public User(CreateUserRequest createUserRequest) {
+		this.firstName = createUserRequest.getFirstName();
+		this.lastName = createUserRequest.getLastName();
+		this.email = createUserRequest.getEmail();
+		this.username = createUserRequest.getUsername();
+		this.password = createUserRequest.getPassword();
+		this.fullName = createUserRequest.getFirstName() + " " + createUserRequest.getLastName();
+	}
     
-    @ManyToOne
-    @JoinColumn(name = "shipping_address")
-    private Address shippingAddress;
+    
 }
 
