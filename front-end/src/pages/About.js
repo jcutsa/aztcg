@@ -32,10 +32,10 @@ export default function About() {
               ></Box>
               <Stack style={{ padding: "20px", textAlign: "left" }}>
                 <Typography variant="h5" component="h2">
-                  Ian Uriegas
+                  Team Member
                 </Typography>
                 <Typography variant="body1" component="h2">
-                  Scrum
+                  Role
                 </Typography>
               </Stack>
             </Stack>
