@@ -20,9 +20,9 @@ export default function App() {
       <Navbar>{/* <Header /> */}</Navbar>
       <div>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Cards />} />
           <Route path="/about" element={<About />} />
-          <Route path="/cards" element={<Cards />} />
+          {/* <Route path="/cards" element={<Cards />} /> */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/shopping-cart" element={<ShoppingCart />} />
           <Route path="/card/:cardId" element={<SingleCard />} />

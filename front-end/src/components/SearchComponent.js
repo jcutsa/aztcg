@@ -26,9 +26,7 @@ export default function SearchComponent() {
   const [cardNames, setCardNames] = useState("none");
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
-  const navigate = useNavigate(); // add this line
-
-  // ...
+  const navigate = useNavigate();
 
   const handleCardSelection = (event, targetName) => {
     let foundCards = cards.filter((c) => c.name === targetName);
@@ -62,10 +60,14 @@ export default function SearchComponent() {
         disablePortal
         id="combo-box-demo"
         options={cardNames}
-        sx={{ width: 300 }}
-        onChange={handleCardSelection} // add this line
+        sx={{ width: 500 }}
+        onChange={handleCardSelection}
         renderInput={(params) => (
-          <TextField {...params} label="Search for Product..." />
+          <TextField
+            {...params}
+            label={params.inputProps.value ? "" : "Search for Product..."}
+            InputLabelProps={{ shrink: false }}
+          />
         )}
       />
     </StyledPaper>

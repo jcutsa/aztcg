@@ -1,22 +1,16 @@
 import React from "react";
-import {
-  Button,
-  Card,
-  FormControl,
-  FormLabel,
-  Input,
-  InputLabel,
-} from "@mui/material";
+import { Button, Card } from "@mui/material";
 import { Stack } from "@mui/system";
-
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
-import { Link } from "react-router-dom";
-
-const ariaLabel = { "aria-label": "description" };
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function Contact() {
   return (
@@ -69,8 +63,10 @@ export default function Contact() {
                   </Typography>
                 </Stack>
               </a>
-              <a href="tel:2175551212" 
-              style={{ textDecoration: "none", color: "#FFFFFF" }}>
+              <a
+                href="tel:2175551212"
+                style={{ textDecoration: "none", color: "#FFFFFF" }}
+              >
                 <Stack direction={"row"} style={{ marginTop: "30px" }}>
                   <LocalPhoneOutlinedIcon />
                   <Typography variant="body1" style={{ marginLeft: "5px" }}>
@@ -90,6 +86,25 @@ export default function Contact() {
                 </Stack>
               </a>
             </div>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            spacing={.5}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              color: "#FFFFFF",
+              paddingTop: "100px",
+            }}
+          >
+            <FacebookIcon style={{ fontSize: 40 }}></FacebookIcon>
+            <InstagramIcon style={{ fontSize: 40 }}></InstagramIcon>
+            <TwitterIcon style={{ fontSize: 40 }}></TwitterIcon>
+            <PinterestIcon style={{ fontSize: 40 }}></PinterestIcon>
+            <LinkedInIcon style={{ fontSize: 40 }}></LinkedInIcon>
+            <GitHubIcon style={{ fontSize: 40 }}></GitHubIcon>
           </Stack>
         </Card>
         {/* Left Card */}

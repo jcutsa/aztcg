@@ -54,9 +54,9 @@ export default function Navbar() {
               <Link style={linkStyle} to="/about">
                 About
               </Link>
-              <Link style={linkStyle} to="/cards">
+              {/* <Link style={linkStyle} to="/cards">
                 Cards
-              </Link>
+              </Link> */}
               <Link style={linkStyle} to="/contact">
                 Contact
               </Link>
