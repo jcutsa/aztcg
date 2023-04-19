@@ -1,5 +1,4 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -8,22 +7,54 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function AdminLogin() {
+  const [isValidLogin, setIsValidLogin] = useState(false);
+  const [isInvalidLogin, setIsInvalidLogin] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false); // add loggedIn state
+
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const email = data.get("email");
+    const password = data.get("password");
     console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+      email,
+      password,
     });
+    if (email === "az@tradingcards.com" && password === "password123!") {
+      handleAdminLogin();
+    } else {
+      handleAdminLoginIncorrect();
+    }
   };
+
+  function handleAdminLogin() {
+    setIsValidLogin(true);
+    setIsInvalidLogin(false);
+    console.log("correct username and password");
+    setLoggedIn(true); // set loggedIn to true
+    navigate("/admin-dashboard");
+  }
+
+  function handleAdminLogout() {
+    setIsValidLogin(false);
+    setLoggedIn(false); // set loggedIn to false
+    console.log("logging out");
+  }
+
+  function handleAdminLoginIncorrect() {
+    setIsInvalidLogin(true);
+    console.log("incorrect password or username");
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,9 +68,6 @@ export default function AdminLogin() {
             alignItems: "center",
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
           <Typography component="h1" variant="h5">
             Admin login
           </Typography>
@@ -73,6 +101,11 @@ export default function AdminLogin() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            {isInvalidLogin && (
+              <Typography variant="body2" sx={{ color: "red" }}>
+                Incorrect username or password
+              </Typography>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -93,7 +126,6 @@ export default function AdminLogin() {
                 </Link>
               </Grid>
             </Grid>
-            {/* link */}
           </Box>
         </Box>
       </Container>

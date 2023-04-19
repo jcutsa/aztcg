@@ -5,12 +5,14 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { Link } from "react-router-dom";
 
 export default function Contact() {
   return (
@@ -79,7 +81,7 @@ export default function Contact() {
                 style={{ textDecoration: "none", color: "#FFFFFF" }}
               >
                 <Stack direction={"row"} style={{ marginTop: "30px" }}>
-                  <LocationOnOutlinedIcon />
+                  <MailOutlinedIcon />
                   <Typography variant="body1" style={{ marginLeft: "5px" }}>
                     customerservice@aztradingcards.com
                   </Typography>
@@ -90,7 +92,7 @@ export default function Contact() {
 
           <Stack
             direction={"row"}
-            spacing={.5}
+            spacing={0.5}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -99,12 +101,24 @@ export default function Contact() {
               paddingTop: "100px",
             }}
           >
-            <FacebookIcon style={{ fontSize: 40 }}></FacebookIcon>
-            <InstagramIcon style={{ fontSize: 40 }}></InstagramIcon>
-            <TwitterIcon style={{ fontSize: 40 }}></TwitterIcon>
-            <PinterestIcon style={{ fontSize: 40 }}></PinterestIcon>
-            <LinkedInIcon style={{ fontSize: 40 }}></LinkedInIcon>
-            <GitHubIcon style={{ fontSize: 40 }}></GitHubIcon>
+            <a href="https://www.facebook.com/TCGplayer/" target="blank" style={{ color:"white"}}>
+              <FacebookIcon style={{ fontSize: 40 }}></FacebookIcon>
+            </a>
+            <a href="https://www.instagram.com/tcgplayer_com/?hl=en" target="blank" style={{ color:"white"}}>
+              <InstagramIcon style={{ fontSize: 40 }}></InstagramIcon>
+            </a>
+            <a href="https://twitter.com/TCGplayer?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="blank" style={{ color:"white"}}>
+              <TwitterIcon style={{ fontSize: 40 }}></TwitterIcon>
+            </a>
+            <a href="https://www.pinterest.com/search/pins/?q=tcg%20player&rs=typed" target="blank" style={{ color:"white"}}>
+              <PinterestIcon style={{ fontSize: 40 }}></PinterestIcon>
+            </a>
+            <a href="https://www.linkedin.com/company/tcgplayer/" target="blank" style={{ color:"white"}}>
+              <LinkedInIcon style={{ fontSize: 40 }}></LinkedInIcon>
+            </a>
+            <a href="https://github.com/TCGplayer" target="blank" style={{ color:"white"}}>
+              <GitHubIcon style={{ fontSize: 40 }}></GitHubIcon>
+            </a>
           </Stack>
         </Card>
         {/* Left Card */}

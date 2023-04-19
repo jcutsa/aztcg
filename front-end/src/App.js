@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/HomePage";
 import About from "./pages/About";
@@ -13,24 +13,102 @@ import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword.js";
 import AdminLogin from "./pages/AdminLogin.js";
 import SignUp from "./pages/SignUp.js";
+import AdminDashboard from "./pages/AdminDashboard.js"; // import the admin dashboard component
+import Images from "./assetts/images/card1.jpg";
 
 export default function App() {
+  const [user, setUser] = useState({
+    firstName: "him",
+    lastName: "she",
+    email: "123@gmail.com",
+    cart: [
+      {
+        name: "Solemn Judgment - Maze of Memories (MAZE)",
+        brand: "Yu-Gi-Oh!",
+        image: require("./assetts" + "./images/card1.jpg".substring(1)),
+        price: 2.24,
+        maxQuantity: 10,
+        quantitySelected: 10,
+        id: "1",
+        totalPrice: 22.4,
+      },
+      {
+        name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
+        brand: "Yu-Gi-Oh!",
+        image: require("./assetts" + "./images/card3.jpg".substring(1)),
+        // image: "./images.card3.jpg",
+        price: 0.4,
+        maxQuantity: 7,
+        quantitySelected: 7,
+        id: "3",
+        totalPrice: 2.8,
+      },
+    ],
+
+    admin: true,
+  });
+
+  const removeItem = (id) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      cart: prevUser.cart.filter((item) => item.id !== id),
+    }));
+  };
+
+  const updateQuantity = (itemId, newQuantity) => {
+    const updatedCartItems = user.cart.map((item) => {
+      if (item.id === itemId) {
+        const updatedItem = { ...item, quantitySelected: newQuantity };
+        updatedItem.totalPrice =
+          updatedItem.price * updatedItem.quantitySelected;
+        return updatedItem;
+      }
+      return item;
+    });
+    const newTotal = updatedCartItems.reduce(
+      (total, item) => total + item.totalPrice,
+      0
+    );
+    setUser({
+      ...user,
+      cart: updatedCartItems,
+      total: newTotal,
+    });
+  };
+
   return (
     <BrowserRouter>
-      <Navbar>{/* <Header /> */}</Navbar>
+      <Navbar user={user} />
+
       <div>
         <Routes>
           <Route exact path="/" element={<Cards />} />
           <Route path="/about" element={<About />} />
-          {/* <Route path="/cards" element={<Cards />} /> */}
           <Route path="/contact" element={<Contact />} />
-          <Route path="/shopping-cart" element={<ShoppingCart />} />
+          <Route
+            path="/shopping-cart"
+            element={
+              <ShoppingCart
+                user={user}
+                removeItem={removeItem}
+                updateQuantity={updateQuantity}
+                total={user.total}
+              />
+            }
+          />
           <Route path="/card/:cardId" element={<SingleCard />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/sign-in" element={<SignIn/>} />
-          <Route path="/sign-up" element={<SignUp/>} />
-          <Route path="/forgot-password" element={<ForgotPassword/>} />
-          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route
+            path="/sign-in"
+            element={<SignIn user={user} setUser={setUser} />}
+          />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/admin-login"
+            element={<AdminLogin user={user} setUser={setUser} />}
+          />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
       </div>
     </BrowserRouter>

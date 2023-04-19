@@ -17,14 +17,15 @@ const cards = [
       quantity: 0,
       id: "2"
     },
-    // {
-    //   name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
-    //   brand: "Yu-Gi-Oh!"",
-    //   image: require("./images/card3.jpg"),
-    //   price: 0.4,
-    //   inStock: true,
-    //   id: "3"
-    // },
+    {
+      name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
+      brand: "Yu-Gi-Oh!",
+      image: require("./images/card3.jpg"),
+      price: 0.4,
+      inStock: true,
+      quantity: 7,
+      id: "3"
+    },
     {
       name: "Swamp (269) - Full Art - Phyrexia: All Will Be One (ONE)",
       brand: "Magic",
@@ -33,7 +34,25 @@ const cards = [
       inStock: true,
       quantity: 5,
       id: "4"
-    }
+    },
+    {
+      name: "ADR-02 Searcher - Digital Hazard (EX02)",
+      brand: "Digimon",
+      image: require("./images/card5.jpg"),
+      price: 0.49,
+      inStock: true,
+      quantity: 12,
+      id: "5"
+    },
+    {
+      name: "Mist Memory Boost! - New Awakening (BT08)",
+      brand: "Digimon",
+      image: require("./images/card6.jpg"),
+      price: 0.29,
+      inStock: true,
+      quantity: 12,
+      id: "6"
+    },
   ];
   
   export default cards;

@@ -49,9 +49,25 @@ export default function CardList() {
   };
 
   const renderCards = () => {
-    return filteredCards.map((card) => (
-      <Card key={card.name} {...card} style={{ display: "inline-block" }} />
-    ));
+    const cardRows = [];
+
+    for (let i = 0; i < filteredCards.length; i += 3) {
+      const cardsInRow = filteredCards.slice(i, i + 3);
+      const cardRow = (
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          {cardsInRow.map((card) => (
+            <Card
+              key={card.name}
+              {...card}
+              style={{ display: "inline-block" }}
+            />
+          ))}
+        </div>
+      );
+      cardRows.push(cardRow);
+    }
+
+    return cardRows;
   };
 
   return (
@@ -79,7 +95,9 @@ export default function CardList() {
         </div>
       </div>
 
-      <Stack direction={"row"} flex="wrap" justifyContent={"space-evenly"}>{renderCards()}</Stack>
+      <Stack direction="column" spacing={2}>
+        {renderCards()}
+      </Stack>
     </div>
   );
 }
