@@ -14,7 +14,6 @@ import ForgotPassword from "./pages/ForgotPassword.js";
 import AdminLogin from "./pages/AdminLogin.js";
 import SignUp from "./pages/SignUp.js";
 import AdminDashboard from "./pages/AdminDashboard.js"; // import the admin dashboard component
-import Images from "./assetts/images/card1.jpg";
 
 export default function App() {
   const [user, setUser] = useState({
@@ -96,7 +95,11 @@ export default function App() {
               />
             }
           />
-          <Route path="/card/:cardId" element={<SingleCard />} />
+          <Route
+            path="/card/:cardId"
+            element={<SingleCard setUser={setUser} />}
+          />
+
           <Route path="/checkout" element={<Checkout />} />
           <Route
             path="/sign-in"

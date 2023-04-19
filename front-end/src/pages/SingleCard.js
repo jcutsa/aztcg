@@ -10,12 +10,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import cards from "../assetts/CardsData";
 
-function SingleCard() {
+function SingleCard({ setUser }) {
   const { cardId } = useParams();
   const [card, setCard] = useState({});
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [cartItems, setCartItems] = useState([]);
-
 
   useEffect(() => {
     const targetCard = cards.filter((card) => card.id === cardId);
@@ -23,8 +22,23 @@ function SingleCard() {
   }, [cardId]);
 
   const handleAddToCart = () => {
-    // Handle adding the selected quantity to the cart
-    console.log(`Added ${selectedQuantity} ${card.name} to cart // Card id: ${card.id}`);
+    const newItem = {
+      name: card.name,
+      brand: card.brand,
+      image: card.image,
+      price: card.price,
+      maxQuantity: card.quantity,
+      quantitySelected: selectedQuantity,
+      id: card.id,
+      totalPrice: card.price * selectedQuantity,
+    };
+    setUser((prevUser) => ({
+      ...prevUser,
+      cart: [...prevUser.cart, newItem],
+    }));
+    console.log(
+      `Added ${selectedQuantity} ${card.name} to cart // Card id: ${card.id}`
+    );
   };
 
   const quantityOptions = Array.from(

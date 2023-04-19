@@ -1,20 +1,19 @@
 import { Typography } from "@mui/material";
 import { Divider } from "@mui/material";
 import { Stack } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 
 export default function ShoppingCart({ user, removeItem, updateQuantity }) {
-  const { cart,  } = user;
+  const { cart } = user;
 
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0);
 
-
-  useEffect( () => {
-    let temp_total = 0
-    cart.forEach((item) => temp_total = temp_total + item.totalPrice)
-    console.log(temp_total)
-    setTotal(temp_total)
+  useEffect(() => {
+    let temp_total = 0;
+    cart.forEach((item) => (temp_total = temp_total + item.totalPrice));
+    console.log(temp_total);
+    setTotal(temp_total);
   }, [cart]);
 
   return (
@@ -61,7 +60,11 @@ export default function ShoppingCart({ user, removeItem, updateQuantity }) {
             total={item.totalPrice}
           />
         ))}
-        <h1>Total: ${total.toFixed(2)}</h1>
+        {total === 0.0 ? (
+          <h1>Shopping Cart is empty</h1>
+        ) : (
+          <h1>Total: ${total.toFixed(2)}</h1>
+        )}
       </Stack>
     </div>
   );
