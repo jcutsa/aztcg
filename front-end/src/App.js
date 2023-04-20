@@ -14,6 +14,9 @@ import ForgotPassword from "./pages/ForgotPassword.js";
 import AdminLogin from "./pages/AdminLogin.js";
 import SignUp from "./pages/SignUp.js";
 import AdminDashboard from "./pages/AdminDashboard.js"; // import the admin dashboard component
+import AdminProducts from "./pages/AdminProducts.js"; // import the admin dashboard component
+import AdminUsers from "./pages/AdminUsers.js"; // import the admin dashboard component
+import AdminOrders from "./pages/AdminOrders.js"; // import the admin dashboard component
 
 export default function App() {
   const [user, setUser] = useState({
@@ -35,7 +38,6 @@ export default function App() {
         name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
         brand: "Yu-Gi-Oh!",
         image: require("./assetts" + "./images/card3.jpg".substring(1)),
-        // image: "./images.card3.jpg",
         price: 0.4,
         maxQuantity: 7,
         quantitySelected: 7,
@@ -112,6 +114,9 @@ export default function App() {
             element={<AdminLogin user={user} setUser={setUser} />}
           />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin-products" element={<AdminProducts /> } />
+          <Route path="/admin-users" element={<AdminUsers user={user} /> } />
+          <Route path="/admin-orders" element={<AdminOrders/> } />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { Divider } from "@mui/material";
+import { Button } from "@mui/material";
 import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
@@ -29,18 +30,30 @@ export default function ShoppingCart({ user, removeItem, updateQuantity }) {
         <h1>Shopping Cart</h1>
         <Stack
           direction={"row"}
-          alignItems="center"
-          justifyContent="center"
+          // alignItems="center"
+          // justifyContent="center"
           sx={{
             marginTop: "10px",
             marginBottom: "10px",
-            marginLeft: "150px",
+            marginLeft: "165px",
             width: "1000px",
           }}
         >
-          <h3 style={{ width: "500px", backgroundColor: "white" }}>Product</h3>
-          <h3 style={{ width: "150px", backgroundColor: "white" }}>Quantity</h3>
-          <h3 style={{ width: "250px", backgroundColor: "white" }}>Price</h3>
+          <Typography sx={{ width: "54%", backgroundColor: "white" }}>
+            Product
+          </Typography>
+          <Typography sx={{ width: "15%", backgroundColor: "white" }}>
+            Quantity
+          </Typography>
+          <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+            Price
+          </Typography>
+          <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+            Subtotal
+          </Typography>
+          <Typography sx={{ width: "11%", backgroundColor: "white" }}>
+            Delete
+          </Typography>
         </Stack>
         <Divider
           sx={{
@@ -63,7 +76,28 @@ export default function ShoppingCart({ user, removeItem, updateQuantity }) {
         {total === 0.0 ? (
           <h1>Shopping Cart is empty</h1>
         ) : (
-          <h1>Total: ${total.toFixed(2)}</h1>
+            <Stack style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <h1 backgroundColor="green">Total: ${total.toFixed(2)}</h1>
+              <Button
+                sx={{
+                  width: "100px",
+                  height: "50px",
+                  bgcolor: "white",
+                  color: "green",
+                  border: "2px solid green",
+                  "&:hover": {
+                    bgcolor: "green",
+                    color: "white",
+                  },
+                }}
+              >
+                Checkout
+              </Button>
+            </Stack>
         )}
       </Stack>
     </div>
