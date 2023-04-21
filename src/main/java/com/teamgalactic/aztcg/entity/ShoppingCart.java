@@ -1,11 +1,13 @@
 package com.teamgalactic.aztcg.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,8 +24,12 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id")
     private User user;
 
-     @OneToMany(mappedBy = "shoppingCart")
-     private List<CartItem> cartItems;
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items = new ArrayList<>();
+
+    public ShoppingCart(User user) {
+        this.user = user;
+    }
 
 }
 
