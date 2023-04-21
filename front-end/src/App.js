@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/AdminDashboard.js"; // import the admin dash
 import AdminProducts from "./pages/AdminProducts.js"; // import the admin dashboard component
 import AdminUsers from "./pages/AdminUsers.js"; // import the admin dashboard component
 import AdminOrders from "./pages/AdminOrders.js"; // import the admin dashboard component
+import AdminProductEdit from "./pages/AdminProductEdit.js";
 
 export default function App() {
   const [user, setUser] = useState({
@@ -115,6 +116,7 @@ export default function App() {
           />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin-products" element={<AdminProducts /> } />
+          <Route path="/admin-product-edit" element={<AdminProductEdit/> } />
           <Route path="/admin-users" element={<AdminUsers user={user} /> } />
           <Route path="/admin-orders" element={<AdminOrders/> } />
         </Routes>
