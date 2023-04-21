@@ -1,8 +1,13 @@
 package com.teamgalactic.aztcg.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UpdateCartItemRequest {
 
+	@JsonProperty("cart_item_id")
     private Long cartItemId;
+	
+	@JsonProperty("quantity")
     private Integer quantity;
 
     public Long getCartItemId() {
