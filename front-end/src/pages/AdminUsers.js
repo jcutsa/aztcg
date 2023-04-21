@@ -5,7 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ClippedDrawer from "../components/ClippedDrawer";
 import SingleUser from "../components/SingleUser";
-import {UserInfo} from "../assetts/UserInfo";
+import { UserInfo } from "../assetts/UserInfo";
 
 const pages = ["Products", "Pricing", "Blog"];
 
@@ -15,8 +15,29 @@ const linkStyle = {
   color: "white",
 };
 
+import { Button, Modal, TextField } from "@mui/material";
+import { useState } from "react";
+
 function AdminUsers() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to create a new user
+  const handleCreateUser = () => {
+    // TODO: Implement code to create a new user
+  };
+
+  // Function to handle modal open
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to handle modal close
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
+    // Existing code
     <div
       style={{
         padding: "24px 48px",
@@ -27,6 +48,57 @@ function AdminUsers() {
     >
       <Stack>
         <h1>User Info</h1>
+        <Button
+  variant="contained"
+  onClick={handleModalOpen}
+  size="small"
+  sx={{ display: "block", mx: "auto", mt: 2 }}
+>
+  Create User
+</Button>
+
+        <Modal open={isModalOpen} onClose={handleModalClose}>
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "white",
+              padding: "24px",
+              borderRadius: "4px",
+            }}
+          >
+            <h2>Create New User</h2>
+            <TextField
+              label="First Name"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Permissions"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+            <Button variant="contained" onClick={handleCreateUser}>
+              Create User
+            </Button>
+          </div>
+        </Modal>
         <Stack
           direction={"row"}
           // alignItems="center"
@@ -64,6 +136,9 @@ function AdminUsers() {
         />
         {Array.isArray(UserInfo) &&
           UserInfo.map((userData) => <SingleUser userData={userData} />)}
+        {/* Button to open modal */}
+
+        {/* Modal to create a new user */}
       </Stack>
     </div>
   );

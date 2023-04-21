@@ -116,8 +116,12 @@ export default function App() {
           />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin-products" element={<AdminProducts /> } />
+<<<<<<< HEAD
           <Route path="/admin-product-edit" element={<AdminProductEdit/> } />
           <Route path="/admin-users" element={<AdminUsers user={user} /> } />
+=======
+          <Route path="/admin-users" element={<AdminUsers user={user} setUser={setUser} /> } />
+>>>>>>> bc9081b17 (added editable textfields)
           <Route path="/admin-orders" element={<AdminOrders/> } />
         </Routes>
       </div>
