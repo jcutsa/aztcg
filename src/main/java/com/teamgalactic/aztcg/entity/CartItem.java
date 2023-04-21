@@ -38,7 +38,7 @@ public class CartItem {
     private Integer quantity;
 
     public CartItem(CreateCartItemRequest createCartItemRequest) {
-        this.product = createCartItemRequest.getProduct();
+        this.id = createCartItemRequest.getId();
         this.quantity = createCartItemRequest.getQuantity();
     }
 }

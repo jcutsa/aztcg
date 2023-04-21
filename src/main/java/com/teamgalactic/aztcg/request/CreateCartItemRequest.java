@@ -1,31 +1,34 @@
 package com.teamgalactic.aztcg.request;
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.teamgalactic.aztcg.entity.Product;
-
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateCartItemRequest {
 
-    @NotNull
-    private Product product;
+    @JsonProperty("id")
+    @NotNull(message="Product id is required")
+    private Long id;
 
-    @NotNull
-    @Min(1)
+    @JsonProperty("quantity")
+    @NotNull(message="Quantity must be at least 1")
+    @Min(value=1)
+    @Max(value=10)
     private Integer quantity;
 
-    public CreateCartItemRequest(Product product, Integer quantity) {
-        this.product = product;
+    public CreateCartItemRequest(Long id, Integer quantity) {
+        this.id = id;
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getId() {
+        return id;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getQuantity() {
@@ -36,4 +39,5 @@ public class CreateCartItemRequest {
         this.quantity = quantity;
     }
 }
+
 

@@ -32,7 +32,7 @@ public class ShoppingCartService {
         // check if the product is already in the shopping cart
         boolean productExists = false;
         for (CartItem item : shoppingCart.getItems()) {
-            if (item.getProduct().getId().equals(cartItemRequest.getProduct().getId())) {
+            if (item.getProduct().getId().equals(cartItemRequest.getId())) {
                 // increment the quantity if the product is already in the shopping cart
                 item.setQuantity(item.getQuantity() + cartItemRequest.getQuantity());
                 productExists = true;
@@ -43,7 +43,7 @@ public class ShoppingCartService {
         if (!productExists) {
             // create a new cart item if the product is not in the shopping cart
             CartItem item = new CartItem();
-            item.setProduct(cartItemRequest.getProduct());
+            item.setId(cartItemRequest.getId());
             item.setQuantity(cartItemRequest.getQuantity());
             item.setShoppingCart(shoppingCart);
             shoppingCart.getItems().add(item);
