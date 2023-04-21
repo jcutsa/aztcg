@@ -37,10 +37,12 @@ export default function myCard(props) {
           onClick={handleButtonClick}
           src={image}
           alt={name}
-          style={{ height: "300px"}}
+          style={{ height: "300px" }}
         />
-        <Stack spacing={2}>
-          <h2 style={{ marginBottom:"0"}} onClick={handleButtonClick}>{name}</h2>
+        <Stack spacing={2} onClick={handleButtonClick}>
+          <h2 style={{ marginBottom: "0" }} onClick={handleButtonClick}>
+            {name}
+          </h2>
           <p>${price.toFixed(2)}</p>
           <p>{brand}</p>
           <p style={{ color: inStock ? "green" : "red", fontWeight: "bold" }}>

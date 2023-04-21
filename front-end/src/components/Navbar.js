@@ -14,6 +14,8 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Stack } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
+import { Badge } from "@mui/material";
+// import { Badge } from "@mui/material";
 
 const linkStyle = {
   marginRight: "1rem",
@@ -88,6 +90,11 @@ export default function Navbar({ user, admin, loggedIn }) {
   };
   const [isValidLogin, setIsValidLogin] = React.useState(false);
 
+  const totalItems = user.cart.reduce(
+    (total, item) => total + item.quantitySelected,
+    0
+  );
+
   // if user is an admin add that admin dashboard button
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -107,7 +114,9 @@ export default function Navbar({ user, admin, loggedIn }) {
                 Sign In
               </Link>
               <Link to="/shopping-cart" style={{ marginTop: "5px" }}>
-                <ShoppingCartCheckoutOutlined style={{ color: "#FFFFFF" }} />
+                <Badge color="info" badgeContent={totalItems}>
+                  <ShoppingCartCheckoutOutlined style={{ color: "#FFFFFF" }} />
+                </Badge>
               </Link>
             </Stack>
             {/* Bottom Stack */}
@@ -137,7 +146,6 @@ export default function Navbar({ user, admin, loggedIn }) {
                     variant="contained"
                     disableElevation
                     onClick={handleClick}
-                    // endIcon={<KeyboardArrowDownIcon></KeyboardArrowDownIcon>}
                     style={linkStyle}
                   >
                     Admin
@@ -152,15 +160,15 @@ export default function Navbar({ user, admin, loggedIn }) {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose} disableRipple>
+                    <MenuItem component={Link} to="/admin-products" onClick={handleClose} disableRipple>
                       <EditIcon />
                       Products
                     </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
+                    <MenuItem component={Link} to="/admin-users" onClick={handleClose} disableRipple>
                       <GroupIcon />
                       Users
                     </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
+                    <MenuItem component={Link} to="/admin-orders" onClick={handleClose} disableRipple>
                       <ArchiveIcon />
                       Orders
                     </MenuItem>
