@@ -2,7 +2,6 @@ package com.teamgalactic.aztcg.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,7 +14,6 @@ public class CreateCartItemRequest {
     @JsonProperty("quantity")
     @NotNull(message="Quantity must be at least 1")
     @Min(value=1)
-    @Max(value=10)
     private Integer quantity;
 
     public CreateCartItemRequest(Long id, Integer quantity) {

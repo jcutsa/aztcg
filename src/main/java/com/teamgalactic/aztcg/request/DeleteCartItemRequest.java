@@ -1,6 +1,10 @@
 package com.teamgalactic.aztcg.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DeleteCartItemRequest {
+	
+	@JsonProperty("cart_item_id")
     private Long cartItemId;
 
     public Long getCartItemId() {

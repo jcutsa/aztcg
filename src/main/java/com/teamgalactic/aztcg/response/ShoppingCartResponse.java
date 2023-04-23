@@ -17,14 +17,14 @@ public class ShoppingCartResponse {
     private Long id;
 
     @JsonProperty("user_id")
-    private Long userId;
+    private Long user_id;
 
     @JsonProperty("cart_items")
     private List<CartItemResponse> cartItems = new ArrayList<>();
 
     public ShoppingCartResponse(ShoppingCart shoppingCart) {
         this.id = shoppingCart.getId();
-        this.userId = shoppingCart.getUser().getId();
+        this.user_id = shoppingCart.getUser().getId();
         for (CartItem cartItem : shoppingCart.getItems()) {
             this.cartItems.add(new CartItemResponse(cartItem));
         }

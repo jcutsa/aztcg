@@ -17,15 +17,15 @@ public class ShoppingCartService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
-    public ShoppingCart addItemToCart(Long userId, CreateCartItemRequest cartItemRequest) {
+    public ShoppingCart addItemToCart(Long user_id, CreateCartItemRequest cartItemRequest) {
         // get the user's shopping cart from the database
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(userId);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(user_id);
 
         if (shoppingCart == null) {
             // create a new shopping cart if the user does not have one
             shoppingCart = new ShoppingCart();
             User user = new User();
-            user.setId(userId);
+            user.setId(user_id);
             shoppingCart.setUser(user);
         }
 
@@ -55,15 +55,15 @@ public class ShoppingCartService {
         return shoppingCart;
     }
 
-    public ShoppingCart updateCartItemQuantity(Long userId, UpdateCartItemRequest updateRequest) {
+    public ShoppingCart updateCartItemQuantity(Long user_id, UpdateCartItemRequest updateRequest) {
         // get the user's shopping cart from the database
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(userId);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(user_id);
 
         if (shoppingCart == null) {
             // create a new shopping cart if the user does not have one
             shoppingCart = new ShoppingCart();
             User user = new User();
-            user.setId(userId);
+            user.setId(user_id);
             shoppingCart.setUser(user);
         }
 
@@ -87,15 +87,15 @@ public class ShoppingCartService {
         return shoppingCart;
     }
 
-    public ShoppingCart deleteItemFromCart(Long userId, DeleteCartItemRequest deleteRequest) {
+    public ShoppingCart deleteItemFromCart(Long user_id, DeleteCartItemRequest deleteRequest) {
         // get the user's shopping cart from the database
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(userId);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(user_id);
 
         if (shoppingCart == null) {
             // create a new shopping cart if the user does not have one
             shoppingCart = new ShoppingCart();
             User user = new User();
-            user.setId(userId);
+            user.setId(user_id);
             shoppingCart.setUser(user);
         }
 
