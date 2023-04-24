@@ -23,7 +23,13 @@ import { useState } from "react";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-const theme = createTheme();
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#4b8673",
+        },
+    },
+});
 
 export default function Checkout() {
     const [orderDetails, setOrderDetails] = useState({
