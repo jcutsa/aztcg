@@ -25,12 +25,6 @@ public class UserResponse {
 
 	private String email;
 	
-	@JsonProperty("billing_address")
-	private Address billingAddress;
-	
-	@JsonProperty("shipping_address")
-	private Address shippingAddress;
-	
 	
 	public UserResponse(User user) {
 		
@@ -39,8 +33,6 @@ public class UserResponse {
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
 		this.email = user.getEmail();
-		this.billingAddress = user.getBillingAddress();
-		this.shippingAddress = user.getShippingAddress();
 	}
 
 }

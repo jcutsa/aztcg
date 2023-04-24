@@ -9,11 +9,11 @@ export default function myCard(props) {
   const [elevation, setElevation] = useState(3);
 
   function raiseElevation() {
-    setElevation(15);
+    setElevation(20);
   }
 
   function lowerElevation() {
-    setElevation(3);
+    setElevation(5);
   }
 
   const handleButtonClick = () => {
@@ -37,30 +37,17 @@ export default function myCard(props) {
           onClick={handleButtonClick}
           src={image}
           alt={name}
-          style={{ height: "300px"}}
+          style={{ height: "300px" }}
         />
-        <Stack spacing={2}>
-          <h2 style={{ marginBottom:"0"}} onClick={handleButtonClick}>{name}</h2>
+        <Stack spacing={2} onClick={handleButtonClick}>
+          <h2 style={{ marginBottom: "0" }} onClick={handleButtonClick}>
+            {name}
+          </h2>
           <p>${price.toFixed(2)}</p>
           <p>{brand}</p>
           <p style={{ color: inStock ? "green" : "red", fontWeight: "bold" }}>
             {inStock ? "In Stock" : "Out of Stock"}
           </p>
-
-          <div>
-            <button
-              style={{
-                backgroundColor: inStock ? "green" : "gray",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-                cursor: inStock ? "pointer" : "default",
-              }}
-              disabled={!inStock}
-            >
-              {inStock ? "Add to Cart" : "Out of Stock"}
-            </button>
-          </div>
         </Stack>
       </Stack>
     </Card>

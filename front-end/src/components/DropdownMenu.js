@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuItem } from "@mui/material";
 
-const options = ["All", "Yu-Gi-Oh!", "Magic"];
+const options = ["All", "Yu-Gi-Oh!", "Magic", "Pokemon", "Digimon"];
 
 const DropdownMenu = ({selectedOption, setSelectedOption}) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -22,7 +22,7 @@ const DropdownMenu = ({selectedOption, setSelectedOption}) => {
   return (
     <>
       <Button
-        sx={{
+        style={{
           marginRight: "0.5rem",
           color: "black",
           backgroundColor: "#f5f5f5",
@@ -31,6 +31,7 @@ const DropdownMenu = ({selectedOption, setSelectedOption}) => {
           borderTopRightRadius: "0",
           borderBottomRightRadius: "0",
           padding: "12px 16px",
+          width: "125px"
         }}
         onClick={handleClick}
       >

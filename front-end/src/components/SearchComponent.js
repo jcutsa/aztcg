@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import DropdownMenu from "./DropdownMenu";
 import cards from "../assetts/CardsData";
 import { Autocomplete, TextField } from "@mui/material";
@@ -12,9 +9,8 @@ import { Autocomplete, TextField } from "@mui/material";
 const options = ["All", "Yu-Gi-Oh!", "Magic"];
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  display: "flex",
+  display: "inline-flex",
   alignItems: "center",
-  width: 400,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.grey[100],
   "&:hover": {
@@ -30,9 +26,7 @@ export default function SearchComponent() {
   const [cardNames, setCardNames] = useState("none");
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
-  const navigate = useNavigate(); // add this line
-
-  // ...
+  const navigate = useNavigate();
 
   const handleCardSelection = (event, targetName) => {
     let foundCards = cards.filter((c) => c.name === targetName);
@@ -66,10 +60,14 @@ export default function SearchComponent() {
         disablePortal
         id="combo-box-demo"
         options={cardNames}
-        sx={{ width: 300 }}
-        onChange={handleCardSelection} // add this line
+        sx={{ width: 500 }}
+        onChange={handleCardSelection}
         renderInput={(params) => (
-          <TextField {...params} label="Search for Product..." />
+          <TextField
+            {...params}
+            label={params.inputProps.value ? "" : "Search for Product..."}
+            InputLabelProps={{ shrink: false }}
+          />
         )}
       />
     </StyledPaper>
