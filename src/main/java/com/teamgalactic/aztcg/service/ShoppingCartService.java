@@ -79,6 +79,11 @@ public class ShoppingCartService {
         if (cartItem != null) {
             // update the cart item quantity
             cartItem.setQuantity(updateRequest.getQuantity());
+
+            // remove the cart item if its quantity becomes zero
+            if (cartItem.getQuantity() == 0) {
+                shoppingCart.getItems().remove(cartItem);
+            }
         }
 
         // save the shopping cart to the database
@@ -86,6 +91,8 @@ public class ShoppingCartService {
 
         return shoppingCart;
     }
+
+
 
     public ShoppingCart deleteItemFromCart(Long userId, DeleteCartItemRequest deleteRequest) {
         // get the user's shopping cart from the database
