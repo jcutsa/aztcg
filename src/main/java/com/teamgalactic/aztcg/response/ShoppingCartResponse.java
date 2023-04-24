@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class ShoppingCartResponse {
 
+	@JsonProperty("id")
     private Long id;
 
     @JsonProperty("user_id")

@@ -8,6 +8,6 @@ import com.teamgalactic.aztcg.entity.ShoppingCart;
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
 
-    ShoppingCart findByUser_Id(Long user_id);
+    ShoppingCart findByUserId(Long userId);
 
 }

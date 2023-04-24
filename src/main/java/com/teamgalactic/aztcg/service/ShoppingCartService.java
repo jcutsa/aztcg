@@ -17,15 +17,15 @@ public class ShoppingCartService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
-    public ShoppingCart addItemToCart(Long user_id, CreateCartItemRequest cartItemRequest) {
+    public ShoppingCart addItemToCart(Long userId, CreateCartItemRequest cartItemRequest) {
         // get the user's shopping cart from the database
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(user_id);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId);
 
         if (shoppingCart == null) {
             // create a new shopping cart if the user does not have one
             shoppingCart = new ShoppingCart();
             User user = new User();
-            user.setId(user_id);
+            user.setId(userId);
             shoppingCart.setUser(user);
         }
 
@@ -55,22 +55,22 @@ public class ShoppingCartService {
         return shoppingCart;
     }
 
-    public ShoppingCart updateCartItemQuantity(Long user_id, UpdateCartItemRequest updateRequest) {
+    public ShoppingCart updateCartItemQuantity(Long userId, UpdateCartItemRequest updateRequest) {
         // get the user's shopping cart from the database
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(user_id);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId);
 
         if (shoppingCart == null) {
             // create a new shopping cart if the user does not have one
             shoppingCart = new ShoppingCart();
             User user = new User();
-            user.setId(user_id);
+            user.setId(userId);
             shoppingCart.setUser(user);
         }
 
         // find the cart item to update
         CartItem cartItem = null;
         for (CartItem item : shoppingCart.getItems()) {
-            if (item.getProduct().getId().equals(updateRequest.getCartItemId())) {
+            if (item.getProduct().getId().equals(updateRequest.getId())) {
                 cartItem = item;
                 break;
             }
@@ -87,22 +87,22 @@ public class ShoppingCartService {
         return shoppingCart;
     }
 
-    public ShoppingCart deleteItemFromCart(Long user_id, DeleteCartItemRequest deleteRequest) {
+    public ShoppingCart deleteItemFromCart(Long userId, DeleteCartItemRequest deleteRequest) {
         // get the user's shopping cart from the database
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_Id(user_id);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId);
 
         if (shoppingCart == null) {
             // create a new shopping cart if the user does not have one
             shoppingCart = new ShoppingCart();
             User user = new User();
-            user.setId(user_id);
+            user.setId(userId);
             shoppingCart.setUser(user);
         }
 
         // find the cart item to delete
         CartItem cartItem = null;
         for (CartItem item : shoppingCart.getItems()) {
-            if (item.getProduct().getId().equals(deleteRequest.getCartItemId())) {
+            if (item.getProduct().getId().equals(deleteRequest.getId())) {
             	cartItem = item;
             	break;
             }
@@ -118,4 +118,3 @@ public class ShoppingCartService {
         return shoppingCart;
     }
 }
-

@@ -4,18 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpdateCartItemRequest {
 
-	@JsonProperty("cart_item_id")
-    private Long cartItemId;
-	
-	@JsonProperty("quantity")
+    @JsonProperty("id")
+    private Long id;
+
+    @JsonProperty("quantity")
     private Integer quantity;
 
-    public Long getCartItemId() {
-        return cartItemId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCartItemId(Long cartItemId) {
-        this.cartItemId = cartItemId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getQuantity() {

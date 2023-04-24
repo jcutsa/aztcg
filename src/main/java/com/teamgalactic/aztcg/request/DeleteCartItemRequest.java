@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeleteCartItemRequest {
 	
-	@JsonProperty("cart_item_id")
-    private Long cartItemId;
+	@JsonProperty("id")
+    private Long id;
 
-    public Long getCartItemId() {
-        return cartItemId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCartItemId(Long cartItemId) {
-        this.cartItemId = cartItemId;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

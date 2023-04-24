@@ -8,16 +8,21 @@ import jakarta.validation.constraints.NotNull;
 public class CreateCartItemRequest {
 
     @JsonProperty("id")
-    @NotNull(message="Product id is required")
+    @NotNull(message="Cart id is required")
     private Long id;
+
+    @JsonProperty("productId")
+    @NotNull(message="Product id is required")
+    private Long productId;
 
     @JsonProperty("quantity")
     @NotNull(message="Quantity must be at least 1")
     @Min(value=1)
     private Integer quantity;
 
-    public CreateCartItemRequest(Long id, Integer quantity) {
+    public CreateCartItemRequest(Long id, Long productId, Integer quantity) {
         this.id = id;
+        this.productId = productId;
         this.quantity = quantity;
     }
 
@@ -29,6 +34,14 @@ public class CreateCartItemRequest {
         this.id = id;
     }
 
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -37,5 +50,3 @@ public class CreateCartItemRequest {
         this.quantity = quantity;
     }
 }
-
-
