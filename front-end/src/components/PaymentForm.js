@@ -57,6 +57,7 @@ export default function PaymentForm({ value, onChange }) {
                         helperText="Last three digits on signature strip"
                         fullWidth
                         variant="standard"
+                        type="password"
                     />
                 </Grid>
             </Grid>
