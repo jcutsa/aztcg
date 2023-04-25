@@ -45,6 +45,9 @@ public class User {
 	//When deleting a user, the address will be automatically deleted
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address shippingAddress;
+	
+	@Column(name="permission_level")
+	private Integer permissionLevel;
 
 	@Transient
 	private String fullName;

@@ -43,12 +43,14 @@ public class UserService {
 		String email = updateUserRequest.getEmail();
 		String username = updateUserRequest.getUsername();
 		String password = updateUserRequest.getPassword();
+		Integer permissionLevel = updateUserRequest.getPermissionLevel();
 		
 		if (firstName != null && !firstName.isEmpty()) user.setFirstName(firstName);
 		if (lastName != null && !lastName.isEmpty()) user.setLastName(lastName);
 		if (email != null && !email.isEmpty()) user.setEmail(email);
 		if (username != null && !username.isEmpty()) user.setUsername(username);
 		if (password != null && !password.isEmpty()) user.setPassword(password);
+		if (permissionLevel != null) user.setPermissionLevel(permissionLevel);
 		
 		user = userRepository.save(user);
 		
