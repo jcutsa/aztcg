@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 public class CreateUserRequest {
 
-	@JsonProperty("firstName")
+	@JsonProperty("first_name")
 	@NotBlank(message="First name is required")
 	private String firstName;
 	
-	@JsonProperty("lastName")
+	@JsonProperty("last_name")
 	@NotBlank(message="Last name is required")
 	private String lastName;
 	
@@ -32,7 +32,7 @@ public class CreateUserRequest {
 	@NotBlank(message="Password is required")
 	private String password;
 	
-	@JsonProperty("permissionLevel")
+	@JsonProperty("permission_level")
 	private Integer permissionLevel = 1;
 	
 }
