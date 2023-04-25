@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"com.teamgalactic.aztcg.controller", "com.teamgalactic.aztcg.service"})
-@EntityScan("com.teamgalactic.aztcg.entity")
-@EnableJpaRepositories("com.teamgalactic.aztcg.repository")
+@ComponentScan({"com.teamgalactic.aztcg"})
+@EntityScan("com.teamgalactic.aztcg")
+@EnableJpaRepositories("com.teamgalactic.aztcg")
 public class AztcgApplication {
 
 	public static void main(String[] args) {
