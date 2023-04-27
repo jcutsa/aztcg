@@ -7,14 +7,26 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  InputLabel,
 } from "@mui/material";
 import React, { useState } from "react";
+import axios from "axios";
 
-function SingleUser({ userData }) {
+const API_URL = "http://localhost:8080/api/user/update";
+
+function SingleUser({ userData, setUserData }) {
   const { id, first_name, last_name, email, admin } = userData;
 
   const [open, setOpen] = useState(false);
 
+  const [updatedFirstName, setUpdatedFirstName] = useState("");
+  const [updatedLastName, setUpdatedLastName] = useState("");
+  const [updatedEmail, setUpdatedEmail] = useState("");
+  const [updatedAdmin, setUpdatedAdmin] = useState(false);
+  
   const handleOpen = () => {
     setOpen(true);
   };
@@ -26,7 +38,27 @@ function SingleUser({ userData }) {
   const handleModifyUser = () => {
     handleOpen();
   };
+  function updateUserDetails(id, firstName, lastName, email, isAdmin) {
+    const user = {
+      id: id,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      admin: isAdmin,
+    };
 
+    axios
+      .put(API_URL, user)
+      .then((response) => {
+        console.log(response.data);
+        // Update state values here
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle error here
+      });
+  }
   return (
     <div
       style={{
@@ -49,13 +81,7 @@ function SingleUser({ userData }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography
-            sx={{ width: "10%", backgroundColor: "white" }}
-            onClick={(e) => {
-              e.target.contentEditable = true;
-              e.target.focus();
-            }}
-          >
+          <Typography sx={{ width: "10%", backgroundColor: "white" }}>
             {id}
           </Typography>
           <Typography
@@ -63,10 +89,6 @@ function SingleUser({ userData }) {
               width: "20%",
               backgroundColor: "white",
               overflowWrap: "break-word",
-            }}
-            onClick={(e) => {
-              e.target.contentEditable = true;
-              e.target.focus();
             }}
           >
             {first_name}
@@ -77,10 +99,6 @@ function SingleUser({ userData }) {
               backgroundColor: "white",
               overflowWrap: "break-word",
             }}
-            onClick={(e) => {
-              e.target.contentEditable = true;
-              e.target.focus();
-            }}
           >
             {last_name}
           </Typography>
@@ -89,10 +107,6 @@ function SingleUser({ userData }) {
               width: "20%",
               backgroundColor: "white",
               overflowWrap: "break-word",
-            }}
-            onClick={(e) => {
-              e.target.contentEditable = true;
-              e.target.focus();
             }}
           >
             {email}
@@ -103,13 +117,10 @@ function SingleUser({ userData }) {
               backgroundColor: "white",
               overflowWrap: "break-word",
             }}
-            onClick={(e) => {
-              e.target.contentEditable = true;
-              e.target.focus();
-            }}
           >
             {admin ? "Admin" : "User"}
           </Typography>
+
           <Button
             onClick={handleModifyUser}
             sx={{ width: "10%", backgroundColor: "white" }}
@@ -117,7 +128,6 @@ function SingleUser({ userData }) {
             Edit
           </Button>
         </Stack>
-
         <Divider
           sx={{
             marginBottom: "8px",
@@ -126,19 +136,71 @@ function SingleUser({ userData }) {
             mx: "auto",
           }}
         />
-
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          maxWidth="md"
+          fullWidth={true}
+        >
           <DialogTitle>Modify User</DialogTitle>
-          <DialogContent>
-            <Typography>ID: {id}</Typography>
-            <Typography>First Name: {first_name}</Typography>
-            <Typography>Last Name: {last_name}</Typography>
-            <Typography>Email: {email}</Typography>
-            <Typography>User Type: {admin ? "Admin" : "User"}</Typography>
+          <DialogContent dividers={true}>
+            <Typography variant="subtitle1">User Details</Typography>
+            <Typography variant="body1">
+              <strong>ID:</strong> {id}
+            </Typography>
+            <TextField
+              label="First Name"
+              placeholder={first_name}
+              value={updatedFirstName}
+              onChange={(e) => setUpdatedFirstName(e.target.value)}
+            />
+            <TextField
+              label="Last Name"
+              placeholder={last_name}
+              value={updatedLastName}
+              onChange={(e) => setUpdatedLastName(e.target.value)}
+            />
+            {/* <InputLabel shrink={updatedEmail !== ""}>{email}</InputLabel> */}
+            <TextField
+              label="Email"
+              placeholder={email}
+              value={updatedEmail}
+              onChange={(e) => setUpdatedEmail(e.target.value)}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={updatedAdmin}
+                  onChange={(e) => setUpdatedAdmin(e.target.checked)}
+                />
+              }
+              label="Admin"
+              style={{ paddingLeft: "20px" }}
+            />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Save</Button>
+            <Button onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                updateUserDetails(
+                  id,
+                  updatedFirstName,
+                  updatedLastName,
+                  updatedEmail,
+                  updatedAdmin
+                );
+                setUpdatedFirstName("");
+                setUpdatedLastName("");
+                setUpdatedEmail("");
+                setUpdatedAdmin(false);
+                handleClose();
+              }}
+              color="primary"
+            >
+              Update User
+            </Button>
           </DialogActions>
         </Dialog>
       </div>

@@ -35,6 +35,11 @@ function AdminUsers() {
 
   const [UserInfo, setUserInfo] = useState();
 
+  const setUserData = (data) => {
+    // Update the userInfo state with the updated data
+    setUserInfo((prevData) => prevData.map((user) => user.id === data.id ? data : user));
+  };
+
   useEffect(() => {
     fetch("http://localhost:8080/api/user/getAll")
       .then((resp) => resp.json())
@@ -161,7 +166,7 @@ function AdminUsers() {
           }}
         />
         {Array.isArray(UserInfo) &&
-          UserInfo.map((userData) => <SingleUser userData={userData} />)}
+          UserInfo.map((userData) => <SingleUser userData={userData} setUserData={setUserData} />)}
         {/* Button to open modal */}
 
         {/* Modal to create a new user */}
