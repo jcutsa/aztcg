@@ -5,18 +5,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ClippedDrawer from "../components/ClippedDrawer";
 import SingleUser from "../components/SingleUser";
-import { UserInfo } from "../assetts/UserInfo";
-
-const pages = ["Products", "Pricing", "Blog"];
+// import { UserInfo } from "../assetts/UserInfo";
+import { Button, Modal, TextField } from "@mui/material";
+import { useState, useEffect } from "react";
 
 const linkStyle = {
   marginRight: "1rem",
   textDecoration: "none",
   color: "white",
 };
-
-import { Button, Modal, TextField } from "@mui/material";
-import { useState } from "react";
 
 function AdminUsers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,6 +33,21 @@ function AdminUsers() {
     setIsModalOpen(false);
   };
 
+  const [UserInfo, setUserInfo] = useState();
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/user/getAll")
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log("Getting Object from API:", data);
+        setUserInfo(data);
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error(error);
+      });
+  }, []);
+
   return (
     // Existing code
     <div
@@ -49,13 +61,13 @@ function AdminUsers() {
       <Stack>
         <h1>User Info</h1>
         <Button
-  variant="contained"
-  onClick={handleModalOpen}
-  size="small"
-  sx={{ display: "block", mx: "auto", mt: 2 }}
->
-  Create User
-</Button>
+          variant="contained"
+          onClick={handleModalOpen}
+          size="small"
+          sx={{ display: "block", mx: "auto", mt: 2 }}
+        >
+          Create User
+        </Button>
 
         <Modal open={isModalOpen} onClose={handleModalClose}>
           <div
@@ -99,33 +111,47 @@ function AdminUsers() {
             </Button>
           </div>
         </Modal>
-        <Stack
+        {/* <Stack
           direction={"row"}
-          // alignItems="center"
-          // justifyContent="center"
-          sx={{
-            marginTop: "10px",
-            marginBottom: "10px",
-            marginLeft: "165px",
-            width: "1000px",
+          style={{ backgroundColor: "white", width: "1000px" }}
+          alignItems="center"
+          justifyContent="space-between"
+        ></Stack> */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: "20px",
+            paddingTop: "20px"
           }}
         >
-          <Typography sx={{ width: "22.5%", backgroundColor: "white" }}>
-            First Name
-          </Typography>
-          <Typography sx={{ width: "22.5%", backgroundColor: "white" }}>
-            Last Name
-          </Typography>
-          <Typography sx={{ width: "22.5%", backgroundColor: "white" }}>
-            Email
-          </Typography>
-          <Typography sx={{ width: "22.5%", backgroundColor: "white" }}>
-            Permissions
-          </Typography>
-          <Typography sx={{ width: "10%", backgroundColor: "white" }}>
-            Modify
-          </Typography>
-        </Stack>
+          <Stack
+            direction={"row"}
+            alignItems="center"
+            justifyContent="space-between"
+            style={{ backgroundColor: "white", width: "1000px" }}
+          >
+            <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+              ID
+            </Typography>
+            <Typography sx={{ width: "20%", backgroundColor: "white" }}>
+              First Name
+            </Typography>
+            <Typography sx={{ width: "20%", backgroundColor: "white" }}>
+              Last Name
+            </Typography>
+            <Typography sx={{ width: "20%", backgroundColor: "white" }}>
+              Email
+            </Typography>
+            <Typography sx={{ width: "20%", backgroundColor: "white" }}>
+              Permissions
+            </Typography>
+            <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+              Modify
+            </Typography>
+          </Stack>
+        </div>
         <Divider
           sx={{
             marginBottom: "8px",

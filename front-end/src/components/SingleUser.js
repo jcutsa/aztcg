@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 
 function SingleUser({ userData }) {
-  const { firstName, lastName, email, admin } = userData;
+  const { id, first_name, last_name, email, admin } = userData;
 
   const [open, setOpen] = useState(false);
 
@@ -39,6 +39,8 @@ function SingleUser({ userData }) {
         style={{
           padding: "5px",
           backgroundColor: "white",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Stack
@@ -48,25 +50,46 @@ function SingleUser({ userData }) {
           justifyContent="space-between"
         >
           <Typography
-            sx={{ flex: "0 0 22.5%" }}
+            sx={{ width: "10%", backgroundColor: "white" }}
             onClick={(e) => {
               e.target.contentEditable = true;
               e.target.focus();
             }}
           >
-            {firstName}
+            {id}
           </Typography>
           <Typography
-            sx={{ flex: "0 0 22.5%" }}
+            sx={{
+              width: "20%",
+              backgroundColor: "white",
+              overflowWrap: "break-word",
+            }}
             onClick={(e) => {
               e.target.contentEditable = true;
               e.target.focus();
             }}
           >
-            {lastName}
+            {first_name}
           </Typography>
           <Typography
-            sx={{ flex: "0 0 22.5%" }}
+            sx={{
+              width: "20%",
+              backgroundColor: "white",
+              overflowWrap: "break-word",
+            }}
+            onClick={(e) => {
+              e.target.contentEditable = true;
+              e.target.focus();
+            }}
+          >
+            {last_name}
+          </Typography>
+          <Typography
+            sx={{
+              width: "20%",
+              backgroundColor: "white",
+              overflowWrap: "break-word",
+            }}
             onClick={(e) => {
               e.target.contentEditable = true;
               e.target.focus();
@@ -75,7 +98,11 @@ function SingleUser({ userData }) {
             {email}
           </Typography>
           <Typography
-            sx={{ flex: "0 0 22.5%" }}
+            sx={{
+              width: "20%",
+              backgroundColor: "white",
+              overflowWrap: "break-word",
+            }}
             onClick={(e) => {
               e.target.contentEditable = true;
               e.target.focus();
@@ -83,8 +110,11 @@ function SingleUser({ userData }) {
           >
             {admin ? "Admin" : "User"}
           </Typography>
-          <Button onClick={handleModifyUser} sx={{ flex: "0 0 10%" }}>
-            Modify
+          <Button
+            onClick={handleModifyUser}
+            sx={{ width: "10%", backgroundColor: "white" }}
+          >
+            Edit
           </Button>
         </Stack>
 
@@ -100,8 +130,9 @@ function SingleUser({ userData }) {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Modify User</DialogTitle>
           <DialogContent>
-            <Typography>First Name: {firstName}</Typography>
-            <Typography>Last Name: {lastName}</Typography>
+            <Typography>ID: {id}</Typography>
+            <Typography>First Name: {first_name}</Typography>
+            <Typography>Last Name: {last_name}</Typography>
             <Typography>Email: {email}</Typography>
             <Typography>User Type: {admin ? "Admin" : "User"}</Typography>
           </DialogContent>
