@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material";
+import { Checkbox, Divider, FormControlLabel } from "@mui/material";
 import { Typography } from "@mui/material";
 import { AppBar, Drawer, List, Stack } from "@mui/material";
 import React from "react";
@@ -8,6 +8,9 @@ import SingleUser from "../components/SingleUser";
 // import { UserInfo } from "../assetts/UserInfo";
 import { Button, Modal, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
+import { IconButton, InputAdornment } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const linkStyle = {
   marginRight: "1rem",
@@ -17,10 +20,29 @@ const linkStyle = {
 
 function AdminUsers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [UserInfo, setUserInfo] = useState([]);
 
-  // Function to create a new user
-  const handleCreateUser = () => {
-    // TODO: Implement code to create a new user
+  // Data not yet implemented for API
+  const [userId, setUserId] = useState("");
+  const [admin, setAdmin] = useState(false);
+
+  // Data for API
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleMouseDown = (event) => {
+    event.preventDefault();
+    setShowPassword(true);
+  };
+
+  const handleMouseUp = (event) => {
+    event.preventDefault();
+    setShowPassword(false);
   };
 
   // Function to handle modal open
@@ -33,11 +55,29 @@ function AdminUsers() {
     setIsModalOpen(false);
   };
 
-  const [UserInfo, setUserInfo] = useState();
-
   const setUserData = (data) => {
     // Update the userInfo state with the updated data
-    setUserInfo((prevData) => prevData.map((user) => user.id === data.id ? data : user));
+    setUserInfo((prevData) =>
+      prevData.map((user) => (user.id === data.id ? data : user))
+    );
+  };
+
+  // Function to create a new user
+  const handleCreateUser = (newUser) => {
+    fetch("http://localhost:8080/api/user/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("New user created:", data);
+        // Add the new user data to the existing user info state
+        setUserInfo((prevData) => [...prevData, data]);
+      })
+      .catch((error) => console.error(error));
   };
 
   useEffect(() => {
@@ -87,35 +127,99 @@ function AdminUsers() {
             }}
           >
             <h2>Create New User</h2>
+            {/* <TextField
+              label="ID"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            /> */}
             <TextField
               label="First Name"
               variant="outlined"
               fullWidth
               margin="normal"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
             <TextField
               label="Last Name"
               variant="outlined"
               fullWidth
               margin="normal"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <TextField
+              label="Username"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onMouseDown={handleMouseDown}
+                      onMouseUp={handleMouseUp}
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Email"
               variant="outlined"
               fullWidth
               margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <TextField
-              label="Permissions"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-            />
-            <Button variant="contained" onClick={handleCreateUser}>
+            {/* <FormControlLabel
+              control={
+                <Checkbox
+                  checked={admin}
+                  onChange={(e) => setAdmin(e.target.checked)}
+                />
+              }
+              label="Admin"
+            /> */}
+
+            <Button
+              variant="contained"
+              onClick={() =>
+                handleCreateUser({
+                  // id: userId,
+                  first_name: firstName,
+                  last_name: lastName,
+                  username,
+                  password,
+                  email,
+                })
+              }
+            >
               Create User
             </Button>
           </div>
         </Modal>
+
         {/* <Stack
           direction={"row"}
           style={{ backgroundColor: "white", width: "1000px" }}
@@ -128,7 +232,7 @@ function AdminUsers() {
             justifyContent: "center",
             alignItems: "center",
             paddingBottom: "20px",
-            paddingTop: "20px"
+            paddingTop: "20px",
           }}
         >
           <Stack
@@ -166,7 +270,9 @@ function AdminUsers() {
           }}
         />
         {Array.isArray(UserInfo) &&
-          UserInfo.map((userData) => <SingleUser userData={userData} setUserData={setUserData} />)}
+          UserInfo.map((userData) => (
+            <SingleUser userData={userData} setUserData={setUserData} />
+          ))}
         {/* Button to open modal */}
 
         {/* Modal to create a new user */}
