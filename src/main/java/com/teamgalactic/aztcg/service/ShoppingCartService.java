@@ -1,5 +1,7 @@
 package com.teamgalactic.aztcg.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class ShoppingCartService {
     
     public ShoppingCart getShoppingCartByUserId(Long userId) {
         return shoppingCartRepository.findByUserId(userId);
+    }
+    
+    public List<ShoppingCart> getAllCarts() {
+        return shoppingCartRepository.findAll();
     }
 
     public ShoppingCart addItemToCart(Long userId, CreateCartItemRequest cartItemRequest) {

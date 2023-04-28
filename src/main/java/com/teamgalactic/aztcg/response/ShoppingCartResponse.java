@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teamgalactic.aztcg.entity.CartItem;
 import com.teamgalactic.aztcg.entity.ShoppingCart;
-
 import lombok.Getter;
 import lombok.Setter;
 

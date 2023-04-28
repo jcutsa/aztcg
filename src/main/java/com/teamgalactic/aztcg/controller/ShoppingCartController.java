@@ -1,6 +1,10 @@
 package com.teamgalactic.aztcg.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +29,16 @@ public class ShoppingCartController {
 
     @Autowired
     ShoppingCartService shoppingCartService;
+    
+    @GetMapping("/getAll")
+    public ResponseEntity<List<ShoppingCartResponse>> getAllCarts() {
+        List<ShoppingCart> carts = shoppingCartService.getAllCarts();
+        List<ShoppingCartResponse> response = new ArrayList<>();
+        for (ShoppingCart cart : carts) {
+            response.add(new ShoppingCartResponse(cart));
+        }
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("findbyuserid/{userId}")
     public ShoppingCartResponse getShoppingCartByUserId(@PathVariable Long userId) {

@@ -16,27 +16,23 @@ import lombok.Setter;
 @Table(name = "cart")
 public class ShoppingCart {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    
-    @Column(name="total")
-    private Double total;
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> items = new ArrayList<>();
-    
-    public ShoppingCart(User user, Double total) {
-        this.user = user;
-        this.total = total;
-        this.items = new ArrayList<>();
-    }
+	@Column(name = "total")
+	private Double total;
+
+	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CartItem> items = new ArrayList<>();
+
+	public ShoppingCart(User user, Double total) {
+		this.user = user;
+		this.total = total;
+		this.items = new ArrayList<>();
+	}
 }
-
-
-
-
