@@ -16,6 +16,10 @@ public class ShoppingCartService {
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
+    
+    public ShoppingCart getShoppingCartByUserId(Long userId) {
+        return shoppingCartRepository.findByUserId(userId);
+    }
 
     public ShoppingCart addItemToCart(Long userId, CreateCartItemRequest cartItemRequest) {
         // get the user's shopping cart from the database

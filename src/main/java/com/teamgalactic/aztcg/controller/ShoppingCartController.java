@@ -1,7 +1,5 @@
 package com.teamgalactic.aztcg.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamgalactic.aztcg.entity.CartItem;
 import com.teamgalactic.aztcg.entity.ShoppingCart;
-import com.teamgalactic.aztcg.repository.CartItemRepository;
 import com.teamgalactic.aztcg.request.CreateCartItemRequest;
 import com.teamgalactic.aztcg.request.DeleteCartItemRequest;
 import com.teamgalactic.aztcg.request.UpdateCartItemRequest;
@@ -29,15 +25,13 @@ public class ShoppingCartController {
 
     @Autowired
     ShoppingCartService shoppingCartService;
-    
-    @Autowired
-    CartItemRepository CartItemRepository;
-    
-    @GetMapping("/cartitem/findbycartid/{cartId}")
-    public List<CartItem> getCartItemsByCartId(@PathVariable("cartId") Long cartId) {
-        return CartItemRepository.findByShoppingCartId(cartId);
-    }
 
+    @GetMapping("findbyuserid/{userId}")
+    public ShoppingCartResponse getShoppingCartByUserId(@PathVariable Long userId) {
+        ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByUserId(userId);
+        return new ShoppingCartResponse(shoppingCart);
+    }
+    
     @PostMapping("add/{userId}")
     public ShoppingCartResponse addItemToCart(@PathVariable Long userId, @RequestBody CreateCartItemRequest cartItemRequest) {
         ShoppingCart shoppingCart = shoppingCartService.addItemToCart(userId, cartItemRequest);
@@ -53,7 +47,7 @@ public class ShoppingCartController {
     @DeleteMapping("delete/{userId}")
     public ShoppingCartResponse removeItemFromCart(@PathVariable Long userId, @RequestBody DeleteCartItemRequest cartItemRequest) {
         ShoppingCart shoppingCart = shoppingCartService.deleteItemFromCart(userId, cartItemRequest);
-        return new ShoppingCartResponse(shoppingCart);
-    }
+		return new ShoppingCartResponse(shoppingCart);
+	}
 
 }

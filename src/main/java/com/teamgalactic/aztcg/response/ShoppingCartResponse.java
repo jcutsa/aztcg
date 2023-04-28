@@ -14,20 +14,22 @@ import lombok.Setter;
 @Setter
 public class ShoppingCartResponse {
 
-	@JsonProperty("id")
+    @JsonProperty("id")
     private Long id;
 
     @JsonProperty("user_id")
-    private Long user_id;
+    private Long userId;
 
     @JsonProperty("cart_items")
-    private List<CartItemResponse> cartItems = new ArrayList<>();
+    private List<CartItemResponse> cartItems;
 
     public ShoppingCartResponse(ShoppingCart shoppingCart) {
         this.id = shoppingCart.getId();
-        this.user_id = shoppingCart.getUser().getId();
+        this.userId = shoppingCart.getUser().getId();
+        this.cartItems = new ArrayList<>();
         for (CartItem cartItem : shoppingCart.getItems()) {
             this.cartItems.add(new CartItemResponse(cartItem));
         }
     }
 }
+
