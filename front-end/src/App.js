@@ -21,7 +21,10 @@ import AdminProductEdit from "./pages/AdminProductEdit.js";
 // import handleCreateUser from "./pages/AdminUsers";
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
   const [user, setUser] = useState({
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -31,16 +34,17 @@ export default function App() {
   });
 
   const handleSignOut = () => {
+    setLoggedIn(false);
     setUser({
       firstName: "",
       lastName: "",
       email: "",
       cart: [],
       admin: false,
-      total: 0
+      total: 0,
     });
   };
-  
+
   const removeItem = (id) => {
     setUser((prevUser) => ({
       ...prevUser,
@@ -86,6 +90,8 @@ export default function App() {
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
                 total={user.total}
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
               />
             }
           />
@@ -97,7 +103,14 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route
             path="/sign-in"
-            element={<SignIn user={user} setUser={setUser} />}
+            element={
+              <SignIn
+                user={user}
+                setUser={setUser}
+                loggedIn={loggedIn}
+                setLoggedIn={setLoggedIn}
+              />
+            }
           />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -106,11 +119,14 @@ export default function App() {
             element={<AdminLogin user={user} setUser={setUser} />}
           />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/admin-products" element={<AdminProducts /> } />
-          <Route path="/admin-product-edit" element={<AdminProductEdit/> } />
-          <Route path="/admin-users" element={<AdminUsers user={user} /> } />
-          <Route path="/admin-users" element={<AdminUsers user={user} setUser={setUser} /> } />
-          <Route path="/admin-orders" element={<AdminOrders/> } />
+          <Route path="/admin-products" element={<AdminProducts />} />
+          <Route path="/admin-product-edit" element={<AdminProductEdit />} />
+          <Route path="/admin-users" element={<AdminUsers user={user} />} />
+          <Route
+            path="/admin-users"
+            element={<AdminUsers user={user} setUser={setUser} />}
+          />
+          <Route path="/admin-orders" element={<AdminOrders />} />
           {/* <Route path="/logged-in" element={<LoggedIn />} /> */}
         </Routes>
       </div>

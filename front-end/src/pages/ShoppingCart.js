@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 
-export default function ShoppingCart({ user, removeItem, updateQuantity }) {
+export default function ShoppingCart({ user, removeItem, updateQuantity, loggedIn, setLoggedIn }) {
   const { cart } = user;
 
   const [total, setTotal] = useState(0);

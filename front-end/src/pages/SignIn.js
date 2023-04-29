@@ -14,54 +14,61 @@ import SignUp from "./SignUp";
 
 const theme = createTheme();
 
-export default function SignIn({ user, setUser }) {
+export default function SignIn({ user, setUser, loggedIn, setLoggedIn }) {
   const [submitted, setSubmitted] = React.useState(false);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  // const [loggedIn, setLoggedIn] = React.useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-
-    // Check if email and password match a regular user account
-    if (
-      email === "averagejoe123@gmail.com" &&
-      password === "UserPassword123!"
-    ) {
-      setUser({
-        firstName: "Joe",
-        lastName: "Johnson",
-        email: "averagejoe123@gmail.com",
-        cart: [],
-        admin: false, // set admin to false
-        total: 0,
-      });
-      // window.location.href = "/";
-      setLoggedIn(true);
-    }
-
-    // Check if email and password match an admin account
-    else if (
-      email === "pokemaster9001@gmail.com" &&
-      password === "AdminPassword123!"
-    ) {
-      setUser({
-        firstName: "John",
-        lastName: "Deere",
-        email: "pokemaster9001@gmail.com",
-        cart: [],
-        admin: true, // set admin to true
-        total: 0,
-      });
-      // window.location.href = "/";
-      // window.alert(`Welcome back ${user.firstName} ${user.lastName}`)
-      setLoggedIn(true);
-    } else {
-      setSubmitted(true);
-    }
-    // Output the user type to the console
-    console.log(user.firstName);
-    console.log(user.admin);
+  
+    const url = "http://localhost:8080/api/user/getAll";
+  
+    fetch(url)
+      .then((response) => response.json())
+      .then((users) => {
+        const userWithEmail = users.find(
+          (user) => user.email === email && "Password123!" === password
+        );
+        if (userWithEmail) {
+          // the submitted email and password are valid
+          console.log(
+            `User with email ${email} and password ${password} found in database`
+          );
+          if (userWithEmail.permission_level === 1) {
+            console.log(true);
+            setUser({
+              id: userWithEmail.id,
+              firstName: userWithEmail.first_name,
+              lastName: userWithEmail.last_name,
+              email: userWithEmail.email,
+              cart: [],
+              admin: true,
+              total: 0,
+            });
+          } else {
+            console.log(false);
+            setUser({
+              id: userWithEmail.id,
+              firstName: userWithEmail.first_name,
+              lastName: userWithEmail.last_name,
+              email: userWithEmail.email,
+              cart: [],
+              admin: false,
+              total: 0,
+            });
+          }
+          setLoggedIn(true); // Set loggedIn state here
+          console.log(user);
+        } else {
+          // the submitted email and/or password are invalid
+          console.log(
+            `User with email ${email} and/or password ${password} not found in database`
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -126,6 +133,7 @@ export default function SignIn({ user, setUser }) {
                   type="submit"
                   fullWidth
                   variant="contained"
+                  // onClick
                   // onClick={() => {
                   //   if (user.firstName !== "") {
                   //     window.location.href = "/";
