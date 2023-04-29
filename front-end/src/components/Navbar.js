@@ -12,10 +12,12 @@ import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import { Badge } from "@mui/material";
+
 // import { Badge } from "@mui/material";
+
 
 const linkStyle = {
   marginRight: "1rem",
@@ -79,7 +81,7 @@ const StyledMenu = styled((props) => (
     },
   },
 }));
-export default function Navbar({ user, admin, loggedIn }) {
+export default function Navbar({ user, admin, loggedIn , onSignOut}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -110,9 +112,21 @@ export default function Navbar({ user, admin, loggedIn }) {
               style={{ display: "flex", alignItems: "center" }}
             >
               <SearchComponent></SearchComponent>
-              <Link style={linkStyle} to="/sign-in" color="inherit">
-                Sign In
-              </Link>
+              {user.firstName === "" ? (
+                <Link style={linkStyle} to="/sign-in" color="inherit">
+                  Sign In
+                </Link>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={onSignOut}
+                  style={{ marginLeft: "auto", color: "white" }}
+                >
+                  Sign Out
+                </Button>
+              )}
+
               <Link to="/shopping-cart" style={{ marginTop: "5px" }}>
                 <Badge color="info" badgeContent={totalItems}>
                   <ShoppingCartCheckoutOutlined style={{ color: "#FFFFFF" }} />
@@ -160,15 +174,30 @@ export default function Navbar({ user, admin, loggedIn }) {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem component={Link} to="/admin-products" onClick={handleClose} disableRipple>
+                    <MenuItem
+                      component={Link}
+                      to="/admin-products"
+                      onClick={handleClose}
+                      disableRipple
+                    >
                       <EditIcon />
                       Products
                     </MenuItem>
-                    <MenuItem component={Link} to="/admin-users" onClick={handleClose} disableRipple>
+                    <MenuItem
+                      component={Link}
+                      to="/admin-users"
+                      onClick={handleClose}
+                      disableRipple
+                    >
                       <GroupIcon />
                       Users
                     </MenuItem>
-                    <MenuItem component={Link} to="/admin-orders" onClick={handleClose} disableRipple>
+                    <MenuItem
+                      component={Link}
+                      to="/admin-orders"
+                      onClick={handleClose}
+                      disableRipple
+                    >
                       <ArchiveIcon />
                       Orders
                     </MenuItem>

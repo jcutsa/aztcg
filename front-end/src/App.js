@@ -22,35 +22,25 @@ import AdminProductEdit from "./pages/AdminProductEdit.js";
 
 export default function App() {
   const [user, setUser] = useState({
-    firstName: "him",
-    lastName: "she",
-    email: "123@gmail.com",
-    cart: [
-      {
-        name: "Solemn Judgment - Maze of Memories (MAZE)",
-        brand: "Yu-Gi-Oh!",
-        image: require("./assetts" + "./images/card1.jpg".substring(1)),
-        price: 2.24,
-        maxQuantity: 10,
-        quantitySelected: 10,
-        id: "1",
-        totalPrice: 22.4,
-      },
-      {
-        name: "Labyrinth Heavy Tank - Maze of Memories (MAZE)",
-        brand: "Yu-Gi-Oh!",
-        image: require("./assetts" + "./images/card3.jpg".substring(1)),
-        price: 0.4,
-        maxQuantity: 7,
-        quantitySelected: 7,
-        id: "3",
-        totalPrice: 2.8,
-      },
-    ],
-
-    admin: true,
+    firstName: "",
+    lastName: "",
+    email: "",
+    cart: [],
+    admin: false,
+    total: 0,
   });
 
+  const handleSignOut = () => {
+    setUser({
+      firstName: "",
+      lastName: "",
+      email: "",
+      cart: [],
+      admin: false,
+      total: 0
+    });
+  };
+  
   const removeItem = (id) => {
     setUser((prevUser) => ({
       ...prevUser,
@@ -81,7 +71,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Navbar user={user} />
+      <Navbar user={user} onSignOut={handleSignOut} />
 
       <div>
         <Routes>
@@ -121,6 +111,7 @@ export default function App() {
           <Route path="/admin-users" element={<AdminUsers user={user} /> } />
           <Route path="/admin-users" element={<AdminUsers user={user} setUser={setUser} /> } />
           <Route path="/admin-orders" element={<AdminOrders/> } />
+          {/* <Route path="/logged-in" element={<LoggedIn />} /> */}
         </Routes>
       </div>
     </BrowserRouter>
