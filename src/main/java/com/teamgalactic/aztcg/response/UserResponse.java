@@ -1,7 +1,6 @@
 package com.teamgalactic.aztcg.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.teamgalactic.aztcg.entity.Address;
 import com.teamgalactic.aztcg.entity.User;
 
 import lombok.Getter;
@@ -24,7 +23,6 @@ public class UserResponse {
 	private String lastName;
 
 	private String email;
-	
 	
 	public UserResponse(User user) {
 		
