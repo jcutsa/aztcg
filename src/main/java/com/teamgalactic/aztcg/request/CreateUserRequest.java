@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,7 @@ public class CreateUserRequest {
 	private String password;
 	
 	@JsonProperty("permission_level")
+	@PositiveOrZero(message="Permission level must be a nonnegative integer")
 	private Integer permissionLevel = 0;
 	
 }

@@ -24,6 +24,9 @@ public class UserResponse {
 
 	private String email;
 	
+	@JsonProperty("permission_level")
+	private Integer permissionLevel;
+	
 	public UserResponse(User user) {
 		
 		this.id = user.getId();
@@ -31,6 +34,7 @@ public class UserResponse {
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
 		this.email = user.getEmail();
+		this.permissionLevel = user.getPermissionLevel();
 	}
 
 }

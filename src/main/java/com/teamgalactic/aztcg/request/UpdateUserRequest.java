@@ -5,6 +5,7 @@ import com.teamgalactic.aztcg.entity.Address;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,8 @@ public class UpdateUserRequest {
 	
 	private String password;
 	
+	@JsonProperty("permission_level")
+	@PositiveOrZero(message="Permission level must be a nonnegative integer")
 	private Integer permissionLevel;
 
 }
