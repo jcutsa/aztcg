@@ -56,6 +56,7 @@ function AdminUsers() {
 
   // Function to handle modal close
   const handleModalClose = () => {
+    resetForm();
     setIsModalOpen(false);
   };
 
