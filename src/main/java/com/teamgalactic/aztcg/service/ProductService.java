@@ -30,8 +30,8 @@ public class ProductService {
 	public Product createProduct(CreateProductRequest createProductRequest) {
 		Product product = new Product(createProductRequest);
 		
-		CardType cardType = cardTypeRepository.findById(createProductRequest.getCardTypeId()).get();
-		
+		Long cardTypeId = createProductRequest.getCardTypeId();
+		CardType cardType = cardTypeRepository.findById(cardTypeId).orElseThrow(() -> new ResourceNotFoundException("Card type with ID " + cardTypeId + " not found"));
 		product.setCardType(cardType);
 		
 		product = productRepository.save(product);
@@ -45,7 +45,6 @@ public class ProductService {
 		
 		String name = updateProductRequest.getName();
 		String description = updateProductRequest.getDescription();
-		String cardKey  = updateProductRequest.getCardKey();
 		Integer quantityOnHand = updateProductRequest.getQuantityOnHand();
 		Double price = updateProductRequest.getPrice();
 		String rarity = updateProductRequest.getRarity();
@@ -57,7 +56,6 @@ public class ProductService {
 		
 		if (name != null && !name.isEmpty()) product.setName(name);
 		if (description != null && !description.isEmpty()) product.setDescription(description);
-		if (cardKey != null && !cardKey.isEmpty()) product.setCardKey(cardKey);
 		if (quantityOnHand != null) product.setQuantityOnHand(quantityOnHand);
 		if (price != null) product.setPrice(price);
 		if (rarity != null && !rarity.isEmpty()) product.setRarity(rarity);
