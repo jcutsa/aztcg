@@ -33,6 +33,7 @@ function AdminUsers() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [permissionLevel, setPermissionLevel] = useState(1);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -66,9 +67,11 @@ function AdminUsers() {
   // Function to create a new user
   const handleCreateUser = (newUser) => {
     console.log("Creating new user with data:", newUser);
-    console.log(typeof newUser.id)
     axios
-      .post("http://localhost:8080/api/user/create", newUser)
+      .post("http://localhost:8080/api/user/create", {
+        ...newUser,
+        permission_level: 1,
+      })
       .then((response) => {
         console.log("Created user:", response.data);
         setUserInfo((prevData) => [...prevData, response.data]);
@@ -78,6 +81,7 @@ function AdminUsers() {
         console.error("Error creating user:", error);
       });
   };
+  
 
   useEffect(() => {
     fetch("http://localhost:8080/api/user/getAll")
@@ -205,13 +209,13 @@ function AdminUsers() {
               variant="contained"
               onClick={() =>
                 handleCreateUser({
-                  id: 12,
+                  // id: 12,
                   first_name: firstName,
                   last_name: lastName,
                   username: username,
                   password: password,
                   email: email,
-                  permission_level: 1,
+                  permission_level: permissionLevel,
                 })
               }
             >
