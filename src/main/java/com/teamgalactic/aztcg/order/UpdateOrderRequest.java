@@ -15,11 +15,11 @@ import lombok.Setter;
 public class UpdateOrderRequest {
 
 	@JsonProperty("id")
-	@NotNull(message = "Order Id is required")
+	@NotNull(message = "id (order id) is required")
 	private Long id;
 	
 	@JsonProperty("total")
-	@PositiveOrZero(message="Total must be a nonnegative number")
+	@PositiveOrZero(message="total must be a nonnegative number")
 	private Double total;
 	
     @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss")
