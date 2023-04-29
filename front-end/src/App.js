@@ -18,6 +18,7 @@ import AdminProducts from "./pages/AdminProducts.js"; // import the admin dashbo
 import AdminUsers from "./pages/AdminUsers.js"; // import the admin dashboard component
 import AdminOrders from "./pages/AdminOrders.js"; // import the admin dashboard component
 import AdminProductEdit from "./pages/AdminProductEdit.js";
+// import handleCreateUser from "./pages/AdminUsers";
 
 export default function App() {
   const [user, setUser] = useState({

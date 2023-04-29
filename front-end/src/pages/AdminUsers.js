@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import axios from 'axios';
 
 const linkStyle = {
   marginRight: "1rem",
@@ -24,7 +25,7 @@ function AdminUsers() {
 
   // Data not yet implemented for API
   const [userId, setUserId] = useState("");
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState();
 
   // Data for API
   const [firstName, setFirstName] = useState("");
@@ -64,20 +65,15 @@ function AdminUsers() {
 
   // Function to create a new user
   const handleCreateUser = (newUser) => {
-    fetch("http://localhost:8080/api/user/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("New user created:", data);
-        // Add the new user data to the existing user info state
-        setUserInfo((prevData) => [...prevData, data]);
+    axios.post('http://localhost:8080/api/user/create', newUser)
+      .then((response) => {
+        console.log('Created user:', response.data);
+        setUserInfo((prevData) => [...prevData, response.data]);
+        handleModalClose();
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error('Error creating user:', error);
+      });
   };
 
   useEffect(() => {
@@ -192,26 +188,26 @@ function AdminUsers() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {/* <FormControlLabel
+            <FormControlLabel
               control={
                 <Checkbox
                   checked={admin}
-                  onChange={(e) => setAdmin(e.target.checked)}
+                  onChange={(e) => setAdmin(e.target.checked ? 1 : 0)}
                 />
               }
               label="Admin"
-            /> */}
+            />
 
             <Button
               variant="contained"
               onClick={() =>
                 handleCreateUser({
-                  // id: userId,
                   first_name: firstName,
                   last_name: lastName,
-                  username,
-                  password,
-                  email,
+                  username: username,
+                  password: password,
+                  email: email,
+                  permissionLevel: admin,
                 })
               }
             >
