@@ -12,27 +12,51 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+  let navigate=useNavigate()
+
+  const [user, setUser] = useState ( { 
+    first_name: '', 
+    last_name: '',
+    username: '', 
+    password: '', 
+    email: ''
+
+  })
+
+  const { first_name, last_name, username, password, email} = user; 
+
+  const onInputChange = (e) => {
+    setUser({...user, [e.target.name]: e.target.value})
+  };
+   //Test console.log
+  //console.log(user)
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:8080/api/user/create",user )
+    .then(({user}) => {
+      console.log(user)
+    })
+    //navigate used to route back to the homepage after submit is done 
+    navigate("/")
+
+
+
+
+    
   };
 
-    const verifyUsername = (username) => {
-
-      const pattern = /^[a-zA-Z0-9_-]+$/;
-      return pattern.test(username);
-    };
+    
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,15 +76,16 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Registration 
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={(e)=>onSubmit(e)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="first_name"
                   required
                   fullWidth
-                  id="firstName"
+                  value={first_name}
+                  onChange={(e) => onInputChange(e)}
                   label="First Name"
                   autoFocus
                 />
@@ -69,9 +94,11 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  
                   label="Last Name"
-                  name="lastName"
+                  name="last_name"
+                  value={last_name}
+                  onChange={(e) => onInputChange(e)}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -82,6 +109,8 @@ export default function SignUp() {
                   id="username"
                   label="Username"
                   name="username"
+                  value={username}
+                  onChange={(e) => onInputChange(e)}
                   autoComplete="username"
                 />
               </Grid>
@@ -92,6 +121,8 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value={email}
+                  onChange={(e) => onInputChange(e)}
                   autoComplete="email"
                 />
               </Grid>
@@ -103,24 +134,9 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => onInputChange(e)}
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="repassword"
-                  label="Re-enter Password"
-                  type="password"
-                  id="repassword"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
@@ -146,10 +162,4 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
-
-
-
-
-
-
                                                                                                                                                                                                     
