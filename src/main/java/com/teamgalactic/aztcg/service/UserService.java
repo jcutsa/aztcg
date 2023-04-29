@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamgalactic.aztcg.entity.User;
+import com.teamgalactic.aztcg.exceptions.ResourceNotFoundException;
 import com.teamgalactic.aztcg.repository.AddressRepository;
 import com.teamgalactic.aztcg.repository.UserRepository;
-import com.teamgalactic.aztcg.request.CreateAddressRequest;
 import com.teamgalactic.aztcg.request.CreateUserRequest;
 import com.teamgalactic.aztcg.request.UpdateUserRequest;
 
@@ -22,8 +22,8 @@ public class UserService {
 	AddressRepository addressRepository;
 	
 	public User getUser(Long id) {
-	
-		return userRepository.findById(id).orElse(null);
+		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with ID " + id));
+		return user;
 	}
 	
 	public User createUser(CreateUserRequest createUserRequest) {

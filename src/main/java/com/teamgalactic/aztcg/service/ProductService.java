@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.teamgalactic.aztcg.entity.CardType;
 import com.teamgalactic.aztcg.entity.Product;
-import com.teamgalactic.aztcg.entity.User;
+import com.teamgalactic.aztcg.exceptions.ResourceNotFoundException;
 import com.teamgalactic.aztcg.repository.CardTypeRepository;
 import com.teamgalactic.aztcg.repository.ProductRepository;
 import com.teamgalactic.aztcg.request.CreateProductRequest;
@@ -23,8 +23,8 @@ public class ProductService {
 	CardTypeRepository cardTypeRepository;
 	
 	public Product getProduct(Long id) {
-	
-		return productRepository.findById(id).get();
+		Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with ID " + id));
+		return product;
 	}
 	
 	public Product createProduct(CreateProductRequest createProductRequest) {
