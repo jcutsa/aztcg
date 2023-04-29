@@ -32,7 +32,21 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.Table-header {
+  background-color: rgb(75, 134, 115);
+}
+
+.Table-header-cell {
+  color: white;
+  font-weight: bold;
+}
+
+.Table-row {
+  background-color: rgb(246, 251, 244);
 }
