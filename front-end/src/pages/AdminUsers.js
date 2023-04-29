@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import axios from 'axios';
+import axios from "axios";
 
 const linkStyle = {
   marginRight: "1rem",
@@ -65,14 +65,17 @@ function AdminUsers() {
 
   // Function to create a new user
   const handleCreateUser = (newUser) => {
-    axios.post('http://localhost:8080/api/user/create', newUser)
+    console.log("Creating new user with data:", newUser);
+    console.log(typeof newUser.id)
+    axios
+      .post("http://localhost:8080/api/user/create", newUser)
       .then((response) => {
-        console.log('Created user:', response.data);
+        console.log("Created user:", response.data);
         setUserInfo((prevData) => [...prevData, response.data]);
         handleModalClose();
       })
       .catch((error) => {
-        console.error('Error creating user:', error);
+        console.error("Error creating user:", error);
       });
   };
 
@@ -202,12 +205,13 @@ function AdminUsers() {
               variant="contained"
               onClick={() =>
                 handleCreateUser({
+                  id: 12,
                   first_name: firstName,
                   last_name: lastName,
                   username: username,
                   password: password,
                   email: email,
-                  permissionLevel: admin,
+                  permission_level: 1,
                 })
               }
             >
