@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.teamgalactic.aztcg.entity.Product;
 import com.teamgalactic.aztcg.entity.User;
 import com.teamgalactic.aztcg.exceptions.ResourceNotFoundException;
 import com.teamgalactic.aztcg.order.item.CreateOrderItemRequest;
 import com.teamgalactic.aztcg.order.item.OrderItem;
 import com.teamgalactic.aztcg.order.item.OrderItemRepository;
-import com.teamgalactic.aztcg.repository.UserRepository;
+import com.teamgalactic.aztcg.service.ProductService;
+import com.teamgalactic.aztcg.service.UserService;
 
 @Service
 public class OrderService {
@@ -26,9 +26,10 @@ public class OrderService {
 	OrderItemRepository orderItemRepository;
 	
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
-
+	@Autowired
+	ProductService productService;
 	
 	public Order getOrder(Long id) {
 		Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found with ID " + id));
@@ -40,7 +41,7 @@ public class OrderService {
 		Order order = new Order(createOrderRequest);
 		
 		Long userId = createOrderRequest.getUserId();
-		User user = userRepository.findById(createOrderRequest.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not found with ID " + userId));
+		User user = userService.getUser(userId);
 		
 		order.setUser(user);
 		order = orderRepository.save(order);
@@ -50,6 +51,9 @@ public class OrderService {
 		if (createOrderRequest.getOrderItems() != null) {
 			for (CreateOrderItemRequest createOrderItemRequest : createOrderRequest.getOrderItems()) {
 				OrderItem orderItem = new OrderItem(createOrderItemRequest);
+				
+				Product product = productService.getProduct(createOrderItemRequest.getProductId());
+				orderItem.setProduct(product);
 				orderItem.setOrder(order);
 				orderItemsList.add(orderItem);
 			}
