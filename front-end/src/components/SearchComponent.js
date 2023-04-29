@@ -23,7 +23,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export default function SearchComponent() {
-  const [cardNames, setCardNames] = useState("none");
+  const [cardNames, setCardNames] = useState([]);
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const navigate = useNavigate();

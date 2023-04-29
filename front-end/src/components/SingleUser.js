@@ -15,11 +15,13 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/user/update";
+// const API_URL = "http://localhost:8080/api/user/update";
 
-function SingleUser({ userData, setUserData }) {
+// function SingleUser({ userData, setUserData }) {
+  
+function SingleUser({ userData, setUserData, handleRemoveUser }) {
+  // const { id, first_name, last_name, email, admin } = userData;
   const { id, first_name, last_name, email, permission_level } = userData;
-
   const [open, setOpen] = useState(false);
 
   const [updatedFirstName, setUpdatedFirstName] = useState("");
@@ -50,7 +52,7 @@ function SingleUser({ userData, setUserData }) {
     };
 
     axios
-      .put(API_URL, user)
+      .put("http://localhost:8080/api/user/update", user)
       .then((response) => {
         console.log(response.data);
         // Update state values here
@@ -61,6 +63,7 @@ function SingleUser({ userData, setUserData }) {
         // Handle error here
       });
   }
+
   return (
     <div
       style={{
@@ -83,7 +86,7 @@ function SingleUser({ userData, setUserData }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+          <Typography sx={{ width: "5%", backgroundColor: "white" }}>
             {id}
           </Typography>
           <Typography
@@ -122,12 +125,26 @@ function SingleUser({ userData, setUserData }) {
           >
             {permission_level == 1 ? "Admin" : "User"}
           </Typography>
-
           <Button
             onClick={handleModifyUser}
             sx={{ width: "10%", backgroundColor: "white" }}
           >
             Edit
+          </Button>
+          <Button
+            onClick={() => handleRemoveUser(id)}
+            sx={{
+              backgroundColor: "white",
+              color: "black",
+              "&:hover": {
+                backgroundColor: "#ff5722",
+                transform: "scale(1.05)",
+              },
+              transition: "all 0.3s ease-in-out",
+              marginLeft: "auto",
+            }}
+          >
+            X
           </Button>
         </Stack>
         <Divider

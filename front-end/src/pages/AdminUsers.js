@@ -1,11 +1,8 @@
 import { Checkbox, Divider, FormControlLabel } from "@mui/material";
 import { Typography } from "@mui/material";
-import { AppBar, Drawer, List, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
-import ClippedDrawer from "../components/ClippedDrawer";
 import SingleUser from "../components/SingleUser";
-// import { UserInfo } from "../assetts/UserInfo";
 import { Button, Modal, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IconButton, InputAdornment } from "@mui/material";
@@ -36,6 +33,15 @@ function AdminUsers() {
   const [permissionLevel, setPermissionLevel] = useState(1);
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const resetForm = () => {
+    setFirstName("");
+    setLastName("");
+    setUsername("");
+    setPassword("");
+    setEmail("");
+    setAdmin(false);
+  };
 
   const handleMouseDown = (event) => {
     event.preventDefault();
@@ -76,12 +82,24 @@ function AdminUsers() {
         console.log("Created user:", response.data);
         setUserInfo((prevData) => [...prevData, response.data]);
         handleModalClose();
+        resetForm(); // reset the form after the user is created
       })
       .catch((error) => {
         console.error("Error creating user:", error);
       });
   };
-  
+
+  const handleRemoveUser = (id) => {
+    axios
+      .delete(`http://localhost:8080/api/user/delete/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setUserInfo((prevData) => prevData.filter((user) => user.id !== id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/api/user/getAll")
@@ -130,14 +148,6 @@ function AdminUsers() {
             }}
           >
             <h2>Create New User</h2>
-            {/* <TextField
-              label="ID"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-            /> */}
             <TextField
               label="First Name"
               variant="outlined"
@@ -223,13 +233,6 @@ function AdminUsers() {
             </Button>
           </div>
         </Modal>
-
-        {/* <Stack
-          direction={"row"}
-          style={{ backgroundColor: "white", width: "1000px" }}
-          alignItems="center"
-          justifyContent="space-between"
-        ></Stack> */}
         <div
           style={{
             display: "flex",
@@ -245,7 +248,7 @@ function AdminUsers() {
             justifyContent="space-between"
             style={{ backgroundColor: "white", width: "1000px" }}
           >
-            <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+            <Typography sx={{ width: "5%", backgroundColor: "white" }}>
               ID
             </Typography>
             <Typography sx={{ width: "20%", backgroundColor: "white" }}>
@@ -263,6 +266,9 @@ function AdminUsers() {
             <Typography sx={{ width: "10%", backgroundColor: "white" }}>
               Modify
             </Typography>
+            <Typography sx={{ width: "5%", backgroundColor: "white" }}>
+              Delete
+            </Typography>
           </Stack>
         </div>
         <Divider
@@ -275,11 +281,13 @@ function AdminUsers() {
         />
         {Array.isArray(UserInfo) &&
           UserInfo.map((userData) => (
-            <SingleUser userData={userData} setUserData={setUserData} />
+            <SingleUser
+              key={userData.id}
+              userData={userData}
+              setUserData={setUserData}
+              handleRemoveUser={handleRemoveUser}
+            />
           ))}
-        {/* Button to open modal */}
-
-        {/* Modal to create a new user */}
       </Stack>
     </div>
   );
