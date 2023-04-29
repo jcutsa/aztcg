@@ -20,10 +20,6 @@ function AdminUsers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [UserInfo, setUserInfo] = useState([]);
 
-  // Data not yet implemented for API
-  const [userId, setUserId] = useState("");
-  const [admin, setAdmin] = useState();
-
   // Data for API
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -31,7 +27,7 @@ function AdminUsers() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [permissionLevel, setPermissionLevel] = useState(1);
-
+  const [admin, setAdmin] = useState();
   const [showPassword, setShowPassword] = useState(false);
 
   const resetForm = () => {
@@ -77,6 +73,7 @@ function AdminUsers() {
       .post("http://localhost:8080/api/user/create", {
         ...newUser,
         permission_level: 0,
+        admin: !!newUser.admin, // convert admin to boolean
       })
       .then((response) => {
         console.log("Created user:", response.data);
@@ -95,6 +92,7 @@ function AdminUsers() {
       .then((response) => {
         console.log(response.data);
         setUserInfo((prevData) => prevData.filter((user) => user.id !== id));
+        window.alert(`User with ID ${id} has been deleted.`);
       })
       .catch((error) => {
         console.log(error);
@@ -115,16 +113,16 @@ function AdminUsers() {
   }, []);
 
   return (
-    // Existing code
     <div
       style={{
         padding: "24px 48px",
+        // paddingBottom: "20px",
         textAlign: "center",
-        // overflowY: "scroll",
         height: "100vh",
+        backgroundColor: "white",
       }}
     >
-      <Stack>
+      <Stack style={{ backgroundColor: "white", paddingBottom: "100px" }}>
         <h1>User Info</h1>
         <Button
           variant="contained"
@@ -263,12 +261,32 @@ function AdminUsers() {
             <Typography sx={{ width: "20%", backgroundColor: "white" }}>
               Permissions
             </Typography>
-            <Typography sx={{ width: "10%", backgroundColor: "white" }}>
+            <Button
+              sx={{
+                width: "10%",
+                backgroundColor: "white",
+                textTransform: "capitalize",
+                color: "black",
+                pointerEvents: "none",
+                fontFamily: "Arial",
+                fontSize: "16px",
+              }}
+            >
               Modify
-            </Typography>
-            <Typography sx={{ width: "5%", backgroundColor: "white" }}>
+            </Button>
+            <Button
+              sx={{
+                width: "5%",
+                backgroundColor: "white",
+                textTransform: "capitalize",
+                color: "black",
+                pointerEvents: "none",
+                fontFamily: "Arial",
+                fontSize: "16px",
+              }}
+            >
               Delete
-            </Typography>
+            </Button>
           </Stack>
         </div>
         <Divider

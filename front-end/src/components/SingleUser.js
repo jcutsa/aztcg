@@ -18,7 +18,7 @@ import axios from "axios";
 // const API_URL = "http://localhost:8080/api/user/update";
 
 // function SingleUser({ userData, setUserData }) {
-  
+
 function SingleUser({ userData, setUserData, handleRemoveUser }) {
   // const { id, first_name, last_name, email, admin } = userData;
   const { id, first_name, last_name, email, permission_level } = userData;
@@ -29,10 +29,12 @@ function SingleUser({ userData, setUserData, handleRemoveUser }) {
   const [updatedEmail, setUpdatedEmail] = useState("");
   const [updatedAdmin, setUpdatedAdmin] = useState(false);
 
-  
   const handleOpen = () => {
     setOpen(true);
-    setUpdatedAdmin(permission_level === 1)
+    setUpdatedFirstName(first_name);
+    setUpdatedLastName(last_name);
+    setUpdatedEmail(email);
+    setUpdatedAdmin(permission_level === 1);
   };
 
   const handleClose = () => {
@@ -48,7 +50,7 @@ function SingleUser({ userData, setUserData, handleRemoveUser }) {
       first_name: firstName,
       last_name: lastName,
       email: email,
-      permission_level: isAdmin ? 1 : 0,
+      permission_level: isAdmin ? 1 : 0, // use permission_level instead of isAdmin
     };
 
     axios
@@ -134,6 +136,7 @@ function SingleUser({ userData, setUserData, handleRemoveUser }) {
           <Button
             onClick={() => handleRemoveUser(id)}
             sx={{
+              width: "5%",
               backgroundColor: "white",
               color: "black",
               "&:hover": {
