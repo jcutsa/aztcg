@@ -26,9 +26,6 @@ public class Product {
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="card_key")
-	private String cardKey;
-	
 	@Column(name="name")
 	private String name;
 	
@@ -51,7 +48,6 @@ public class Product {
 	public Product(CreateProductRequest createProductRequest) {
 		this.name = createProductRequest.getName();
 		this.description = createProductRequest.getDescription();
-		this.cardKey = createProductRequest.getCardKey();
 		this.price = createProductRequest.getPrice();
 		this.rarity = createProductRequest.getRarity();
 		this.quantityOnHand = createProductRequest.getQuantityOnHand();

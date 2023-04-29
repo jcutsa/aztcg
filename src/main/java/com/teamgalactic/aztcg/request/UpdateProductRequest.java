@@ -17,9 +17,6 @@ public class UpdateProductRequest {
 	@NotNull(message = "Product Id is required")
 	private Long id;
 	
-	@JsonProperty("card_key")
-	private String cardKey;
-	
 	@JsonProperty("name")
 	private String name;
 	
