@@ -46,8 +46,8 @@ public class User {
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address shippingAddress;
 	
-	@Column(name="permission_level")
-	private Integer permissionLevel;
+	@Column(name = "permission_level", nullable = false)
+    private int permissionLevel = 1;
 
 	@Transient
 	private String fullName;
