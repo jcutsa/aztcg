@@ -25,23 +25,24 @@ public class CreateOrderRequest {
 	private Long id;
 	
     @JsonProperty("user_id")
-    @NotNull(message="User ID is required")
+    @NotNull(message="user_id is required")
     private Long userId;
     
     @JsonProperty("total")
-    @NotNull(message="Total is required")
+    @NotNull(message="total (decimal value) is required")
     private Double total;
     
     @JsonProperty("date")
-    @NotNull(message="Date is required")
+    @NotNull(message="date (yyyy/MM/dd HH:mm:ss) is required")
     @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss")
     private Date dateOrdered;
     
     @JsonProperty("shipped")
+    @NotNull(message="shipped (boolean value) is required")
     private Boolean shipped;
     
     @JsonProperty("items")
-    @NotNull(message="List of order items required")
+    @NotNull(message="items (list of order items) is required")
     List<CreateOrderItemRequest> orderItems;
     
 }

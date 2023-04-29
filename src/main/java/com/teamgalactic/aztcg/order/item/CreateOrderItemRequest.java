@@ -14,19 +14,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateOrderItemRequest {
 
-    @JsonProperty("order_id")
-    @NotNull(message="Order id is required")
-    private Long orderId;
-
     @JsonProperty("quantity")
-    @NotNull(message="Quantity must be at least 1")
-    @Min(value=1)
+    @Min(value=1,message="Quantity must be 1 or more")
     private Integer quantity;
+    
+    @JsonProperty("product_id")
+    @NotNull(message="Product ID is required")
+    private Long productId;
 
-    public CreateOrderItemRequest(Long orderId, Integer quantity) {
-        this.orderId = orderId;
-        this.quantity = quantity;
-    }
 }
 
   
