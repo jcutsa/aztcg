@@ -18,7 +18,7 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/user/update";
 
 function SingleUser({ userData, setUserData }) {
-  const { id, first_name, last_name, email, admin } = userData;
+  const { id, first_name, last_name, email, permission_level } = userData;
 
   const [open, setOpen] = useState(false);
 
@@ -26,9 +26,11 @@ function SingleUser({ userData, setUserData }) {
   const [updatedLastName, setUpdatedLastName] = useState("");
   const [updatedEmail, setUpdatedEmail] = useState("");
   const [updatedAdmin, setUpdatedAdmin] = useState(false);
+
   
   const handleOpen = () => {
     setOpen(true);
+    setUpdatedAdmin(permission_level === 1)
   };
 
   const handleClose = () => {
@@ -44,7 +46,7 @@ function SingleUser({ userData, setUserData }) {
       first_name: firstName,
       last_name: lastName,
       email: email,
-      admin: isAdmin,
+      permission_level: isAdmin ? 1 : 0,
     };
 
     axios
@@ -118,7 +120,7 @@ function SingleUser({ userData, setUserData }) {
               overflowWrap: "break-word",
             }}
           >
-            {admin ? "Admin" : "User"}
+            {permission_level == 1 ? "Admin" : "User"}
           </Typography>
 
           <Button

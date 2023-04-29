@@ -70,7 +70,7 @@ function AdminUsers() {
     axios
       .post("http://localhost:8080/api/user/create", {
         ...newUser,
-        permission_level: 1,
+        permission_level: 0,
       })
       .then((response) => {
         console.log("Created user:", response.data);
