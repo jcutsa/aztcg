@@ -30,10 +30,11 @@ public class DiscountService {
 		
 		String name = updateDiscountRequest.getName();
 		Double percentage = updateDiscountRequest.getPercentage();
+		Integer active = updateDiscountRequest.getActive();
 		
-
 		if (name != null && !name.isEmpty()) discount.setName(name);
 		if (percentage != null) discount.setPercentage(percentage);
+		if (active != null) discount.setActive(active);
 		discount = discountRepository.save(discount);
 		
 		return discount;

@@ -17,5 +17,7 @@ public class CreateDiscountRequest {
 	
 	@JsonProperty("percentage")
 	private Double percentage = 1.0D;
-	
+
+	@JsonProperty("active")
+	private Integer active;
 }

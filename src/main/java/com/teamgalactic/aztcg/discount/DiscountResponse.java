@@ -19,11 +19,15 @@ public class DiscountResponse {
 	@JsonProperty("percentage")
 	private Double percentage;
 
+	@JsonProperty("active")
+	private Integer active;
+
 	public DiscountResponse(Discount discount) {
 		
 		this.id = discount.getId();
 		this.name = discount.getName();
 		this.percentage = discount.getPercentage();
+		this.active = discount.getActive();
 	}
 
 }

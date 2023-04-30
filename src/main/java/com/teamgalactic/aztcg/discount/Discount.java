@@ -31,5 +31,6 @@ public class Discount {
 	public Discount(CreateDiscountRequest createDiscountRequest) {
 		this.name = createDiscountRequest.getName();
 		this.percentage = createDiscountRequest.getPercentage();
+		this.active = createDiscountRequest.getActive();
 	}
 }
