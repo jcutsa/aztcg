@@ -31,6 +31,9 @@ public class ProductResponse {
 	
 	@JsonProperty("card_type")
 	private CardTypeResponse cardType;
+	
+	@JsonProperty("image_url")
+	private String imageUrl;
 
 	public ProductResponse(Product product) {
 		
@@ -41,6 +44,7 @@ public class ProductResponse {
 		this.price = product.getPrice();
 		this.rarity = product.getRarity();
 		this.cardType = new CardTypeResponse(product.getCardType());
+		this.imageUrl = product.getImageUrl();
 		
 	}
 

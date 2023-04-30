@@ -39,6 +39,10 @@ public class CreateProductRequest {
 	@NotNull(message="card_type (positive ID number) is required")
 	private Long cardTypeId;
 	
+	@JsonProperty("image_url")
+	@NotBlank(message="image_url is required")
+	private String imageUrl;
+	
 	
 	
 }

@@ -2,6 +2,7 @@ package com.teamgalactic.aztcg.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -39,6 +40,6 @@ public class UpdateProductRequest {
 	@Max(value=3)
 	private Long cardTypeId;
 	
-	
-	
+	@JsonProperty("image_url")
+	private String imageUrl;
 }

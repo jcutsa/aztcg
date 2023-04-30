@@ -42,8 +42,13 @@ public class Product {
 	@Column(name="rarity")
 	private String rarity;
 	
+	@Column(name="image_url")
+	private String imageUrl;
+	
 	@Column(name="quantity_on_hand")
 	private Integer quantityOnHand;
+	
+
 	
 	public Product(CreateProductRequest createProductRequest) {
 		this.name = createProductRequest.getName();
@@ -51,6 +56,7 @@ public class Product {
 		this.price = createProductRequest.getPrice();
 		this.rarity = createProductRequest.getRarity();
 		this.quantityOnHand = createProductRequest.getQuantityOnHand();
+		this.imageUrl = createProductRequest.getImageUrl();
 	}
 	
 }
