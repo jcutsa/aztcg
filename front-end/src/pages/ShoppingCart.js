@@ -26,6 +26,7 @@ export default function ShoppingCart({ user, removeItem, updateQuantity, loggedI
         height: "100vh",
       }}
     >
+      {loggedIn ?(
       <Stack>
         <h1>Shopping Cart</h1>
         <Stack
@@ -99,7 +100,7 @@ export default function ShoppingCart({ user, removeItem, updateQuantity, loggedI
               </Button>
             </Stack>
         )}
-      </Stack>
+      </Stack>) : (<Typography>Please sign in to view cart</Typography>)}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import cards from "../assetts/CardsData";
 
-function SingleCard({ setUser }) {
+function SingleCard({ setUser, loggedIn }) {
   const { cardId } = useParams();
   const [card, setCard] = useState({});
   const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -57,6 +57,7 @@ function SingleCard({ setUser }) {
           />
           <Stack direction={"column"}>
             <h2>{card.name}</h2>
+            {!loggedIn ? (<Typography>Please sign in to view stock and add to cart</Typography>) : (
             <Card sx={{ padding: "24px" }}>
               <Stack direction={"column"}>
                 <h3>${card.price}</h3>
@@ -109,7 +110,7 @@ function SingleCard({ setUser }) {
                   Out of Stock
                 </Button>
               )}
-            </Card>
+            </Card>)}
           </Stack>
         </Stack>
       </p>

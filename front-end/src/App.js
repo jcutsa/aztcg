@@ -97,7 +97,7 @@ export default function App() {
           />
           <Route
             path="/card/:cardId"
-            element={<SingleCard setUser={setUser} />}
+            element={<SingleCard setUser={setUser} loggedIn={loggedIn} />}
           />
 
           <Route path="/checkout" element={<Checkout />} />

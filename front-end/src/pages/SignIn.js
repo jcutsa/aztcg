@@ -37,7 +37,7 @@ export default function SignIn({ user, setUser, loggedIn, setLoggedIn }) {
             `User with email ${email} and password ${password} found in database`
           );
           if (userWithEmail.permission_level === 1) {
-            console.log(true);
+            // console.log(userWithEmail.password);
             setUser({
               id: userWithEmail.id,
               firstName: userWithEmail.first_name,
@@ -60,12 +60,14 @@ export default function SignIn({ user, setUser, loggedIn, setLoggedIn }) {
             });
           }
           setLoggedIn(true); // Set loggedIn state here
-          console.log(user);
+          setSubmitted(false);
+          // console.log(user);
         } else {
           // the submitted email and/or password are invalid
           console.log(
             `User with email ${email} and/or password ${password} not found in database`
           );
+          setSubmitted(true)
         }
       })
       .catch((error) => console.error(error));
@@ -133,12 +135,6 @@ export default function SignIn({ user, setUser, loggedIn, setLoggedIn }) {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  // onClick
-                  // onClick={() => {
-                  //   if (user.firstName !== "") {
-                  //     window.location.href = "/";
-                  //   }
-                  // }}
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign In
