@@ -95,30 +95,32 @@ function AdminProducts() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead className="Table-header">
                         <TableRow>
-                            <TableCell className="Table-header-cell">
+                            <TableCell
+                                sx={{ color: "white", fontWeight: "bold" }}
+                            >
                                 Name
                             </TableCell>
                             <TableCell
                                 align="right"
-                                className="Table-header-cell"
+                                sx={{ color: "white", fontWeight: "bold" }}
                             >
                                 Rarity
                             </TableCell>
                             <TableCell
                                 align="right"
-                                className="Table-header-cell"
+                                sx={{ color: "white", fontWeight: "bold" }}
                             >
                                 Quantity
                             </TableCell>
                             <TableCell
                                 align="right"
-                                className="Table-header-cell"
+                                sx={{ color: "white", fontWeight: "bold" }}
                             >
                                 Price
                             </TableCell>
                             <TableCell
                                 align="right"
-                                className="Table-header-cell"
+                                sx={{ color: "white", fontWeight: "bold" }}
                             >
                                 Actions
                             </TableCell>
