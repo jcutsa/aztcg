@@ -18,6 +18,7 @@ import AdminProducts from "./pages/AdminProducts.js"; // import the admin dashbo
 import AdminUsers from "./pages/AdminUsers.js"; // import the admin dashboard component
 import AdminOrders from "./pages/AdminOrders.js"; // import the admin dashboard component
 import AdminProductEdit from "./pages/AdminProductEdit.js";
+import AdminDiscount from "./pages/AdminDiscount.js";
 // import handleCreateUser from "./pages/AdminUsers";
 
 export default function App() {
@@ -119,6 +120,7 @@ export default function App() {
             element={<AdminLogin user={user} setUser={setUser} />}
           />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin-discount" element={<AdminDiscount />} />
           <Route path="/admin-products" element={<AdminProducts />} />
           <Route path="/admin-product-edit" element={<AdminProductEdit />} />
           <Route path="/admin-users" element={<AdminUsers user={user} />} />

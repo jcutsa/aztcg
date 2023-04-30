@@ -19,4 +19,7 @@ public class UpdateDiscountRequest {
 	@JsonProperty("percentage")
 	private Double percentage;
 
+	@JsonProperty("active")
+	private Integer active;
+
 }
