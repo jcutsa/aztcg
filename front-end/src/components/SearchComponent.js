@@ -3,10 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import DropdownMenu from "./DropdownMenu";
-import cards from "../assetts/CardsData";
 import { Autocomplete, TextField } from "@mui/material";
-
-const options = ["All", "Yu-Gi-Oh!", "Magic"];
+import axios from "axios";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   display: "inline-flex",
@@ -24,7 +22,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 export default function SearchComponent() {
   const [cardNames, setCardNames] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState("All");
+  const [options, setOptions] = useState([]);
+  const [cards, setCards] = useState([]);
 
   const navigate = useNavigate();
 
@@ -38,23 +38,40 @@ export default function SearchComponent() {
   };
 
   useEffect(() => {
-    if (selectedOption === "All") {
-      setCardNames(cards.map((card) => card.name));
-    } else {
-      filterCards(selectedOption);
-    }
+    axios
+      .get("http://localhost:8080/api/product/getAll")
+      .then((response) => {
+        const cards = response.data;
+        setCards(cards); // store response data in cards state variable
+        setOptions(getUniqueBrands(cards));
+        if (selectedOption === "All") { // change the default selected option to "All"
+          setCardNames(cards.map((card) => card.name));
+        } else {
+          filterCards(selectedOption);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [selectedOption]);
 
+  const getUniqueBrands = (cards) => {
+    const brands = new Set(cards.map((card) => card.card_type.name));
+    return ["All", ...brands];
+  };
+
   const filterCards = (targetBrand) => {
-    let foundCards = cards.filter((c) => c.brand === targetBrand);
+    let foundCards = cards.filter((c) => c.card_type.name === targetBrand);
     let cardNames = foundCards.map((c) => c.name);
     setCardNames(cardNames);
   };
+
   return (
     <StyledPaper>
       <DropdownMenu
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
+        options={options}
       />
       <Autocomplete
         disablePortal

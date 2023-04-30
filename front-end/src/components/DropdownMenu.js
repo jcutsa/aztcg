@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuItem } from "@mui/material";
 
-const options = ["All", "Yu-Gi-Oh!", "Magic", "Pokemon", "Digimon"];
+// const options = ["All", "Yu-Gi-Oh!", "Magic", "Pokemon", "Digimon"];
 
-const DropdownMenu = ({selectedOption, setSelectedOption}) => {
+const DropdownMenu = ({selectedOption, setSelectedOption, options}) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
