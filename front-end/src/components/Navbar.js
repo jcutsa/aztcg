@@ -16,6 +16,7 @@ import { Button, Stack } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import { Badge } from "@mui/material";
 import { Typography } from '@mui/material';
+import PercentIcon from '@mui/icons-material/Percent';
 
 // import { Badge } from "@mui/material";
 
@@ -203,6 +204,15 @@ export default function Navbar({ user, admin, loggedIn , onSignOut}) {
                     >
                       <ArchiveIcon />
                       Orders
+                    </MenuItem>
+                    <MenuItem
+                      component={Link}
+                      to="/admin-discount"
+                      onClick={handleClose}
+                      disableRipple
+                    >
+                      <PercentIcon />
+                      Discounts
                     </MenuItem>
                   </StyledMenu>
                 </div>
