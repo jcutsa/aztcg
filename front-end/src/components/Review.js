@@ -9,50 +9,16 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 
-// Can probably hardcode the tax value in here
-// Add discount code entry text box
-// Does the API call to verify the discount code live here or in Checkout?
-
-const products = [
-    {
-        name: "Product 1",
-        desc: "A nice thing",
-        price: "9.99",
-        quantity: 1,
-    },
-    {
-        name: "Product 2",
-        desc: "Another thing",
-        price: "3.45",
-        quantity: 1,
-    },
-    {
-        name: "Product 3",
-        desc: "Something else",
-        price: "6.51",
-        quantity: 1,
-    },
-    {
-        name: "Product 4",
-        desc: "Best thing of all",
-        price: "14.11",
-        quantity: 1,
-    },
-];
-
-let subtotal = Number(
-    products
-        .reduce((acc, item) => acc + item.quantity * parseFloat(item.price), 0)
-        .toFixed(2)
-);
-
-let tax = Number((subtotal * 0.0825).toFixed(2));
-let totalPrice = (subtotal + tax).toFixed(2);
-
-export default function Review({ value }) {
+export default function Review({ value, user }) {
     const [discountCodes, setDiscountCodes] = useState([]);
     const [codeInput, setCodeInput] = useState("");
-    const [validCode, setValidCode] = useState({});
+    //const [validCode, setValidCode] = useState({});
+    //const [subtotal, setSubtotal] = useState(user.total);
+    //console.log(user.total);
+
+    let subtotal = user.total;
+    let tax = Number((subtotal * 0.0825).toFixed(2));
+    let totalPrice = (subtotal + tax).toFixed(2);
 
     // Get a list of all valid discount codes
     useEffect(() => {
@@ -64,16 +30,19 @@ export default function Review({ value }) {
     }, []);
 
     // Searches code list for a matching code.
-    const handleDiscountSubmit = () => {
+    const handleDiscountSubmit = (e) => {
         const searchCode = discountCodes.filter((e) => e.name === codeInput);
         if (searchCode.length > 0) {
-            let percentage = searchCode[0].percentage * 100.0;
-            alert(percentage + "% discount has been applied!");
-            setValidCode(searchCode[0]);
-            //subtotal *= 1 - validCode.percentage;
+            alert(searchCode[0].percentage + "% discount has been applied!");
+            //setValidCode(searchCode[0]);
+            let discount = (searchCode[0].percentage / 100) * subtotal;
+            //setSubtotal(subtotal - discount);
+            subtotal -= discount;
+            alert(subtotal);
+            e.currentTarget.disabled = true;
         } else {
             alert(codeInput + " is not a valid discount code!");
-            setValidCode({});
+            //setValidCode({});
         }
     };
 
@@ -100,14 +69,18 @@ export default function Review({ value }) {
                 Order summary
             </Typography>
             <List disablePadding>
-                {products.map((product) => (
-                    <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
+                {user.cart.map((item) => (
+                    <ListItem key={item.name} sx={{ py: 1, px: 0 }}>
                         <ListItemText
-                            primary={product.name}
-                            secondary={product.desc}
+                            primary={item.name}
+                            secondary={item.brand}
                         />
+                        <Typography variant="subtitle2" sx={{ mr: 3 }}>
+                            ${Number(item.price).toFixed(2)} x{" "}
+                            {item.quantitySelected} :
+                        </Typography>
                         <Typography variant="body2">
-                            ${product.price}
+                            ${Number(item.totalPrice).toFixed(2)}
                         </Typography>
                     </ListItem>
                 ))}

@@ -63,6 +63,11 @@ export default function App() {
             }
             return item;
         });
+        // FIXME: Right now, total is only getting updated when you click on the -/+ icons in shopping cart.
+        //        I think this is because shopping cart passes updateQuantity as a prop to CartItem.js
+        //        Expected behavior is for total to be updated any time the content of the cart changes.
+        //        But where do we make that change? ShoppingCart.js has it's own total state var when it
+        //        should probably use user.total
         const newTotal = updatedCartItems.reduce(
             (total, item) => total + item.totalPrice,
             0
@@ -99,13 +104,18 @@ export default function App() {
                     <Route
                         path="/card/:cardId"
                         element={
-                            <SingleCard setUser={setUser} loggedIn={loggedIn} />
+                            <SingleCard
+                                // Trying to fix user total not updating
+                                user={user}
+                                setUser={setUser}
+                                loggedIn={loggedIn}
+                            />
                         }
                     />
 
                     <Route
                         path="/checkout"
-                        element={<Checkout user={user} loggedIn={loggedIn} />}
+                        element={<Checkout user={user} />}
                     />
                     <Route
                         path="/sign-in"

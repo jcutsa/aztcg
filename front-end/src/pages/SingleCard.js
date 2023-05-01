@@ -13,7 +13,7 @@ import defaultImage from "../assetts/images/card1.jpg";
 
 // import cards from "../assetts/CardsData";
 
-function SingleCard({ setUser, loggedIn }) {
+function SingleCard({ user, setUser, loggedIn }) {
     const { cardId } = useParams();
     const [card, setCard] = useState({});
     const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -28,7 +28,7 @@ function SingleCard({ setUser, loggedIn }) {
                     name: cardData.name,
                     brand: cardData.card_type.name,
                     image: cardData.image_url || defaultImage,
-                    price: cardData.price.toFixed(2),
+                    price: cardData.price,
                     inStock: cardData.quantity_on_hand > 0,
                     quantity: cardData.quantity_on_hand,
                     id: cardData.id.toString(),
@@ -54,6 +54,8 @@ function SingleCard({ setUser, loggedIn }) {
         setUser((prevUser) => ({
             ...prevUser,
             cart: [...prevUser.cart, newItem],
+            // May be incorrect
+            total: prevUser.total + newItem.totalPrice,
         }));
         console.log(
             `Added ${selectedQuantity} ${card.name} to cart // Card id: ${card.id}`
@@ -87,7 +89,7 @@ function SingleCard({ setUser, loggedIn }) {
                         ) : (
                             <Card sx={{ padding: "24px" }}>
                                 <Stack direction={"column"}>
-                                    <h3>${card.price}</h3>
+                                    <h3>${Number(card.price).toFixed(2)}</h3>
                                 </Stack>
                                 {card.inStock ? (
                                     <Stack

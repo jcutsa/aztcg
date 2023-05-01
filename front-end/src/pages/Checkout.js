@@ -26,12 +26,12 @@ const steps = ["Shipping address", "Payment details", "Review your order"];
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#4b8673",
+            main: "#5FD068",
         },
     },
 });
 
-export default function Checkout() {
+export default function Checkout({ user }) {
     const [orderDetails, setOrderDetails] = useState({
         firstName: "",
         lastName: "",
@@ -77,7 +77,7 @@ export default function Checkout() {
                     <PaymentForm value={orderDetails} onChange={handleChange} />
                 );
             case 2:
-                return <Review value={orderDetails} />;
+                return <Review value={orderDetails} user={user} />;
             default:
                 throw new Error("Unknown step");
         }
