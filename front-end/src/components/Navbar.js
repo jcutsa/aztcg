@@ -15,6 +15,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Stack } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import { Badge } from "@mui/material";
+import { Typography } from '@mui/material';
 
 // import { Badge } from "@mui/material";
 
@@ -32,10 +33,11 @@ const linkStyle = {
   fontSize: "1.2rem",
 };
 
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#000000",
+      main: "#4B8673",
     },
   },
 });
@@ -111,6 +113,7 @@ export default function Navbar({ user, admin, loggedIn , onSignOut}) {
               spacing={3}
               style={{ display: "flex", alignItems: "center" }}
             >
+              <Typography variant="h4" sx={{fontStyle: 'italic'}}>A-Z TCG Marketplace</Typography>
               <SearchComponent></SearchComponent>
               {user.firstName === "" ? (
                 <Link style={linkStyle} to="/sign-in" color="inherit">
