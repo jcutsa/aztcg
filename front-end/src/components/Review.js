@@ -9,16 +9,12 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 
-export default function Review({ value, user }) {
+export default function Review({ value, user, setUser }) {
     const [discountCodes, setDiscountCodes] = useState([]);
     const [codeInput, setCodeInput] = useState("");
-    //const [validCode, setValidCode] = useState({});
-    //const [subtotal, setSubtotal] = useState(user.total);
-    //console.log(user.total);
 
-    let subtotal = user.total;
-    let tax = Number((subtotal * 0.0825).toFixed(2));
-    let totalPrice = (subtotal + tax).toFixed(2);
+    let tax = Number((user.total * 0.0825).toFixed(2));
+    let totalPrice = (user.total + tax).toFixed(2);
 
     // Get a list of all valid discount codes
     useEffect(() => {
@@ -32,17 +28,17 @@ export default function Review({ value, user }) {
     // Searches code list for a matching code.
     const handleDiscountSubmit = (e) => {
         const searchCode = discountCodes.filter((e) => e.name === codeInput);
+
         if (searchCode.length > 0) {
             alert(searchCode[0].percentage + "% discount has been applied!");
-            //setValidCode(searchCode[0]);
-            let discount = (searchCode[0].percentage / 100) * subtotal;
-            //setSubtotal(subtotal - discount);
-            subtotal -= discount;
-            alert(subtotal);
+            const newTotal = user.total * (1 - searchCode[0].percentage / 100);
+            setUser({
+                ...user,
+                total: newTotal,
+            });
             e.currentTarget.disabled = true;
         } else {
             alert(codeInput + " is not a valid discount code!");
-            //setValidCode({});
         }
     };
 
@@ -109,7 +105,9 @@ export default function Review({ value, user }) {
 
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Subtotal" />
-                    <Typography variant="body2">${subtotal}</Typography>
+                    <Typography variant="body2">
+                        ${user.total.toFixed(2)}
+                    </Typography>
                 </ListItem>
 
                 <ListItem sx={{ py: 1, px: 0 }}>

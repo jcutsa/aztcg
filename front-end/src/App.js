@@ -115,7 +115,7 @@ export default function App() {
 
                     <Route
                         path="/checkout"
-                        element={<Checkout user={user} />}
+                        element={<Checkout user={user} setUser={setUser} />}
                     />
                     <Route
                         path="/sign-in"
