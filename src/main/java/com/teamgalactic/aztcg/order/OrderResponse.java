@@ -24,6 +24,9 @@ public class OrderResponse {
     @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss")
     private Date dateOrdered;
     
+    @JsonProperty("total")
+    private Double total;
+    
     @JsonProperty("order_items")
     private List<OrderItemResponse> orderItems = new ArrayList<>();
 
