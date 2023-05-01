@@ -57,7 +57,7 @@ export default function Checkout() {
     };
 
     const handleNext = () => {
-        console.log(orderDetails);
+        //console.log(orderDetails);
         setActiveStep(activeStep + 1);
     };
 

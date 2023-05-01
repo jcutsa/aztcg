@@ -6,6 +6,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
+import { useState, useEffect } from "react";
 
 // Can probably hardcode the tax value in here
 // Add discount code entry text box
@@ -38,15 +40,43 @@ const products = [
     },
 ];
 
-const subtotal = Number(
+let subtotal = Number(
     products
         .reduce((acc, item) => acc + item.quantity * parseFloat(item.price), 0)
         .toFixed(2)
 );
-const tax = Number((subtotal * 0.0825).toFixed(2));
-const totalPrice = (subtotal + tax).toFixed(2);
+
+let tax = Number((subtotal * 0.0825).toFixed(2));
+let totalPrice = (subtotal + tax).toFixed(2);
 
 export default function Review({ value }) {
+    const [discountCodes, setDiscountCodes] = useState([]);
+    const [codeInput, setCodeInput] = useState("");
+    const [validCode, setValidCode] = useState({});
+
+    // Get a list of all valid discount codes
+    useEffect(() => {
+        fetch("http://localhost:8080/api/discount/getAll")
+            .then((response) => response.json())
+            .then((data) => {
+                setDiscountCodes(data);
+            });
+    }, []);
+
+    // Searches code list for a matching code.
+    const handleDiscountSubmit = () => {
+        const searchCode = discountCodes.filter((e) => e.name === codeInput);
+        if (searchCode.length > 0) {
+            let percentage = searchCode[0].percentage * 100.0;
+            alert(percentage + "% discount has been applied!");
+            setValidCode(searchCode[0]);
+            //subtotal *= 1 - validCode.percentage;
+        } else {
+            alert(codeInput + " is not a valid discount code!");
+            setValidCode({});
+        }
+    };
+
     let addresses = Object.entries(value)
         .slice(2, 8)
         .map((entry) => entry[1]);
@@ -86,12 +116,22 @@ export default function Review({ value }) {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Discount Code" />
                     <TextField
-                        sx={{ width: 100 }}
+                        sx={{ width: 100, mr: 1 }}
                         id="discount"
                         name="discount"
                         variant="outlined"
                         size="small"
+                        onChange={(v) =>
+                            setCodeInput(v.target.value.toUpperCase())
+                        }
                     />
+                    <Button
+                        variant="contained"
+                        size="small"
+                        onClick={handleDiscountSubmit}
+                    >
+                        Submit
+                    </Button>
                 </ListItem>
 
                 <ListItem sx={{ py: 1, px: 0 }}>

@@ -45,7 +45,7 @@ function AdminProducts() {
     };
 
     const productList = products.map((product) => {
-        const link = "/admin-product-edit/" + product.id;
+        const editLink = "/admin-product-edit/" + product.id;
         return (
             <TableRow key={product.id} className="Table-row">
                 <TableCell component="th" scope="row">
@@ -60,7 +60,8 @@ function AdminProducts() {
                             size="small"
                             color="success"
                             variant="contained"
-                            href={link}
+                            component={Link}
+                            to={editLink}
                             sx={{ mr: 1 }}
                         >
                             Edit
@@ -84,7 +85,8 @@ function AdminProducts() {
             <Grid container justifyContent="flex-end">
                 <Button
                     variant="contained"
-                    href="/admin-product-edit/new"
+                    component={Link}
+                    to="/admin-product-edit/new"
                     color="success"
                 >
                     Add Product

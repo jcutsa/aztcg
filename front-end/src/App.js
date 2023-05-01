@@ -22,116 +22,133 @@ import AdminDiscount from "./pages/AdminDiscount.js";
 // import handleCreateUser from "./pages/AdminUsers";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+    const [loggedIn, setLoggedIn] = React.useState(false);
 
-  const [user, setUser] = useState({
-    id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    cart: [],
-    admin: false,
-    total: 0,
-  });
-
-  const handleSignOut = () => {
-    setLoggedIn(false);
-    setUser({
-      firstName: "",
-      lastName: "",
-      email: "",
-      cart: [],
-      admin: false,
-      total: 0,
+    const [user, setUser] = useState({
+        id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        cart: [],
+        admin: false,
+        total: 0,
     });
-  };
 
-  const removeItem = (id) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      cart: prevUser.cart.filter((item) => item.id !== id),
-    }));
-  };
+    const handleSignOut = () => {
+        setLoggedIn(false);
+        setUser({
+            firstName: "",
+            lastName: "",
+            email: "",
+            cart: [],
+            admin: false,
+            total: 0,
+        });
+    };
 
-  const updateQuantity = (itemId, newQuantity) => {
-    const updatedCartItems = user.cart.map((item) => {
-      if (item.id === itemId) {
-        const updatedItem = { ...item, quantitySelected: newQuantity };
-        updatedItem.totalPrice =
-          updatedItem.price * updatedItem.quantitySelected;
-        return updatedItem;
-      }
-      return item;
-    });
-    const newTotal = updatedCartItems.reduce(
-      (total, item) => total + item.totalPrice,
-      0
+    const removeItem = (id) => {
+        setUser((prevUser) => ({
+            ...prevUser,
+            cart: prevUser.cart.filter((item) => item.id !== id),
+        }));
+    };
+
+    const updateQuantity = (itemId, newQuantity) => {
+        const updatedCartItems = user.cart.map((item) => {
+            if (item.id === itemId) {
+                const updatedItem = { ...item, quantitySelected: newQuantity };
+                updatedItem.totalPrice =
+                    updatedItem.price * updatedItem.quantitySelected;
+                return updatedItem;
+            }
+            return item;
+        });
+        const newTotal = updatedCartItems.reduce(
+            (total, item) => total + item.totalPrice,
+            0
+        );
+        setUser({
+            ...user,
+            cart: updatedCartItems,
+            total: newTotal,
+        });
+    };
+
+    return (
+        <BrowserRouter>
+            <Navbar user={user} onSignOut={handleSignOut} />
+
+            <div>
+                <Routes>
+                    <Route exact path="/" element={<Cards />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route
+                        path="/shopping-cart"
+                        element={
+                            <ShoppingCart
+                                user={user}
+                                removeItem={removeItem}
+                                updateQuantity={updateQuantity}
+                                total={user.total}
+                                loggedIn={loggedIn}
+                                setLoggedIn={setLoggedIn}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/card/:cardId"
+                        element={
+                            <SingleCard setUser={setUser} loggedIn={loggedIn} />
+                        }
+                    />
+
+                    <Route
+                        path="/checkout"
+                        element={<Checkout user={user} loggedIn={loggedIn} />}
+                    />
+                    <Route
+                        path="/sign-in"
+                        element={
+                            <SignIn
+                                user={user}
+                                setUser={setUser}
+                                loggedIn={loggedIn}
+                                setLoggedIn={setLoggedIn}
+                            />
+                        }
+                    />
+                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route
+                        path="/forgot-password"
+                        element={<ForgotPassword />}
+                    />
+                    <Route
+                        path="/admin-login"
+                        element={<AdminLogin user={user} setUser={setUser} />}
+                    />
+                    <Route
+                        path="/admin-dashboard"
+                        element={<AdminDashboard />}
+                    />
+                    <Route path="/admin-discount" element={<AdminDiscount />} />
+                    <Route path="/admin-products" element={<AdminProducts />} />
+                    <Route
+                        path="/admin-product-edit"
+                        element={<AdminProductEdit />}
+                    />
+                    <Route
+                        path="/admin-users"
+                        element={<AdminUsers user={user} />}
+                    />
+                    <Route
+                        path="/admin-users"
+                        element={<AdminUsers user={user} setUser={setUser} />}
+                    />
+                    <Route path="/admin-orders" element={<AdminOrders />} />
+                    {/* <Route path="/logged-in" element={<LoggedIn />} /> */}
+                </Routes>
+            </div>
+        </BrowserRouter>
     );
-    setUser({
-      ...user,
-      cart: updatedCartItems,
-      total: newTotal,
-    });
-  };
-
-  return (
-    <BrowserRouter>
-      <Navbar user={user} onSignOut={handleSignOut} />
-
-      <div>
-        <Routes>
-          <Route exact path="/" element={<Cards />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route
-            path="/shopping-cart"
-            element={
-              <ShoppingCart
-                user={user}
-                removeItem={removeItem}
-                updateQuantity={updateQuantity}
-                total={user.total}
-                loggedIn={loggedIn}
-                setLoggedIn={setLoggedIn}
-              />
-            }
-          />
-          <Route
-            path="/card/:cardId"
-            element={<SingleCard setUser={setUser} loggedIn={loggedIn} />}
-          />
-
-          <Route path="/checkout" element={<Checkout />} />
-          <Route
-            path="/sign-in"
-            element={
-              <SignIn
-                user={user}
-                setUser={setUser}
-                loggedIn={loggedIn}
-                setLoggedIn={setLoggedIn}
-              />
-            }
-          />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route
-            path="/admin-login"
-            element={<AdminLogin user={user} setUser={setUser} />}
-          />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/admin-discount" element={<AdminDiscount />} />
-          <Route path="/admin-products" element={<AdminProducts />} />
-          <Route path="/admin-product-edit" element={<AdminProductEdit />} />
-          <Route path="/admin-users" element={<AdminUsers user={user} />} />
-          <Route
-            path="/admin-users"
-            element={<AdminUsers user={user} setUser={setUser} />}
-          />
-          <Route path="/admin-orders" element={<AdminOrders />} />
-          {/* <Route path="/logged-in" element={<LoggedIn />} /> */}
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
 }
