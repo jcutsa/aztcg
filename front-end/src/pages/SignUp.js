@@ -50,10 +50,6 @@ export default function SignUp() {
     //navigate used to route back to the homepage after submit is done 
     navigate("/")
 
-
-
-
-    
   };
 
     
