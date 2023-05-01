@@ -3,10 +3,11 @@ import DataTable from './DataTable';
 
 
     const columns = [
-        {field: 'user_id', headerName: 'User ID', width: 150},
-        {field: 'shipped', headerName: 'Shipping Status', width: 150},
-        {field: 'date', headerName: 'Date', width:150}, 
-        {field: 'order_items', headerName: 'Order Items', width:150}
+        {field: 'date', headerName: 'Date', width:150, headerAlign: 'center'}, 
+        {field: 'user_id', headerName: 'User ID', width: 150, headerAlign: 'center'},
+        {field: 'shipped', headerName: 'Shipping Status', width: 150, headerAlign: 'center'},
+        
+        {field: 'order_items', headerName: 'Order Items', width:150,  headerAlign: 'center'}
 
     ];
 
@@ -20,8 +21,13 @@ const OrderTable = () => {
           .then((json) => setOrders(json))
     }, []);
 
+
+
+
      return (
+        
          <DataTable
+
             rows = {orders}
             columns={columns}
             />

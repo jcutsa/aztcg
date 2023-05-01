@@ -1,7 +1,9 @@
 export const gridWrapperStyles = {
-    position: 'relative',
-    padding: '48px 32px',
-    minHeight: 'calc(100vh - 166px)',
-    marginLeft: '320px',
-    backgroundColor: '#eaeff1',
+    position: 'center',
+    padding: '100px',
+    minHeight: 'auto',
+    marginLeft: '100px',
+    marginRight: '100px',
+    textAlign: "center",
+    backgroundColor: '#FFFFFF',
 };

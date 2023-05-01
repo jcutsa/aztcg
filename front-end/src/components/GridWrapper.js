@@ -6,7 +6,7 @@ import { gridWrapperStyles } from './styles/GridStyles';
 const GridWrapper = ({ children }) => {
 
     return (
-        <Grid item xs={12} sx={gridWrapperStyles}>
+        <Grid item xs={5} sx={gridWrapperStyles}>
             {children}
         </Grid>
     )
