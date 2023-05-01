@@ -1,12 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from './DataTable';
 import { GridToolbar } from '@mui/x-data-grid';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+function getShippedStatusCell(shippedValue){
+
+    if (shippedValue === true) {
+        return <DoneIcon/>;
+      } else {
+        return <CloseIcon/>;
+      }
+    }
 
 
     const columns = [
         {field: 'date', headerName: 'Date Order Placed', width:300, headerAlign: 'center',align: 'center'}, 
         {field: 'user_id', headerName: 'User ID', width: 150, headerAlign: 'center', align: 'center'},
-        {field: 'shipped', headerName: 'Shipping Status', width: 150, headerAlign: 'center',align: 'center'
+        {field: 'shipped', type: 'boolean', headerName: 'Shipping Status', width: 150, headerAlign: 'center',align: 'center',
+
+        renderCell: (params) => {
+            return getShippedStatusCell(params.value);
+          }
        
         },
         
@@ -33,6 +49,13 @@ const OrderTable = () => {
             setOrders(json)})
     }, []);
     console.log(orders.date)
+
+    if (orders.shipped === false){
+
+        orders.shipped = DoneIcon
+    } else{
+        orders.shipped = CloseIcon
+    }
 
 
 

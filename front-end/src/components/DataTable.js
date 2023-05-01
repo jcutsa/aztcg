@@ -4,6 +4,8 @@ import { GridToolbar } from "@mui/x-data-grid";
 
 
 
+
+
 const DataTable = ({
 
     rows, 
@@ -12,6 +14,8 @@ const DataTable = ({
     
   return (
     <DataGrid
+
+    disableRowSelectionOnClick 
 
     slots={{
       toolbar: GridToolbar,
