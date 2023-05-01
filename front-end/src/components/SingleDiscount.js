@@ -112,7 +112,7 @@ function SingleDiscount({ discountData, setDiscountData}) {
               overflowWrap: "break-word",
             }}
           >
-            {percentage}
+            {percentage + "%"}
           </Typography>
           <Typography
             sx={{
@@ -222,7 +222,7 @@ function SingleDiscount({ discountData, setDiscountData}) {
                 );
                 setupdatedName("");
                 setupdatedPercentage("");
-                setupdatedActive();
+                setupdatedActive(updatedActive);
                 handleClose();
               }}
               color="primary"
