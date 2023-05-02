@@ -53,15 +53,23 @@ const OrderTable = () => {
     const [userIds, setUserIds] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/order/getAll")
-          .then((response) => response.json())
-          .then((json) => {
-            console.log("Getting Object from API:", json);
-            setOrders(json);
-            const ids = json.map(order => order.user_id);
-            console.log("Create an array of userIDs", ids);
-            setUserIds(ids);
+      fetch("http://localhost:8080/api/order/getAll")
+        .then((response) => response.json())
+        .then((json) => {
+          console.log("Getting Object from API:", json);
+          const updatedRows = json.map((order) => {
+            return {
+              ...order,
+              first_name: order.user.first_name,
+              last_name: order.user.last_name
+            };
           });
+          console.log("Updated Rows:", updatedRows);
+          setOrders(updatedRows);
+          const ids = json.map((order) => order.user_id);
+          console.log("Create an array of userIDs", ids);
+          setUserIds(ids);
+        });
     }, []);
 
     
