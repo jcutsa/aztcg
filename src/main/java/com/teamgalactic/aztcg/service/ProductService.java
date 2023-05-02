@@ -70,6 +70,15 @@ public class ProductService {
 		return "Product with id " + id + " has been deleted successfully";
 	}
 	
+	public Product reduceQuantityOnHand(Product product, Integer quantity) {
+		
+		int newQuantity = product.getQuantityOnHand() - quantity;
+		if (newQuantity < 0) newQuantity = 0;
+		product.setQuantityOnHand(newQuantity);
+		
+		return productRepository.save(product);
+	}
+	
 
 	public List<Product> getAllProducts() {
 		return productRepository.findAll();

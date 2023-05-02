@@ -56,6 +56,8 @@ public class OrderService {
 				orderItem.setProduct(product);
 				orderItem.setOrder(order);
 				orderItemsList.add(orderItem);
+				productService.reduceQuantityOnHand(product, orderItem.getQuantity());
+				
 			}
 			
 			orderItemRepository.saveAll(orderItemsList);
