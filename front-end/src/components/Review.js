@@ -13,8 +13,8 @@ export default function Review({ value, user, setUser, setTotalWithTax }) {
     const [discountCodes, setDiscountCodes] = useState([]);
     const [codeInput, setCodeInput] = useState("");
 
-    let tax = Number((user.total * 0.0825).toFixed(2));
-    let totalPrice = (user.total + tax).toFixed(2);
+    let tax = Math.round(user.total * 0.0825 * 1e2) / 1e2;
+    let totalPrice = Math.round((user.total + tax) * 1e2) / 1e2;
 
     useEffect(() => {
         setTotalWithTax(totalPrice);

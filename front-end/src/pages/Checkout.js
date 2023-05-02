@@ -59,6 +59,39 @@ export default function Checkout({ user, setUser }) {
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
+
+        // Order submitted
+        if (activeStep === steps.length - 1) {
+            const orderItems = user.cart.map((item) => ({
+                product_id: item.id,
+                quantity: item.quantitySelected,
+            }));
+
+            const order = {
+                user_id: user.id,
+                total: totalWithTax,
+                date: getDateandTime(),
+                shipped: false,
+                items: orderItems,
+            };
+
+            // Create the order
+            fetch(`http://localhost:8080/api/order/create`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(order),
+            });
+
+            // Clear cart and total
+            setUser({
+                ...user,
+                total: 0,
+                cart: [],
+            });
+        }
     };
 
     const handleBack = () => {
@@ -81,25 +114,6 @@ export default function Checkout({ user, setUser }) {
             today.getSeconds();
         const formattedString = date + " " + time;
         return formattedString;
-    };
-
-    const handleSubmit = () => {
-        const order = {
-            user_id: user.id,
-            total: totalWithTax,
-            date: getDateandTime(),
-            shipped: false,
-            items: user.cart,
-        };
-        console.log(JSON.stringify(order));
-        fetch(`http://localhost:8080/api/order/create`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(order),
-        });
     };
 
     function getStepContent(step) {
@@ -150,7 +164,7 @@ export default function Checkout({ user, setUser }) {
                         <React.Fragment>
                             {/* This is displayed when you place an order
                              */}
-                            {handleSubmit()}
+                            {/*handleSubmit*/}
                             <Typography variant="h5" gutterBottom>
                                 Order has been placed.
                             </Typography>
