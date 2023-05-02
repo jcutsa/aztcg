@@ -88,7 +88,7 @@ public class UserController {
 		return userService.deleteUser(id);
 	}
 
-	@GetMapping("getByIdIn")
+	@PostMapping("getByIdIn")
 	public List<UserResponse> getByFirstNameIn(@RequestBody InQueryRequest inQueryRequest) {
 		
 
