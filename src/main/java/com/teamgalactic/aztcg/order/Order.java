@@ -45,6 +45,7 @@ public class Order {
     @JoinColumn(name="user_id")
     private User user;
     
+    @Column(name="total")
     private Double total;
     
     @Column(name="date_ordered", columnDefinition = "DATE")
