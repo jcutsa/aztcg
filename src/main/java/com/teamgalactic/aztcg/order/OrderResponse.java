@@ -25,7 +25,7 @@ public class OrderResponse {
     private Boolean shipped;
     
     @JsonProperty("date")
-    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy/MM/dd")
     private Date dateOrdered;
     
     @JsonProperty("total")
