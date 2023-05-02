@@ -33,6 +33,7 @@ public class OrderResponse {
     public OrderResponse(Order order) {
         this.id = order.getId();
         this.dateOrdered = order.getDateOrdered();
+        this.total = order.getTotal();
         this.shipped = order.getShipped();
         this.user_id = order.getUser().getId();
         for (OrderItem orderItem :  order.getItems()) {
