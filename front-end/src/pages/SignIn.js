@@ -11,11 +11,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SignUp from "./SignUp";
+///TO RELOCATE TO MAIN PAGE
+import {useNavigate} from 'react-router-dom';
 
 const theme = createTheme();
 
 export default function SignIn({ user, setUser, loggedIn, setLoggedIn }) {
   const [submitted, setSubmitted] = React.useState(false);
+  ///TO RELOCATE TO MAIN PAGE
+  const navigate = useNavigate();
+
+  const navigateHome = () => {
+    navigate('../');
+  };
+  //////////////////////////
+
   // const [loggedIn, setLoggedIn] = React.useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,6 +71,9 @@ export default function SignIn({ user, setUser, loggedIn, setLoggedIn }) {
           }
           setLoggedIn(true); // Set loggedIn state here
           setSubmitted(false);
+          ///TO RELOCATE TO MAIN PAGE
+          navigateHome();
+          ///////////////////////////
           // console.log(user);
         } else {
           // the submitted email and/or password are invalid

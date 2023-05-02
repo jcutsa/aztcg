@@ -11,6 +11,7 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
 
 const cardtypes = [
@@ -39,9 +40,11 @@ export default function AdminProducts() {
   const queryParameters = new URLSearchParams(window.location.search);
   const id_get = Number(queryParameters.get('id'));
   console.log("ID:", id_get);
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState({});
   const [cardTypeId, setcardtypeid] = useState();
+  const [cardTypeName, setcardtypename] = useState();
 
 
   const [upid, setid] = useState("");
@@ -52,12 +55,17 @@ export default function AdminProducts() {
   const [uprarity, setrarity] = useState("");
   const [upimage, setimage] = useState("");
 
+  const navigateHome = () => {
+    navigate('../admin-products');
+  };
+
+
   useEffect(() => {
     if (id_get) {
       fetch(`http://localhost:8080/api/product/${id_get}`)
         .then((response) => response.json())
         .then((product) => setProduct(product))
-    }
+    
     setid(product.id);
     setname(product.name);
     setdescription(product.description);
@@ -69,6 +77,7 @@ export default function AdminProducts() {
     console.log(String(cardTypeId));
     ///////REALLY
     setimage(product.image_url);
+    }
     }, upid);
 
   function updateProductDetails(upname,updescription,upprice,upquantity_on_hand,upimage,uprarity) {
@@ -98,13 +107,13 @@ export default function AdminProducts() {
     function handleCreateProduct(upname,updescription,upprice,upquantity_on_hand,upimage){
       console.log("CREATE: ",upname,updescription,upprice, upquantity_on_hand,upimage);
       const product = {
-        name : "Blastoise",
-        description : "Blue, Cannon",
+        name : upname,
+        description : updescription,
         card_type : 1,
-        quantity_on_hand : 5,
-        price : "5.00",
+        quantity_on_hand : upquantity_on_hand,
+        price : upprice,
         rarity : "Common",
-        image_url : "https://i0.wp.com/pkmncards.com/wp-content/uploads/blastoise-base-set-bs-2.jpg?fit=600%2C825&ssl=1",
+        image_url : upimage,
         /*
         name : "Blastoise",
         description : "Blue, Cannon",
@@ -281,6 +290,15 @@ export default function AdminProducts() {
         value={updescription}
         onChange={(e) => setdescription(e.target.value)}
       />
+      <TextField
+            InputLabelProps={{ shrink: true }}
+            id="standard-required"
+            variant="standard"
+            color="success"
+            label= "Card Rarity"
+            value={uprarity}
+            onChange={(e) => {setrarity(e.target.value)}}
+        />
       <FormControl fullWidth sx={{ m: 1 }} variant="standard" color="success">
         <InputLabel htmlFor="standard-adornment-amount">Cost Of Card</InputLabel>
         <Input
@@ -320,6 +338,7 @@ export default function AdminProducts() {
                 upquantity_on_hand,
                 upimage
               );
+              navigateHome();
             }}
           >
             Create
