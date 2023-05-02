@@ -10,6 +10,9 @@ import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 
@@ -43,7 +46,9 @@ export default function AdminProducts() {
   const navigate = useNavigate();
 
   const [product, setProduct] = useState({});
-  const [cardTypeId, setcardtypeid] = useState();
+  const [options, setOptions] = React.useState("");
+  const [inputValue, setInputValue] = React.useState("");
+  const [cardTypeId, setcardtypeid] = useState("");
   const [cardTypeName, setcardtypename] = useState();
 
 
@@ -65,19 +70,16 @@ export default function AdminProducts() {
       fetch(`http://localhost:8080/api/product/${id_get}`)
         .then((response) => response.json())
         .then((product) => setProduct(product))
-    
+      fetch
     setid(product.id);
     setname(product.name);
     setdescription(product.description);
     setquantity_on_hand(product.quantity_on_hand);
     setprice(product.price);
     setrarity(product.rarity);
-    /////IDK
-    setcardtypeid(product.card_type);
-    console.log(String(cardTypeId));
-    ///////REALLY
     setimage(product.image_url);
     }
+    setOptions(cardtypes);
     }, upid);
 
   function updateProductDetails(upname,updescription,upprice,upquantity_on_hand,upimage,uprarity) {
@@ -86,7 +88,6 @@ export default function AdminProducts() {
       card_key: 'test',
       name: upname,
       description: updescription,
-      card_type_id: '',
       quantity_on_hand: upquantity_on_hand,
       price: upprice,
       image: upimage,
@@ -104,15 +105,15 @@ export default function AdminProducts() {
       });
     };
 
-    function handleCreateProduct(upname,updescription,upprice,upquantity_on_hand,upimage){
-      console.log("CREATE: ",upname,updescription,upprice, upquantity_on_hand,upimage);
+    function handleCreateProduct(upname,updescription,upprice,upquantity_on_hand,upimage,uprarity){
+      console.log("CREATE: ",upname,updescription,upprice, upquantity_on_hand,upimage, cardTypeId);
       const product = {
         name : upname,
         description : updescription,
-        card_type : 1,
         quantity_on_hand : upquantity_on_hand,
+        card_type : cardTypeId,
         price : upprice,
-        rarity : "Common",
+        rarity : uprarity,
         image_url : upimage,
         /*
         name : "Blastoise",
@@ -148,6 +149,7 @@ export default function AdminProducts() {
       backgroundSize: "cover",
       }}
     >
+      {console.log()}
       {coru === 1 ?
         <Card 
           elevation={23}
@@ -240,7 +242,8 @@ export default function AdminProducts() {
                     upprice,
                     upquantity_on_hand,
                     upimage,
-                    uprarity
+                    uprarity,
+                    cardTypeId
                   );
                 }}
               >
@@ -299,6 +302,24 @@ export default function AdminProducts() {
             value={uprarity}
             onChange={(e) => {setrarity(e.target.value)}}
         />
+                <Box sx={{ minWidth: 450}}>
+            <FormControl variant="standard" sx={{ minWidth: 450 }}>
+              <InputLabel id="demo-simple-select-label" >Card Type</InputLabel>
+              <Select
+                InputLabelProps={{ shrink: true }}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={cardTypeId}
+                label="Card Type"
+                color="success"
+                onChange={(e) => setcardtypeid(e.target.value)}
+              >
+                <MenuItem value={1}>Pokemon</MenuItem>
+                <MenuItem value={2}>Yugioh</MenuItem>
+                <MenuItem value={3}>Digimon</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard" color="success">
         <InputLabel htmlFor="standard-adornment-amount">Cost Of Card</InputLabel>
         <Input
@@ -336,9 +357,17 @@ export default function AdminProducts() {
                 updescription,
                 upprice,
                 upquantity_on_hand,
-                upimage
+                upimage,
+                uprarity,
+                cardTypeId
               );
-              navigateHome();
+              setid("");
+              setname("");
+              setdescription("");
+              setquantity_on_hand("");
+              setprice("");
+              setrarity("");
+              setimage("");
             }}
           >
             Create
