@@ -45,7 +45,7 @@ function AdminProducts() {
     };
 
     const productList = products.map((product) => {
-        const editLink = "/admin-product-edit/" + product.id;
+        const editLink = "/admin-product-edit?id=" + product.id;
         return (
             <TableRow key={product.id} className="Table-row">
                 <TableCell component="th" scope="row">
@@ -86,7 +86,7 @@ function AdminProducts() {
                 <Button
                     variant="contained"
                     component={Link}
-                    to="/admin-product-edit/new"
+                    to="/admin-product-edit"
                     color="success"
                 >
                     Add Product

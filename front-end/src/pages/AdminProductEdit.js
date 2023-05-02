@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Component } from 'react';
 
 import { Card } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -6,87 +6,129 @@ import Container from "@mui/material/Container";
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-//import image from "../assetts/images/duotone.png"; 
+import axios from "axios";
 
 
-///Look at CreateOrUpdate function to change from Create nad Update
-
-  const cardtypes = [
-    {
-      value: '0',
-      label: 'Pokemon',
-    },
-    {
-      value: '1',
-      label: 'Yugioh',
-    },
-    {
-      value: '2',
-      label: 'Digimon',
-    },
-    {
-      value: '3',
-      label: 'Magic',
-    }
-  ];
-
-  const cardrarity = [
-    {
-      value: '0',
-      label: 'Common',
-    },
-    {
-      value: '1',
-      label: 'Uncommon',
-    },
-    {
-      value: '2',
-      label: 'Rare',
-    },
-    {
-      value: '3',
-      label: 'Rare Holo',
-    }
-  ];
-
-  let coru = 0;
-  let array = [];
-
-function CreateOrUpdate()
-{
-  if (false) //Value sent by admin product for now: true(Update, will auto fill with values below), false(Create)
-  {         //Reload page when changing this value
-
-    coru = 1; //set value to help evaluate how page should look
-    return [1,2,{value: '0', label: 'Pokemon'},4,5,{value: '3', label: 'Rare Holo',}]; // return product array created from product id
-  }
-  else
+const cardtypes = [
   {
-    coru = 0; //set value to help evaluate how page should look
-    return ["","",{value: "", label: ""},"","",{value: "", label: ""}]; // return defult array
+    value: '1',
+    label: 'POKEMON',
+  },
+  {
+    value: '2',
+    label: 'YUGIOH',
+  },
+  {
+    value: '3',
+    label: 'DIGIMON',
+  },
+  {
+    value: '4',
+    label: 'MAGIC',
   }
-}
+];
+
+let coru = 0;
 
 export default function AdminProducts() {
 
-  const [inputValue, setInputValue] = React.useState("");
-  const [options, setOptions] = React.useState(cardtypes);
-  const [rarityValue, setRarityValue] = React.useState("");
-  const [rarity_options, setRarityOptions] = React.useState(cardrarity);
+  const queryParameters = new URLSearchParams(window.location.search);
+  const id_get = Number(queryParameters.get('id'));
+  console.log("ID:", id_get);
 
-  //console.log(coru)
-  //console.log(array)
+  const [product, setProduct] = useState({});
+  const [cardTypeId, setcardtypeid] = useState();
 
-  array = CreateOrUpdate(); //return product array or default array
 
-  //console.log(coru)
-  //console.log(array)
-  
+  const [upid, setid] = useState("");
+  const [upname, setname] = useState("");
+  const [updescription, setdescription] = useState("");
+  const [upquantity_on_hand, setquantity_on_hand] = useState("");
+  const [upprice, setprice] = useState("");
+  const [uprarity, setrarity] = useState("");
+  const [upimage, setimage] = useState("");
+
+  useEffect(() => {
+    if (id_get) {
+      fetch(`http://localhost:8080/api/product/${id_get}`)
+        .then((response) => response.json())
+        .then((product) => setProduct(product))
+    }
+    setid(product.id);
+    setname(product.name);
+    setdescription(product.description);
+    setquantity_on_hand(product.quantity_on_hand);
+    setprice(product.price);
+    setrarity(product.rarity);
+    /////IDK
+    setcardtypeid(product.card_type);
+    console.log(String(cardTypeId));
+    ///////REALLY
+    setimage(product.image_url);
+    }, upid);
+
+  function updateProductDetails(upname,updescription,upprice,upquantity_on_hand,upimage,uprarity) {
+    const product = {
+      id: upid,
+      card_key: 'test',
+      name: upname,
+      description: updescription,
+      card_type_id: '',
+      quantity_on_hand: upquantity_on_hand,
+      price: upprice,
+      image: upimage,
+      rarity: uprarity,
+    };
+    axios
+      .put("http://localhost:8080/api/product/update", product)
+      .then((response) => {
+        console.log(response.data);
+        console.log(typeof response.data.active);
+        setDiscountData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    };
+
+    function handleCreateProduct(upname,updescription,upprice,upquantity_on_hand,upimage){
+      console.log("CREATE: ",upname,updescription,upprice, upquantity_on_hand,upimage);
+      const product = {
+        name : "Blastoise",
+        description : "Blue, Cannon",
+        card_type : 1,
+        quantity_on_hand : 5,
+        price : "5.00",
+        rarity : "Common",
+        image_url : "https://i0.wp.com/pkmncards.com/wp-content/uploads/blastoise-base-set-bs-2.jpg?fit=600%2C825&ssl=1",
+        /*
+        name : "Blastoise",
+        description : "Blue, Cannon",
+        card_type : 1,
+        quantity_on_hand : 5,
+        price : "5.00",
+        rarity : "Common",
+        image_url : "https://i0.wp.com/pkmncards.com/wp-content/uploads/blastoise-base-set-bs-2.jpg?fit=600%2C825&ssl=1",
+        */
+      };
+      console.log("");
+      axios
+        .post("http://localhost:8080/api/product/create", product)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      };
+
+  const title = <h2>{upid ? 'Edit Product' : 'Create Product'}</h2>;
+  coru = upid ? 1 : 0;
+
   return (
     <div
       style={{
@@ -94,11 +136,10 @@ export default function AdminProducts() {
       textAlign: "center",
       height: "100vh",
       backgroundColor: "#F6FBF4",
-      //backgroundImage: `url(${image})`,
       backgroundSize: "cover",
-      //backgroundImage: "url('https://static1.srcdn.com/wordpress/wp-content/uploads/2022/04/Magic-Yu-Gi-Oh-and-Pokemon-TCG.png')"
       }}
     >
+      {coru === 1 ?
         <Card 
           elevation={23}
           style={{
@@ -108,117 +149,187 @@ export default function AdminProducts() {
             flexDirection: 'column'
           }}
         >
-      <Container component="main" maxWidth="sm">
-        <div style={{padding: "20px",}}></div>
-        {
-            coru == 0
-            ? <h2>Create A New Product</h2>
-            : <h2>Update This Product</h2>
+        <Container component="main" maxWidth="sm">
+          <div style={{padding: "20px",}}></div>
+          {
+            title
           }
-        <div style={{padding: "20px",}}></div>
-        <Stack direction="column" spacing={4}>
+          <div style={{padding: "20px",}}></div>
+          <Stack direction="column" spacing={4}>
           <TextField
             required
+            InputLabelProps={{ shrink: true }}
             id="standard-required"
-            label="Card Name"
             variant="standard"
             color="success"
-            defaultValue= {array.at(0)}
-
+            label= "Card Name"
+            defaultValue={product.name}
+            value={upname}
+            onChange={(e) => {setname(e.target.value)}}
           />
           <TextField
             id="standard-multiline-flexible"
-            label="Card Discription"
+            label="Description"
+            InputLabelProps={{ shrink: true }}
             multiline
             maxRows={4}
             variant="standard"
             color="success"
-            defaultValue= {array.at(1)}
-          />
-          <Autocomplete
-            options={options}
-            noOptionsText="Press Enter To Add New Card Type"
-            defaultValue= {array.at(2)}
-            //defaultValue= {{value: '0', label: 'Pokemon',}}
-            getOptionLabel={(option) => option.label}
-            onInputChange={(e, newValue) => {
-                setInputValue(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params} 
-                label="Card Type"
-                variant="standard"
-                color="success"
-                onKeyDown={(e) => {
-                if 
-                (
-                  e.key === "Enter" &&
-                  options.findIndex((o) => o.label === inputValue) === -1
-                ) {
-                  setOptions((o) => o.concat({ label: inputValue }));
-                }
-                }}
-              />
-            )}
+            defaultValue={product.description}
+            value={updescription}
+            onChange={(e) => setdescription(e.target.value)}
           />
           <TextField
-            id="standard-number"
-            label="Amount Of Card/s Available"
-            type="number"
-            color="success"
-            defaultValue= {array.at(3)}
-            InputLabelProps={{
-              shrink: true,
-            }}
+            InputLabelProps={{ shrink: true }}
+            id="standard-required"
             variant="standard"
+            color="success"
+            label= "Card Rarity"
+            defaultValue={product.rarity}
+            value={uprarity}
+            onChange={(e) => {setrarity(e.target.value)}}
           />
           <FormControl fullWidth sx={{ m: 1 }} variant="standard" color="success">
             <InputLabel htmlFor="standard-adornment-amount">Cost Of Card</InputLabel>
             <Input
-              defaultValue= {array.at(4)}
+              InputLabelProps={{ shrink: true }}
+              defaultValue={product.price}
+              value={upprice}
+              onChange={(e) => setprice(e.target.value)}
               id="standard-adornment-amount"                
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
             />
           </FormControl>
-          <Autocomplete
-            options={rarity_options}
-            noOptionsText="Press Enter To Add New Card Rarity"
-            defaultValue= {array.at(5)}
-            //defaultValue= {{value: '3', label: 'Rare Holo',}}
-            getOptionLabel={(option) => option.label}
-            onInputChange={(e, newValue) => {
-                setInputValue(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params} 
-                label="Card Rarity"
-                variant="standard"
-                color="success"
-                onKeyDown={(e) => {
-                if 
-                (
-                  e.key === "Enter" &&
-                  options.findIndex((o) => o.label === inputValue) === -1
-                ) {
-                  setRarityOptions((o) => o.concat({ label: inputValue }));
-                }
-                }}
-              />
-            )}
+          <TextField
+            id="standard-number"
+            InputLabelProps={{ shrink: true }}
+            label="Amount Of Card/s Available"
+            type="number"
+            color="success"
+            defaultValue={product.quantity_on_hand}
+            value={upquantity_on_hand}
+            onChange={(e) => setquantity_on_hand(e.target.value)}
+            variant="standard"
+          />
+          <TextField
+            required
+            id="standard-required"
+            InputLabelProps={{ shrink: true }}
+            label="Image URL"
+            variant="standard"
+            color="success"
+            defaultValue={product.image_url}
+            value={upimage}
+            onChange={(e) => setimage(e.target.value)}
           />
           <div style={{padding: "5px",}}></div>
-          {
-            coru == 0
-            ? <Button variant="outlined" color='success'>Create</Button>
-            : <Button variant="outlined" color='success'>Update</Button>
-          }
+              <Button variant="outlined" color='success'
+                onClick={() => {
+                  updateProductDetails(
+                    upname,
+                    updescription,
+                    upprice,
+                    upquantity_on_hand,
+                    upimage,
+                    uprarity
+                  );
+                }}
+              >
+                Update
+              </Button>
         </Stack>
         <div style={{padding: "40px",}}></div>
       </Container>
       </Card>
+
+      : ////CREATE/////
+
+      <Card 
+      elevation={23}
+      style={{
+        backgroundColor: "#F6FBF4",
+        maxWidth:"500px",
+        margin:'auto',
+        flexDirection: 'column'
+      }}
+    >
+  <Container component="main" maxWidth="sm">
+    <div style={{padding: "20px",}}></div>
+    {
+      title
+    }
+    <div style={{padding: "20px",}}></div>
+    <Stack direction="column" spacing={4}>
+      <TextField
+        required
+        id="standard-required"
+        variant="standard"
+        InputLabelProps={{ shrink: true }}
+        color="success"
+        label= "Card Name"
+        value={upname}
+        onChange={(e) => {setname(e.target.value)}}
+      />
+      <TextField
+        id="standard-multiline-flexible"
+        label="Description"
+        InputLabelProps={{ shrink: true }}
+        multiline
+        maxRows={4}
+        variant="standard"
+        color="success"
+        value={updescription}
+        onChange={(e) => setdescription(e.target.value)}
+      />
+      <FormControl fullWidth sx={{ m: 1 }} variant="standard" color="success">
+        <InputLabel htmlFor="standard-adornment-amount">Cost Of Card</InputLabel>
+        <Input
+          InputLabelProps={{ shrink: true }}
+          value={upprice}
+          onChange={(e) => setprice(e.target.value)}
+          id="standard-adornment-amount"                
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+        />
+      </FormControl>
+      <TextField
+        id="standard-number"
+        label="Amount Of Card/s Available"
+        InputLabelProps={{ shrink: true }}
+        type="number"
+        color="success"
+        value={upquantity_on_hand}
+        onChange={(e) => setquantity_on_hand(e.target.value)}
+        variant="standard"
+      />
+      <TextField
+        id="standard-required"
+        InputLabelProps={{ shrink: true }}
+        label="Image URL"
+        variant="standard"
+        color="success"
+        value={upimage}
+        onChange={(e) => setimage(e.target.value)}
+      />
+      <div style={{padding: "5px",}}></div>
+          <Button variant="outlined" color='success'
+            onClick={() => {
+              handleCreateProduct(
+                upname,
+                updescription,
+                upprice,
+                upquantity_on_hand,
+                upimage
+              );
+            }}
+          >
+            Create
+          </Button>
+    </Stack>
+    <div style={{padding: "40px",}}></div>
+  </Container>
+  </Card>
+      }
     </div>
-  );
+  )
 }
   
