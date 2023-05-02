@@ -9,12 +9,16 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 
-export default function Review({ value, user, setUser }) {
+export default function Review({ value, user, setUser, setTotalWithTax }) {
     const [discountCodes, setDiscountCodes] = useState([]);
     const [codeInput, setCodeInput] = useState("");
 
     let tax = Number((user.total * 0.0825).toFixed(2));
     let totalPrice = (user.total + tax).toFixed(2);
+
+    useEffect(() => {
+        setTotalWithTax(totalPrice);
+    }, [totalPrice]);
 
     // Get a list of all valid discount codes
     useEffect(() => {

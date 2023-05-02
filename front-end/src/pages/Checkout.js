@@ -48,6 +48,7 @@ export default function Checkout({ user, setUser }) {
     });
 
     const [activeStep, setActiveStep] = React.useState(0);
+    const [totalWithTax, setTotalWithTax] = useState(0);
 
     const handleChange = (event) => {
         setOrderDetails({
@@ -57,12 +58,47 @@ export default function Checkout({ user, setUser }) {
     };
 
     const handleNext = () => {
-        //console.log(orderDetails);
         setActiveStep(activeStep + 1);
     };
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+    };
+
+    const getDateandTime = () => {
+        const today = new Date();
+        const date =
+            today.getFullYear() +
+            "/" +
+            (today.getMonth() + 1) +
+            "/" +
+            today.getDate();
+        const time =
+            today.getHours() +
+            ":" +
+            today.getMinutes() +
+            ":" +
+            today.getSeconds();
+        return date + " " + time;
+    };
+
+    const handleSubmit = () => {
+        const order = {
+            user_id: user.id,
+            total: totalWithTax,
+            date: getDateandTime(),
+            shipped: false,
+            items: user.cart,
+        };
+        console.log(JSON.stringify(order));
+        fetch(`http://localhost:8080/api/order/create`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(order),
+        });
     };
 
     function getStepContent(step) {
@@ -82,6 +118,7 @@ export default function Checkout({ user, setUser }) {
                         value={orderDetails}
                         user={user}
                         setUser={setUser}
+                        setTotalWithTax={setTotalWithTax}
                     />
                 );
             default:
@@ -112,6 +149,7 @@ export default function Checkout({ user, setUser }) {
                         <React.Fragment>
                             {/* This is displayed when you place an order
                              */}
+                            {handleSubmit()}
                             <Typography variant="h5" gutterBottom>
                                 Order has been placed.
                             </Typography>
