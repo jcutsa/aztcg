@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teamgalactic.aztcg.order.item.OrderItem;
 import com.teamgalactic.aztcg.order.item.OrderItemResponse;
+import com.teamgalactic.aztcg.response.UserResponse;
 
 
 public class OrderResponse {
@@ -16,6 +17,9 @@ public class OrderResponse {
 
     @JsonProperty("user_id")
     private Long user_id;
+    
+    @JsonProperty("user")
+    private UserResponse user;
     
     @JsonProperty("shipped")
     private Boolean shipped;
@@ -35,6 +39,7 @@ public class OrderResponse {
         this.dateOrdered = order.getDateOrdered();
         this.total = order.getTotal();
         this.shipped = order.getShipped();
+        this.user = new UserResponse(order.getUser());
         this.user_id = order.getUser().getId();
         for (OrderItem orderItem :  order.getItems()) {
             this.orderItems.add(new OrderItemResponse(orderItem));
