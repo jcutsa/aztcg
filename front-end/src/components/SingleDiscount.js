@@ -46,6 +46,7 @@ function SingleDiscount({ discountData, setDiscountData}) {
   };
 
   const handleModifyDiscount = () => {
+    setupdatedActive(active);
     handleOpen();
   };
   const handleDeleteDiscount = () => {
@@ -79,6 +80,7 @@ function SingleDiscount({ discountData, setDiscountData}) {
     .catch((error) => {
       console.log(error);
     });
+
   }
   return (
     <div
@@ -201,7 +203,8 @@ function SingleDiscount({ discountData, setDiscountData}) {
               <FormControlLabel
                 sx={{margin: 'auto'}}
                 control={<Checkbox 
-                          defaultChecked={Boolean(active === 1 ? true: false)}
+                          defaultChecked={Boolean(active)}
+                          checked={updatedActive}
                           onChange= {e => setupdatedActive(e.target.checked)}/>}
                 label="Active"
                 labelPlacement="start"
