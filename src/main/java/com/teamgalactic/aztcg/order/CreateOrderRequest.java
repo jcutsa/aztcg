@@ -12,17 +12,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class CreateOrderRequest {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
 	
     @JsonProperty("user_id")
     @NotNull(message="user_id is required")
@@ -30,6 +26,7 @@ public class CreateOrderRequest {
     
     @JsonProperty("total")
     @NotNull(message="total (decimal value) is required")
+    @PositiveOrZero(message="total must be a nonnegative number")
     private Double total;
     
     @JsonProperty("date")
