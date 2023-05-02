@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.teamgalactic.aztcg.entity.User;
 import com.teamgalactic.aztcg.request.CreateUserRequest;
+import com.teamgalactic.aztcg.request.InQueryRequest;
 import com.teamgalactic.aztcg.request.UpdateUserRequest;
 import com.teamgalactic.aztcg.response.UserResponse;
 import com.teamgalactic.aztcg.service.UserService;
@@ -87,6 +88,22 @@ public class UserController {
 		return userService.deleteUser(id);
 	}
 
+	@GetMapping("getByIdIn")
+	public List<UserResponse> getByFirstNameIn(@RequestBody InQueryRequest inQueryRequest) {
+		
+
+		
+		List<User> userList = userService.getByIdIn(inQueryRequest);
+		List<UserResponse> userResponseList = new ArrayList<UserResponse>();
+		
+		userList.stream().forEach(user -> {
+			userResponseList.add(new UserResponse(user));
+		});
+		
+		
+		return userResponseList;
+	}
+	
     /*@PostMapping("logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         // send logout URL to client so they can initiate logout
