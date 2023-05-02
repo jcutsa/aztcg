@@ -104,7 +104,7 @@ export default function Navbar({ user, admin, loggedIn , onSignOut}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <ThemeProvider theme={theme}>
-        <AppBar position="static" sx={{ height: 120 }}>
+        <AppBar position="auto" sx={{ height: 150 }}>
           <Stack justifyContent="center" alignItems="center">
             {/* Top Stack */}
             <Stack
@@ -112,7 +112,7 @@ export default function Navbar({ user, admin, loggedIn , onSignOut}) {
               justifyContent="center"
               alignItems="center"
               spacing={3}
-              style={{ display: "flex", alignItems: "center" }}
+              style={{ display: "flex", alignItems: "center", margin: 25}}
             >
               <Typography variant="h4" sx={{fontStyle: 'italic'}}>A-Z TCG Marketplace</Typography>
               <SearchComponent></SearchComponent>
