@@ -15,6 +15,24 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
 
 export default function Contact() {
+  const handleSentMessage = () => {
+    // Show the windows alert
+    window.alert("Message successfully sent!");
+
+    // Clear the form by setting the input values to an empty string
+    const firstNameInput = document.getElementById("first-name-input");
+    const lastNameInput = document.getElementById("last-name-input");
+    const emailAddressInput = document.getElementById("email-address-input");
+    const phoneNumberInput = document.getElementById("phone-number-input");
+    const messageInput = document.getElementById("message-input");
+
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    emailAddressInput.value = "";
+    phoneNumberInput.value = "";
+    messageInput.value = "";
+  };
+
   return (
     <div style={{ padding: "24px 48px", textAlign: "center" }}>
       <h1>Contact Us</h1>
@@ -101,22 +119,46 @@ export default function Contact() {
               paddingTop: "100px",
             }}
           >
-            <a href="https://www.facebook.com/TCGplayer/" target="blank" style={{ color:"white"}}>
+            <a
+              href="https://www.facebook.com/TCGplayer/"
+              target="blank"
+              style={{ color: "white" }}
+            >
               <FacebookIcon style={{ fontSize: 40 }}></FacebookIcon>
             </a>
-            <a href="https://www.instagram.com/tcgplayer_com/?hl=en" target="blank" style={{ color:"white"}}>
+            <a
+              href="https://www.instagram.com/tcgplayer_com/?hl=en"
+              target="blank"
+              style={{ color: "white" }}
+            >
               <InstagramIcon style={{ fontSize: 40 }}></InstagramIcon>
             </a>
-            <a href="https://twitter.com/TCGplayer?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="blank" style={{ color:"white"}}>
+            <a
+              href="https://twitter.com/TCGplayer?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+              target="blank"
+              style={{ color: "white" }}
+            >
               <TwitterIcon style={{ fontSize: 40 }}></TwitterIcon>
             </a>
-            <a href="https://www.pinterest.com/search/pins/?q=tcg%20player&rs=typed" target="blank" style={{ color:"white"}}>
+            <a
+              href="https://www.pinterest.com/search/pins/?q=tcg%20player&rs=typed"
+              target="blank"
+              style={{ color: "white" }}
+            >
               <PinterestIcon style={{ fontSize: 40 }}></PinterestIcon>
             </a>
-            <a href="https://www.linkedin.com/company/tcgplayer/" target="blank" style={{ color:"white"}}>
+            <a
+              href="https://www.linkedin.com/company/tcgplayer/"
+              target="blank"
+              style={{ color: "white" }}
+            >
               <LinkedInIcon style={{ fontSize: 40 }}></LinkedInIcon>
             </a>
-            <a href="https://github.com/TCGplayer" target="blank" style={{ color:"white"}}>
+            <a
+              href="https://github.com/TCGplayer"
+              target="blank"
+              style={{ color: "white" }}
+            >
               <GitHubIcon style={{ fontSize: 40 }}></GitHubIcon>
             </a>
           </Stack>
@@ -140,11 +182,13 @@ export default function Contact() {
                 label="First Name"
                 variant="standard"
                 inputProps={{ style: { width: "250px" } }}
+                id="first-name-input"
               />
               <TextField
                 label="Last Name"
                 variant="standard"
                 inputProps={{ style: { width: "250px" } }}
+                id="last-name-input"
               />
             </div>
             <div style={{ marginTop: "20px", display: "flex", gap: "30px" }}>
@@ -152,11 +196,13 @@ export default function Contact() {
                 label="Email Address"
                 variant="standard"
                 inputProps={{ style: { width: "250px" } }}
+                id="email-address-input"
               />
               <TextField
                 label="Phone Number"
                 variant="standard"
                 inputProps={{ style: { width: "250px" } }}
+                id="phone-number-input"
               />
             </div>
             <div style={{ marginTop: "20px", display: "flex" }}>
@@ -166,6 +212,7 @@ export default function Contact() {
                 rows={4}
                 variant="standard"
                 inputProps={{ style: { width: "530px" } }}
+                id="message-input"
               />
             </div>
             <div style={{ marginTop: "40px", display: "flex" }}>
@@ -182,6 +229,7 @@ export default function Contact() {
                   (e.target.style.backgroundColor = "#356C56")
                 }
                 onMouseOut={(e) => (e.target.style.backgroundColor = "#4B8673")}
+                onClick={handleSentMessage}
               >
                 Send
               </Button>

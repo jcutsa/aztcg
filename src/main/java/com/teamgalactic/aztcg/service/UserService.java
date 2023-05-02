@@ -10,6 +10,7 @@ import com.teamgalactic.aztcg.exceptions.ResourceNotFoundException;
 import com.teamgalactic.aztcg.repository.AddressRepository;
 import com.teamgalactic.aztcg.repository.UserRepository;
 import com.teamgalactic.aztcg.request.CreateUserRequest;
+import com.teamgalactic.aztcg.request.InQueryRequest;
 import com.teamgalactic.aztcg.request.UpdateUserRequest;
 
 @Service
@@ -67,4 +68,7 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public List<User> getByIdIn(InQueryRequest inQueryRequest) {
+		return userRepository.findByIdIn(inQueryRequest.getIds());
+	}
 }
