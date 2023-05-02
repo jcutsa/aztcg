@@ -79,7 +79,8 @@ export default function Checkout({ user, setUser }) {
             today.getMinutes() +
             ":" +
             today.getSeconds();
-        return date + " " + time;
+        const formattedString = date + " " + time;
+        return formattedString;
     };
 
     const handleSubmit = () => {
