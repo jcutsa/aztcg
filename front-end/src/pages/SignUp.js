@@ -1,58 +1,71 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({ user, setUser, loggedIn, setLoggedIn }) {
+  let navigate = useNavigate();
 
-  let navigate=useNavigate()
+  const [newUser, setNewUser] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    password: "",
+    email: "",
+  });
 
-  const [user, setUser] = useState ( { 
-    first_name: '', 
-    last_name: '',
-    username: '', 
-    password: '', 
-    email: ''
-
-  })
-
-  const { first_name, last_name, username, password, email} = user; 
+  const { first_name, last_name, username, password, email } = newUser;
 
   const onInputChange = (e) => {
-    setUser({...user, [e.target.name]: e.target.value})
+    setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
-   //Test console.log
-  //console.log(user)
+  //Test console.log
+  //console.log(newUser)
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/api/user/create",user )
-    .then(({user}) => {
-      console.log(user)
-    })
-    //navigate used to route back to the homepage after submit is done 
-    navigate("/")
-
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/user/create",
+        {
+          ...newUser,
+          // permission_level: 0,
+          // admin: !!newUser.admin,
+        }
+      );
+      // setUser(response.data); // set the user
+      // console.log(response.data.permission_level);
+      setUser({
+        id: response.data.id,
+        firstName: response.data.first_name,
+        lastName: response.data.last_name,
+        email: response.data.email,
+        cart: [],
+        admin: false,
+        total: 0,
+      });
+      setLoggedIn(true); // log in the user
+      navigate("/"); // navigate to the homepage
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   };
-
-    
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,18 +74,23 @@ export default function SignUp() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <AccountCircleIcon />
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <AccountCircleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Registration 
+            Registration
           </Typography>
-          <Box component="form" noValidate onSubmit={(e)=>onSubmit(e)} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={(e) => onSubmit(e)}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -90,7 +108,6 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  
                   label="Last Name"
                   name="last_name"
                   value={last_name}
@@ -153,9 +170,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        
       </Container>
     </ThemeProvider>
   );
 }
-                                                                                                                                                                                                    
