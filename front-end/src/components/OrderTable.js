@@ -19,6 +19,7 @@ function formatDollarAmount(amount) {
       }
     
     const columns = [
+        {field: 'id', headerName: 'Order ID', width:200, headerAlign: 'center',align: 'center'}, 
         {field: 'date', headerName: 'Date Order Placed', width:200, headerAlign: 'center',align: 'center'}, 
         {field: 'user_id', headerName: 'User ID', width: 150, headerAlign: 'center', align: 'center'},
         {field: 'first_name', headerName: 'First Name', width: 150, headerAlign: 'center', align: 'center'}, 
