@@ -13,7 +13,10 @@ const DataTable = ({
 }) => {
     
   return (
+
+    
     <DataGrid
+    
 
     disableRowSelectionOnClick 
 
